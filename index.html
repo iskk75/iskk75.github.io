@@ -4,29 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Portfolio Issak Dirir</title>
-<meta name="description" content="Portfolio BTS SIO d'Issak Dirir : réalisations professionnelles, stages, tableau de synthèse E5 et veille technologique.">
+<meta name="description" content="Portfolio BTS SIO option SISR d'Issak Dirir : réalisations professionnelles, stages, tableau de synthèse E5 et veille technologique.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
-<div class="blob" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="top gut">
   <div class="inner">
-    <button class="logo" type="button" data-go="accueil" aria-label="Retour à l'accueil"><span class="dot"></span>ISSAK DIRIR</button>
+    <button class="brand" type="button" data-go="accueil" aria-label="Retour à l'accueil">
+      <span class="mono-badge" aria-hidden="true">ID</span>
+      <span><b>Issak Dirir</b><small>BTS SIO · SISR</small></span>
+    </button>
     <nav class="tabs" aria-label="Sections du portfolio">
-      <span class="pill" aria-hidden="true"></span>
       <a href="#accueil" data-go="accueil">Accueil</a>
       <a href="#parcours" data-go="parcours">Parcours</a>
       <a href="#realisations" data-go="realisations">Réalisations</a>
       <a href="#synthese" data-go="synthese">Synthèse E5</a>
       <a href="#veille" data-go="veille">Veille</a>
       <a href="#contact" data-go="contact">Contact</a>
+      <span class="line" aria-hidden="true"></span>
     </nav>
-    <button class="theme" id="theme" type="button" aria-label="Changer de thème (jour / nuit)"><span></span></button>
+    <button class="theme" id="theme" type="button" aria-label="Changer de thème (clair / sombre)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/></svg>
+    </button>
   </div>
 </header>
 
@@ -35,238 +39,273 @@
 
     <!-- ===== ACCUEIL ===== -->
     <section class="view" id="accueil" data-label="Accueil">
-      <div class="home">
-        <div class="dots" aria-hidden="true"></div>
+      <div class="hero">
         <div>
-          <span class="status rv"><i></i>Disponible · stage / alternance 2027</span>
-          <h1 class="name rv" aria-label="Issak Dirir">
-            <span class="p" aria-hidden="true"><span class="layer">ISSAK</span><span class="layer">DIRIR</span></span>
-            <span class="b" aria-hidden="true"><span class="layer">ISSAK</span><span class="layer">DIRIR</span></span>
-          </h1>
-          <p class="role rv"><span class="mark">BTS SIO · option SLAM</span><br><span class="typed" id="typed">Développeur web en devenir</span><span class="caret"></span></p>
-          <p class="lead rv">Je conçois des applications web et des services informatiques utiles aux organisations. Explore les onglets, retourne les cartes, ou parle au terminal.</p>
+          <span class="eyebrow rv">BTS SIO · option SISR</span>
+          <h1 class="rv">Issak Dirir</h1>
+          <p class="role rv">Futur administrateur systèmes et réseaux</p>
+          <p class="lead rv">Je conçois, installe et sécurise des infrastructures informatiques : serveurs, réseaux d'entreprise et services utilisateurs. Ce portfolio présente mon parcours, mes réalisations professionnelles et mon tableau de synthèse pour l'épreuve E5.</p>
           <div class="cta rv">
-            <button class="btn hot mag" type="button" data-go="realisations">Voir mes réalisations
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button class="btn mag" type="button" data-go="contact">Me contacter</button>
+            <button class="btn primary" type="button" data-go="realisations">Voir mes réalisations
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="btn" type="button" data-go="contact">Me contacter</button>
           </div>
+          <p class="status rv"><i></i>Recherche une alternance ou un stage pour 2027</p>
         </div>
-
-        <div class="term box rv" aria-label="Terminal interactif">
-          <div class="term-bar"><i></i><i></i><i></i><span>issak@sio:~</span></div>
-          <div class="term-out" id="out" aria-live="polite"></div>
-          <form id="cmd-form" autocomplete="off">
-            <label for="cmd">issak@sio:~$</label>
-            <input id="cmd" name="cmd" type="text" spellcheck="false" autocapitalize="off" placeholder="tape aide">
-          </form>
-          <div class="chips-cmd" aria-label="Commandes rapides">
-            <button type="button" data-cmd="whoami">whoami</button>
-            <button type="button" data-cmd="competences">competences</button>
-            <button type="button" data-cmd="projets">projets</button>
-            <button type="button" data-cmd="sudo cafe">sudo cafe</button>
-          </div>
-        </div>
+        <aside class="fiche card rv" aria-label="Fiche de présentation">
+          <h2>Fiche de présentation</h2>
+          <dl>
+            <dt>Formation</dt><dd>BTS SIO</dd>
+            <dt>Option</dt><dd>SISR</dd>
+            <dt>Session</dt><dd>2027</dd>
+            <dt>Spécialité</dt><dd>Systèmes, réseaux, sécurité</dd>
+            <dt>Localisation</dt><dd>Paris</dd>
+          </dl>
+        </aside>
       </div>
 
-      <div class="board rv" id="board" aria-label="Autocollants à déplacer">
-        <span class="stk" style="left:4%;top:22px;--r:-6deg;background:var(--pink)">BTS SIO</span>
-        <span class="stk round" style="left:24%;top:46px;--r:8deg;background:var(--yellow)">option<br>SLAM</span>
-        <span class="stk" style="left:42%;top:30px;--r:4deg;background:#9fe7c9">&lt;?php echo "salut"; ?&gt;</span>
-        <span class="stk" style="left:70%;top:20px;--r:-3deg;background:var(--yellow)">Session 2027</span>
-        <span class="stk round" style="left:84%;top:80px;--r:-10deg;background:var(--pink)">Paris</span>
-        <span class="stk" style="left:58%;top:104px;--r:-8deg;background:#b9c6ff">git push --force</span>
-        <span class="hint">↖ attrape et déplace les autocollants</span>
+      <div class="figures rv">
+        <div class="fig"><b data-count="6">6</b><span>réalisations professionnelles</span></div>
+        <div class="fig"><b><span data-count="14">14</span> sem.</b><span>de stage en entreprise</span></div>
+        <div class="fig"><b><span data-count="6">6</span>/6</b><span>compétences du bloc 1 couvertes</span></div>
+        <div class="fig"><b data-count="2027">2027</b><span>session d'examen</span></div>
       </div>
 
-      <div class="ticker rv" aria-hidden="true"><div class="ticker-track">
-        <span>PHP</span><span>Symfony</span><span>JavaScript</span><span>MySQL</span><span>Python</span><span>Git</span><span>Linux</span><span>GLPI</span><span>Docker</span><span>Merise</span>
-        <span>PHP</span><span>Symfony</span><span>JavaScript</span><span>MySQL</span><span>Python</span><span>Git</span><span>Linux</span><span>GLPI</span><span>Docker</span><span>Merise</span>
-      </div></div>
-
-      <div class="stats">
-        <div class="stat box rv"><b data-count="6">6</b><span>réalisations professionnelles</span></div>
-        <div class="stat box rv"><b><span data-count="14">14</span> sem.</b><span>de stage en entreprise</span></div>
-        <div class="stat box rv"><b><span data-count="6">6</span>/6</b><span>compétences du bloc 1 couvertes</span></div>
-        <div class="stat box rv"><b data-count="2027">2027</b><span>session d'examen</span></div>
+      <div class="section-h rv"><h2>Domaines de compétences</h2><span class="muted">Option SISR</span></div>
+      <div class="domains">
+        <article class="domain card rv">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="12" y="3" width="8" height="6" rx="1"/><rect x="3" y="23" width="8" height="6" rx="1"/><rect x="21" y="23" width="8" height="6" rx="1"/><path d="M16 9v6M7 23v-4h18v4M16 15v4"/></svg>
+          <h3>Réseaux</h3>
+          <p>Conception et configuration de réseaux d'entreprise : VLAN, routage, adressage IP, DHCP et DNS sur équipements Cisco.</p>
+        </article>
+        <article class="domain card rv">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="4" width="22" height="8" rx="1.5"/><rect x="5" y="14" width="22" height="8" rx="1.5"/><path d="M9 8h.01M9 18h.01M13 8h6M13 18h6M11 26h10M16 22v4"/></svg>
+          <h3>Systèmes</h3>
+          <p>Administration de serveurs Windows Server et Linux : Active Directory, stratégies de groupe, virtualisation et sauvegardes.</p>
+        </article>
+        <article class="domain card rv">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 3 6 7v8c0 6.5 4.3 11.6 10 14 5.7-2.4 10-7.5 10-14V7L16 3z"/><path d="m11.5 16 3 3 6-6.5"/></svg>
+          <h3>Sécurité</h3>
+          <p>Protection des infrastructures : pare-feu, VPN, gestion des droits, supervision et respect des bonnes pratiques de l'ANSSI.</p>
+        </article>
       </div>
     </section>
 
     <!-- ===== PARCOURS ===== -->
     <section class="view" id="parcours" data-label="Parcours" hidden>
-      <span class="kicker rv">Formation · expérience</span>
-      <h2 class="title rv">Parcours</h2>
-      <p class="sub rv">Ma formation, mes deux stages du BTS, et ce que je sais faire.</p>
-      <div class="cols">
-        <div>
-          <h3 class="h-sec rv">Formation</h3>
+      <span class="eyebrow rv">Formation et expérience</span>
+      <h2 class="page-title rv">Parcours</h2>
+      <p class="page-sub rv">Ma formation, mes deux stages du BTS et mes compétences techniques.</p>
+      <div class="two">
+        <div class="rv">
+          <h3 class="col-h">Formation</h3>
           <ol class="tl">
-            <li class="box rv"><span class="when">2025 → 2027</span><h3>BTS SIO, option SLAM</h3><p>Lycée [nom de l'établissement], Paris. Développement d'applications, bases de données, cybersécurité et gestion de projet.</p></li>
-            <li class="box rv"><span class="when">2022 → 2025</span><h3>Baccalauréat [général / STI2D]</h3><p>Lycée [nom], spécialités [NSI, mathématiques].</p></li>
+            <li class="now"><span class="when">2025 – 2027</span><h3>BTS SIO, option SISR</h3><p>Lycée [nom de l'établissement], Paris. Administration des systèmes et des réseaux, cybersécurité, virtualisation et gestion de projet.</p></li>
+            <li><span class="when">2022 – 2025</span><h3>Baccalauréat [général / STI2D]</h3><p>Lycée [nom], spécialités [NSI, mathématiques].</p></li>
           </ol>
         </div>
-        <div>
-          <h3 class="h-sec rv">Stages</h3>
-          <article class="stage box rv"><span class="when">1re année · 6 semaines · mai → juin 2026</span><h3>[Entreprise], service informatique</h3>
-            <ul><li>Inventaire du parc informatique dans GLPI</li><li>Traitement des tickets d'assistance de niveau 1</li><li>Préparation et déploiement de postes</li></ul></article>
-          <article class="stage box rv"><span class="when">2e année · 8 semaines · janv. → mars 2027</span><h3>[Entreprise], pôle développement</h3>
-            <ul><li>Développement d'un module de réservation en PHP</li><li>Rédaction de la documentation technique</li><li>Réunions de suivi de projet</li></ul></article>
+        <div class="rv">
+          <h3 class="col-h">Stages</h3>
+          <article class="stage card"><span class="when">1re année · 6 semaines · mai – juin 2026</span><h3>[Entreprise], service informatique</h3>
+            <ul><li>Inventaire du parc informatique avec GLPI</li><li>Support utilisateurs de niveau 1 et suivi des tickets</li><li>Préparation et déploiement de postes Windows</li></ul></article>
+          <article class="stage card"><span class="when">2e année · 8 semaines · janv. – mars 2027</span><h3>[Entreprise], administration systèmes et réseaux</h3>
+            <ul><li>Mise en place d'un pare-feu pfSense et d'un VPN</li><li>Gestion des comptes et des droits dans Active Directory</li><li>Mise en place de la politique de sauvegarde</li></ul></article>
         </div>
       </div>
       <div class="skills">
-        <div class="skill box rv"><h3 class="h-sec" style="margin:0">Développement</h3><div class="chips"><span>PHP</span><span>Symfony</span><span>JavaScript</span><span>Python</span><span>HTML/CSS</span><span>Java</span></div></div>
-        <div class="skill box rv"><h3 class="h-sec" style="margin:0">Données et outils</h3><div class="chips"><span>MySQL</span><span>Merise</span><span>UML</span><span>Git</span><span>Linux</span><span>GLPI</span><span>Docker</span></div></div>
-        <div class="skill box rv"><h3 class="h-sec" style="margin:0">Certifications</h3>
-          <ul class="certs"><li>Pix <span>[score] pts</span></li><li>Anglais B2 <span>CECRL</span></li><li>SecNumacadémie <span>ANSSI</span></li><li>Permis B <span>obtenu</span></li></ul></div>
+        <div class="skill card rv"><h3>Réseaux</h3><ul><li>Cisco IOS <span>switch, routeur</span></li><li>VLAN, routage inter-VLAN</li><li>Adressage IPv4 <span>sous-réseaux</span></li><li>DHCP, DNS</li><li>Packet Tracer</li></ul></div>
+        <div class="skill card rv"><h3>Systèmes</h3><ul><li>Windows Server <span>AD DS, GPO</span></li><li>Linux <span>Debian</span></li><li>Virtualisation <span>VMware, VirtualBox</span></li><li>Sauvegarde, restauration</li><li>PowerShell, Bash</li></ul></div>
+        <div class="skill card rv"><h3>Sécurité et outils</h3><ul><li>pfSense <span>pare-feu</span></li><li>VPN <span>OpenVPN</span></li><li>Supervision <span>Zabbix</span></li><li>GLPI <span>parc, tickets</span></li><li>Git</li></ul></div>
+        <div class="skill card rv"><h3>Certifications</h3><ul><li>Cisco CCNA ITN <span>NetAcad</span></li><li>SecNumacadémie <span>ANSSI</span></li><li>Pix <span>[score]</span></li><li>Anglais <span>B2</span></li><li>Permis B</li></ul></div>
       </div>
     </section>
 
     <!-- ===== RÉALISATIONS ===== -->
     <section class="view" id="realisations" data-label="Réalisations" hidden>
-      <span class="kicker rv">Projets · épreuve E5</span>
-      <h2 class="title rv">Réalisations</h2>
-      <p class="sub rv">Clique sur une carte pour la retourner et voir le détail. Filtre par compétence du bloc 1.</p>
-      <div class="filters rv" role="group" aria-label="Filtrer par compétence">
-        <button type="button" class="on" data-f="all" aria-pressed="true">Toutes</button>
-        <button type="button" data-f="B1.1" aria-pressed="false">B1.1</button>
-        <button type="button" data-f="B1.2" aria-pressed="false">B1.2</button>
-        <button type="button" data-f="B1.3" aria-pressed="false">B1.3</button>
-        <button type="button" data-f="B1.4" aria-pressed="false">B1.4</button>
-        <button type="button" data-f="B1.5" aria-pressed="false">B1.5</button>
-        <button type="button" data-f="B1.6" aria-pressed="false">B1.6</button>
+      <span class="eyebrow rv">Épreuve E5</span>
+      <h2 class="page-title rv">Réalisations professionnelles</h2>
+      <p class="page-sub rv">Cliquez sur une réalisation pour en voir le détail. Filtrez par compétence du bloc 1.</p>
+      <div class="toolbar rv">
+        <div class="filters" role="group" aria-label="Filtrer par compétence">
+          <button type="button" class="on" data-f="all" aria-pressed="true">Toutes</button>
+          <button type="button" data-f="B1.1" aria-pressed="false">B1.1</button>
+          <button type="button" data-f="B1.2" aria-pressed="false">B1.2</button>
+          <button type="button" data-f="B1.3" aria-pressed="false">B1.3</button>
+          <button type="button" data-f="B1.4" aria-pressed="false">B1.4</button>
+          <button type="button" data-f="B1.5" aria-pressed="false">B1.5</button>
+          <button type="button" data-f="B1.6" aria-pressed="false">B1.6</button>
+        </div>
+        <span class="count" id="count">6 réalisations</span>
       </div>
-      <p class="count rv" id="count">6 réalisations affichées</p>
       <div class="grid">
-        <article class="card rv" id="rp1" data-c="B1.4 B1.5"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-01</span><span class="ctx">Formation</span></div>
-            <h3>Application de réservation de salles</h3><p>Application web MVC pour réserver des salles, avec authentification et rôles.</p>
-            <div class="comp"><span>B1.4</span><span>B1.5</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-01</span><span class="ctx">Détail</span></div>
-            <ul><li>Modélisation de la base avec Merise</li><li>Architecture MVC en PHP</li><li>Gestion des rôles admin / utilisateur</li><li>Versionnage avec Git</li></ul>
-            <div class="stack"><span>PHP</span><span>MySQL</span><span>MVC</span><span>Git</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
-        <article class="card rv" id="rp2" data-c="B1.1 B1.2"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-02</span><span class="ctx">Stage 1</span></div>
-            <h3>Inventaire du parc avec GLPI</h3><p>Recensement de 80 postes, agent d'inventaire automatique et suivi des tickets.</p>
-            <div class="comp"><span>B1.1</span><span>B1.2</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-02</span><span class="ctx">Détail</span></div>
-            <ul><li>Installation de GLPI sur un serveur Linux</li><li>Déploiement de l'agent d'inventaire</li><li>Création des catégories de tickets</li><li>Formation d'un collègue à l'outil</li></ul>
-            <div class="stack"><span>GLPI</span><span>Linux</span><span>OCS</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
-        <article class="card rv" id="rp3" data-c="B1.3 B1.4"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-03</span><span class="ctx">Formation</span></div>
-            <h3>Site vitrine pour une association</h3><p>Site responsive avec formulaire de contact, référencement et mentions RGPD.</p>
-            <div class="comp"><span>B1.3</span><span>B1.4</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-03</span><span class="ctx">Détail</span></div>
-            <ul><li>Recueil du besoin avec l'association</li><li>Maquette puis intégration WordPress</li><li>Optimisation du référencement</li><li>Mentions légales et RGPD</li></ul>
-            <div class="stack"><span>WordPress</span><span>HTML/CSS</span><span>SEO</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
-        <article class="card rv" id="rp4" data-c="B1.2 B1.4 B1.5"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-04</span><span class="ctx">Stage 2</span></div>
-            <h3>Module de réservation en entreprise</h3><p>Nouvelle fonctionnalité dans l'application interne, tests et mise en production.</p>
-            <div class="comp"><span>B1.2</span><span>B1.4</span><span>B1.5</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-04</span><span class="ctx">Détail</span></div>
-            <ul><li>Développement d'un bundle Symfony</li><li>Tests unitaires avec PHPUnit</li><li>Correction d'anomalies remontées</li><li>Documentation technique</li></ul>
-            <div class="stack"><span>PHP</span><span>Symfony</span><span>PHPUnit</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
-        <article class="card rv" id="rp5" data-c="B1.5 B1.6"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-05</span><span class="ctx">Formation</span></div>
-            <h3>API REST de gestion d'inventaire</h3><p>API documentée pour consulter le stock d'un magasin depuis une appli mobile.</p>
-            <div class="comp"><span>B1.5</span><span>B1.6</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-05</span><span class="ctx">Détail</span></div>
-            <ul><li>Routes CRUD avec Express</li><li>Authentification par jeton</li><li>Documentation des routes</li><li>Auto-formation à Node.js</li></ul>
-            <div class="stack"><span>Node.js</span><span>Express</span><span>SQL</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
-        <article class="card rv" id="rp6" data-c="B1.3 B1.6"><div class="card-in">
-          <div class="face front"><div class="top-row"><span class="ref">RP-06</span><span class="ctx">Personnel</span></div>
-            <h3>Ce portfolio</h3><p>Conception, animation et mise en ligne de mon portfolio sur GitHub Pages.</p>
-            <div class="comp"><span>B1.3</span><span>B1.6</span></div><button type="button" class="flip-hint">Voir le détail</button></div>
-          <div class="face back"><div class="top-row"><span class="ref">RP-06</span><span class="ctx">Détail</span></div>
-            <ul><li>Design et intégration responsive</li><li>Animations et terminal en JavaScript</li><li>Hébergement sur GitHub Pages</li><li>Mise à jour continue</li></ul>
-            <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>GitHub</span></div><button type="button" class="flip-hint">Retourner</button></div>
-        </div></article>
+        <button type="button" class="proj card rv" id="rp1" data-c="B1.4 B1.5">
+          <span class="meta"><b>RP-01</b><span>Formation</span></span>
+          <h3>Infrastructure Active Directory</h3>
+          <p>Mise en place d'un domaine Windows Server avec DNS, DHCP et stratégies de groupe pour une PME fictive.</p>
+          <span class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Formation · 2025">
+            <span data-h="Contexte">Une PME de 40 salariés n'a pas de gestion centralisée des comptes. J'ai conçu et déployé son domaine.</span>
+            <span data-h="Missions">Installation de Windows Server 2022|Création du domaine et des unités d'organisation|Configuration des rôles DNS et DHCP|Déploiement de GPO (fond d'écran, lecteurs réseau, restrictions)|Rédaction de la documentation technique</span>
+            <span data-h="Outils">Windows Server 2022, AD DS, DNS, DHCP, GPO, VMware</span>
+          </span>
+        </button>
+        <button type="button" class="proj card rv" id="rp2" data-c="B1.1 B1.2">
+          <span class="meta"><b>RP-02</b><span>Stage 1</span></span>
+          <h3>Gestion du parc avec GLPI</h3>
+          <p>Inventaire automatique de 80 postes et mise en place du suivi des incidents.</p>
+          <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.2</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Stage 1 · mai – juin 2026">
+            <span data-h="Contexte">Le service informatique ne disposait d'aucun inventaire à jour ni d'outil de suivi des demandes.</span>
+            <span data-h="Missions">Installation de GLPI sur un serveur Debian|Déploiement de l'agent d'inventaire sur les postes|Création des catégories et des priorités de tickets|Traitement des tickets de niveau 1|Formation d'un collègue à l'outil</span>
+            <span data-h="Outils">GLPI, GLPI Agent, Debian, Apache, MariaDB</span>
+          </span>
+        </button>
+        <button type="button" class="proj card rv" id="rp3" data-c="B1.4 B1.5">
+          <span class="meta"><b>RP-03</b><span>Formation</span></span>
+          <h3>Segmentation réseau par VLAN</h3>
+          <p>Conception d'un réseau d'entreprise segmenté avec routage inter-VLAN sur équipements Cisco.</p>
+          <span class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Formation · 2026">
+            <span data-h="Contexte">Séparer les flux des services Direction, Comptabilité et Production pour améliorer la sécurité.</span>
+            <span data-h="Missions">Plan d'adressage IP et découpage en sous-réseaux|Création des VLAN et des ports trunk|Routage inter-VLAN (router-on-a-stick)|Serveur DHCP avec relais|Tests de connectivité et maquette sous Packet Tracer</span>
+            <span data-h="Outils">Cisco IOS, Packet Tracer, switchs 2960, routeur 4321</span>
+          </span>
+        </button>
+        <button type="button" class="proj card rv" id="rp4" data-c="B1.2 B1.5">
+          <span class="meta"><b>RP-04</b><span>Stage 2</span></span>
+          <h3>Pare-feu pfSense et accès VPN</h3>
+          <p>Sécurisation du réseau de l'entreprise et accès distant chiffré pour les salariés en télétravail.</p>
+          <span class="tags"><span class="tag">B1.2</span><span class="tag">B1.5</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Stage 2 · janv. – mars 2027">
+            <span data-h="Contexte">Les salariés en télétravail devaient accéder aux serveurs internes de façon sécurisée.</span>
+            <span data-h="Missions">Installation et configuration de pfSense|Rédaction des règles de filtrage|Mise en place d'OpenVPN avec certificats|Guide de connexion pour les utilisateurs|Résolution des incidents de connexion</span>
+            <span data-h="Outils">pfSense, OpenVPN, certificats X.509, Active Directory</span>
+          </span>
+        </button>
+        <button type="button" class="proj card rv" id="rp5" data-c="B1.1 B1.6">
+          <span class="meta"><b>RP-05</b><span>Formation</span></span>
+          <h3>Supervision avec Zabbix</h3>
+          <p>Surveillance des serveurs et des équipements réseau avec alertes automatiques.</p>
+          <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.6</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Formation · 2026">
+            <span data-h="Contexte">Détecter les pannes avant les utilisateurs grâce à une supervision centralisée.</span>
+            <span data-h="Missions">Installation du serveur Zabbix sur Debian|Ajout des hôtes Windows et Linux par agent|Supervision SNMP des switchs|Création des seuils d'alerte et notifications par mail|Auto-formation sur la documentation officielle</span>
+            <span data-h="Outils">Zabbix, SNMP, Debian, PostgreSQL</span>
+          </span>
+        </button>
+        <button type="button" class="proj card rv" id="rp6" data-c="B1.3 B1.6">
+          <span class="meta"><b>RP-06</b><span>Personnel</span></span>
+          <h3>Portfolio professionnel</h3>
+          <p>Conception et mise en ligne de ce portfolio, hébergé gratuitement sur GitHub Pages.</p>
+          <span class="tags"><span class="tag">B1.3</span><span class="tag">B1.6</span></span>
+          <span class="more">Voir le détail</span>
+          <span class="detail" hidden data-ctx="Personnel · 2026">
+            <span data-h="Contexte">Présenter mon parcours et mes compétences aux jurys et aux recruteurs.</span>
+            <span data-h="Missions">Structure du site en HTML, CSS et JavaScript|Design responsive (ordinateur et mobile)|Hébergement sur GitHub Pages|Mise à jour régulière des réalisations</span>
+            <span data-h="Outils">HTML, CSS, JavaScript, Git, GitHub Pages</span>
+          </span>
+        </button>
       </div>
     </section>
 
     <!-- ===== SYNTHÈSE ===== -->
     <section class="view" id="synthese" data-label="Synthèse E5" hidden>
-      <span class="kicker rv">Épreuve E5</span>
-      <h2 class="title rv">Tableau de synthèse</h2>
-      <p class="sub rv">Compétences du bloc 1 couvertes par chaque réalisation.</p>
-      <div class="matrix box rv">
+      <span class="eyebrow rv">Épreuve E5</span>
+      <h2 class="page-title rv">Tableau de synthèse</h2>
+      <p class="page-sub rv">Compétences du bloc 1, « Support et mise à disposition de services informatiques », couvertes par chaque réalisation.</p>
+      <div class="matrix card rv">
         <table id="matrix">
           <thead><tr><th scope="col" style="text-align:left">Réalisation</th>
             <th scope="col"><b>B1.1</b>Patrimoine</th><th scope="col"><b>B1.2</b>Incidents</th><th scope="col"><b>B1.3</b>Présence<br>en ligne</th>
             <th scope="col"><b>B1.4</b>Mode projet</th><th scope="col"><b>B1.5</b>Service</th><th scope="col"><b>B1.6</b>Dév. pro</th></tr></thead>
           <tbody>
-            <tr data-rp="rp1"><th><small>RP-01</small>Réservation de salles</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-            <tr data-rp="rp2"><th><small>RP-02</small>Inventaire GLPI</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
-            <tr data-rp="rp3"><th><small>RP-03</small>Site associatif</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td></tr>
-            <tr data-rp="rp4"><th><small>RP-04</small>Module en entreprise</th><td class="n"></td><td class="y"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-            <tr data-rp="rp5"><th><small>RP-05</small>API d'inventaire</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td></tr>
-            <tr data-rp="rp6"><th><small>RP-06</small>Portfolio</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
+            <tr data-rp="rp1"><th><small>RP-01</small>Infrastructure Active Directory</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
+            <tr data-rp="rp2"><th><small>RP-02</small>Gestion du parc avec GLPI</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr data-rp="rp3"><th><small>RP-03</small>Segmentation réseau par VLAN</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
+            <tr data-rp="rp4"><th><small>RP-04</small>Pare-feu pfSense et VPN</th><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
+            <tr data-rp="rp5"><th><small>RP-05</small>Supervision avec Zabbix</th><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
+            <tr data-rp="rp6"><th><small>RP-06</small>Portfolio professionnel</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
           </tbody>
           <tfoot><tr><th>Couverture</th>
-            <td><span class="bar" style="width:8px"></span>1</td><td><span class="bar" style="width:16px"></span>2</td><td><span class="bar" style="width:16px"></span>2</td>
-            <td><span class="bar" style="width:24px"></span>3</td><td><span class="bar" style="width:24px"></span>3</td><td><span class="bar" style="width:16px"></span>2</td></tr></tfoot>
+            <td>2<span class="bar" style="width:20px"></span></td><td>2<span class="bar" style="width:20px"></span></td><td>1<span class="bar" style="width:10px"></span></td>
+            <td>2<span class="bar" style="width:20px"></span></td><td>3<span class="bar" style="width:30px"></span></td><td>2<span class="bar" style="width:20px"></span></td></tr></tfoot>
         </table>
       </div>
-      <p class="tip rv">Survole une colonne pour la surligner · clique sur une ligne pour ouvrir la réalisation.</p>
+      <p class="tip rv">Survolez une colonne pour la mettre en évidence. Cliquez sur une ligne pour ouvrir la réalisation.</p>
       <div class="legend rv">
         <span><b>B1.1</b>Gérer le patrimoine informatique</span>
         <span><b>B1.2</b>Répondre aux incidents et aux demandes d'assistance</span>
         <span><b>B1.3</b>Développer la présence en ligne de l'organisation</span>
         <span><b>B1.4</b>Travailler en mode projet</span>
-        <span><b>B1.5</b>Mettre à disposition un service informatique</span>
+        <span><b>B1.5</b>Mettre à disposition des utilisateurs un service informatique</span>
         <span><b>B1.6</b>Organiser son développement professionnel</span>
       </div>
     </section>
 
     <!-- ===== VEILLE ===== -->
     <section class="view" id="veille" data-label="Veille" hidden>
-      <span class="kicker rv">Veille technologique</span>
-      <h2 class="title rv">Ce que je surveille</h2>
+      <span class="eyebrow rv">Veille technologique</span>
+      <h2 class="page-title rv">Sujet de veille</h2>
       <div class="veille">
-        <div class="v-main box rv">
-          <svg class="key" viewBox="0 0 100 100" fill="none" aria-hidden="true"><circle cx="32" cy="50" r="20" stroke="var(--blue)" stroke-width="9"/><path d="M52 50h40M78 50v16M90 50v11" stroke="var(--pink)" stroke-width="9" stroke-linecap="round"/></svg>
+        <article class="v-main card rv">
           <span class="when">Sujet suivi depuis septembre 2025</span>
           <h3>Les passkeys et la fin des mots de passe</h3>
-          <p>J'étudie l'adoption des passkeys (norme FIDO2 / WebAuthn) par les services en ligne et ce qu'elles changent pour la sécurité des organisations.</p>
-          <div class="meta"><span><b>Sources</b>CERT-FR, FIDO Alliance, Le Monde Informatique</span><span><b>Outils</b>Feedly, alertes Google</span></div>
-        </div>
-        <div class="acc">
-          <details class="rv" open><summary>Comment ça marche</summary><div class="body"><p>Une passkey est une paire de clés : la clé privée reste sur l'appareil de l'utilisateur, le site ne garde que la clé publique. On se connecte avec son empreinte, son visage ou son code PIN.</p></div></details>
-          <details class="rv"><summary>Pourquoi c'est plus sûr</summary><div class="body"><p>Il n'y a plus de mot de passe à voler ni à réutiliser. La passkey est liée au nom de domaine du site, ce qui la rend inutilisable sur une fausse page de phishing.</p></div></details>
-          <details class="rv"><summary>Les freins en entreprise</summary><div class="body"><p>Gestion des appareils perdus, compatibilité des vieux logiciels, formation des utilisateurs et choix entre passkeys synchronisées ou liées à une clé physique.</p></div></details>
-          <details class="rv"><summary>Ce que j'en retiens</summary><div class="body"><p>[Ta conclusion personnelle : ce que tu as appris et comment ce sujet touche le métier de développeur.]</p></div></details>
+          <p>J'étudie l'adoption des passkeys (norme FIDO2 / WebAuthn) et ce qu'elles changent pour la sécurité des comptes dans les organisations.</p>
+          <dl><dt>Sources</dt><dd>CERT-FR, ANSSI, FIDO Alliance, Le Monde Informatique</dd><dt>Outils</dt><dd>Feedly, alertes Google</dd></dl>
+        </article>
+        <div class="acc rv">
+          <details open><summary>Comment ça fonctionne</summary><div class="body"><p>Une passkey est une paire de clés cryptographiques. La clé privée reste sur l'appareil de l'utilisateur et le service ne stocke que la clé publique. L'utilisateur se connecte avec son empreinte, son visage ou un code PIN.</p></div></details>
+          <details><summary>Les apports en sécurité</summary><div class="body"><p>Plus de mot de passe à voler ou à réutiliser. La passkey est liée au nom de domaine du site, ce qui la rend inutilisable sur une page de phishing.</p></div></details>
+          <details><summary>Les enjeux pour un administrateur</summary><div class="body"><p>Gestion des appareils perdus, compatibilité avec Active Directory et Entra ID, choix entre clés synchronisées ou clés physiques, accompagnement des utilisateurs.</p></div></details>
+          <details><summary>Ce que j'en retiens</summary><div class="body"><p>[Votre conclusion personnelle : ce que vous avez appris et l'impact sur le métier d'administrateur systèmes et réseaux.]</p></div></details>
         </div>
       </div>
     </section>
 
     <!-- ===== CONTACT ===== -->
     <section class="view" id="contact" data-label="Contact" hidden>
-      <span class="kicker rv">Contact</span>
+      <span class="eyebrow rv">Contact</span>
+      <h2 class="page-title rv">Me contacter</h2>
       <div class="contact">
-        <div>
-          <h2 class="big rv"><span class="p">Travaillons</span><span class="b">ensemble.</span></h2>
-          <div class="mail rv"><code id="email">ton.email@exemple.fr</code><button class="btn hot mag" id="copy" type="button">Copier l'adresse</button></div>
-          <div class="socials rv">
-            <a class="btn mag" href="https://github.com/iskk75" target="_blank" rel="noopener">GitHub ↗</a>
-            <a class="btn mag" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <div class="rv">
+          <p class="intro">Vous recherchez un alternant en administration systèmes et réseaux ? Je serais ravi d'échanger avec vous.</p>
+          <div class="rows">
+            <div class="row"><span>E-mail</span><span class="act"><code id="email">ton.email@exemple.fr</code><button class="copy" id="copy" type="button">Copier</button></span></div>
+            <div class="row"><span>GitHub</span><a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75 ↗</a></div>
+            <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/" target="_blank" rel="noopener">[votre profil] ↗</a></div>
+            <div class="row"><span>Ville</span><b style="font-weight:500">Paris, Île-de-France</b></div>
           </div>
         </div>
-        <div class="vcard rv" id="vcard" role="button" tabindex="0" aria-label="Retourner la carte de visite"><div class="card-in">
-          <div class="face front"><span class="mono">CARTE DE VISITE · clique pour retourner</span><div><h3>Issak Dirir</h3><p>Étudiant BTS SIO · SLAM</p></div></div>
-          <div class="face back"><span class="mono" style="font-weight:700">VERSO</span><p>github.com/iskk75<br>ton.email@exemple.fr<br>Paris · disponible en 2027</p></div>
-        </div></div>
+        <aside class="avail card rv">
+          <span class="eyebrow">Disponibilité</span>
+          <h3>Alternance ou stage, à partir de 2027</h3>
+          <ul><li>Administration Windows Server et Linux</li><li>Réseaux et équipements Cisco</li><li>Support utilisateurs et gestion de parc</li><li>Sécurité et supervision</li></ul>
+          <button class="btn primary" type="button" id="copy2" style="justify-self:start;margin-top:8px">Copier mon e-mail</button>
+        </aside>
       </div>
     </section>
 
   </div>
 </main>
 
-<footer class="gut"><div class="inner"><span>© 2026 Issak Dirir · Portfolio BTS SIO</span><span>Raccourcis : <kbd>←</kbd> <kbd>→</kbd> changer d'onglet · <kbd>1</kbd>–<kbd>6</kbd> aller direct</span></div></footer>
+<footer class="gut"><div class="inner"><span>© 2026 Issak Dirir · Portfolio BTS SIO option SISR</span><span>Navigation clavier : <kbd>←</kbd> <kbd>→</kbd></span></div></footer>
 
-<div class="wipe" aria-hidden="true"><i class="w1"></i><i class="w2"></i><i class="w3"><span class="wipe-label" id="wipe-label"></span></i></div>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="bg" data-close></div>
+  <div class="panel card">
+    <button class="close" type="button" data-close aria-label="Fermer">✕</button>
+    <span class="meta eyebrow" id="m-ref"></span>
+    <h3 id="m-title"></h3>
+    <p class="ctx" id="m-ctx"></p>
+    <div id="m-body"></div>
+    <div class="nav"><button type="button" id="m-prev">← Précédente</button><button type="button" id="m-next">Suivante →</button></div>
+  </div>
+</div>
 <div class="toast" role="status" aria-live="polite"></div>
 <script src="script.js"></script>
 </body>
