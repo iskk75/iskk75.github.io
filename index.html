@@ -50,10 +50,10 @@
         <h1 class="page-title rv">Présentation</h1>
         <div class="wave rv" aria-hidden="true"></div>
         <div class="welcome">
-          <div class="photo rv" role="img" aria-label="Emplacement de la photo">ID<small>ta photo ici</small></div>
+          <img class="photo rv" src="photo-issak.jpg" width="300" height="300" alt="Photo d'Issak Dirir">
           <div class="prose">
-            <p class="lead rv">Bienvenue sur mon portefeuille de compétences. Je m'appelle Issak Dirir et je suis étudiant en BTS SIO (Services Informatiques aux Organisations), option SISR : Solutions d'Infrastructure, Systèmes et Réseaux.</p>
-            <p class="rv">Je me forme à l'installation, l'administration et la sécurisation des infrastructures informatiques : serveurs Windows et Linux, réseaux d'entreprise, virtualisation et support utilisateurs. Vous trouverez ici mon parcours, mes situations professionnelles, mon tableau de synthèse et ma veille technologique.</p>
+            <p class="lead rv">Bienvenue sur mon portefeuille de compétences. Je m'appelle Issak Dirir, je suis apprenti en BTS SIO (Services Informatiques aux Organisations), option SISR, à l'IPSSI de Serris.</p>
+            <p class="rv">J'ai trois ans d'expérience en informatique en alternance : support technique helpdesk chez ZETES France, puis maintenance des infrastructures IT des clients chez JILITI. Je recherche un poste de technicien de proximité, de support ou de maintenance informatique. Vous trouverez ici mon CV, mes situations professionnelles, mon tableau de synthèse et ma veille technologique.</p>
             <div class="cta rv">
               <button class="btn solid" type="button" data-go="realisations">Mes réalisations</button>
               <button class="btn" type="button" data-go="parcours">Mon CV</button>
@@ -80,8 +80,9 @@
         <h2 class="h-sec rv">Actualités</h2>
         <ul class="news">
           <li class="rv"><time>Oct. 2026</time><span><b>Mise en ligne du portfolio.</b> Mon portefeuille de compétences est désormais accessible en ligne.</span></li>
-          <li class="rv"><time>Juin 2026</time><span><b>Fin du stage de 1re année.</b> Six semaines au service informatique : GLPI, support et déploiement de postes.</span></li>
-          <li class="rv"><time>Sept. 2025</time><span><b>Entrée en BTS SIO.</b> Début de la formation, avec le choix de l'option SISR en fin de premier semestre.</span></li>
+          <li class="rv"><time>Juin 2026</time><span><b>Fin de ma mission chez JILITI (Rungis).</b> Neuf mois comme technicien IT de maintenance des infrastructures des clients.</span></li>
+          <li class="rv"><time>Sept. 2025</time><span><b>Entrée en BTS SIO option SISR à l'IPSSI de Serris,</b> en alternance chez JILITI.</span></li>
+          <li class="rv"><time>Août 2025</time><span><b>Fin de deux ans d'alternance chez ZETES France (Antony)</b> et du Bac Pro Systèmes Numériques au CFA Utec d'Emerainville.</span></li>
         </ul>
       </section>
 
@@ -128,14 +129,14 @@
               <span data-h="Outils">Windows Server 2022, AD DS, DNS, DHCP, GPO, VMware</span>
             </span>
           </button>
-          <button type="button" class="proj rv" id="rp2" data-c="B1.1 B1.2">
-            <span class="cover"><span>RP-02 · STAGE 1</span></span>
-            <span class="body"><h3>Gestion du parc avec GLPI</h3><p>Inventaire automatique de 80 postes et suivi des incidents.</p>
-            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.2</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-02" data-ctx="Stage 1 · mai – juin 2026">
-              <span data-h="Contexte">Le service informatique ne disposait d'aucun inventaire à jour ni d'outil de suivi des demandes.</span>
-              <span data-h="Missions">Installation de GLPI sur un serveur Debian|Déploiement de l'agent d'inventaire|Création des catégories et priorités de tickets|Traitement des tickets de niveau 1|Formation d'un collègue à l'outil</span>
-              <span data-h="Outils">GLPI, GLPI Agent, Debian, Apache, MariaDB</span>
+          <button type="button" class="proj rv" id="rp2" data-c="B1.1 B1.2 B1.5">
+            <span class="cover"><span>RP-02 · ZETES FRANCE</span></span>
+            <span class="body"><h3>Déploiement de terminaux mobiles par MDM</h3><p>Préparation, mise à jour et déploiement à grande échelle de terminaux Honeywell et Zebra.</p>
+            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.2</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
+            <span class="detail" hidden data-ref="RP-02" data-ctx="Alternance ZETES France, Antony · sept. 2023 – août 2025">
+              <span data-h="Contexte">ZETES fournit à ses clients des terminaux de poche industriels, des PDA et des tablettes. Avant chaque livraison, le matériel doit être préparé, configuré et testé.</span>
+              <span data-h="Missions">Prise en main des terminaux Honeywell et Zebra|Préparation et installation des mises à jour Android|Tests et validation des configurations dans le MDM (SOTI) avant déploiement à grande échelle|Étiquetage et traçabilité du matériel selon les procédures|Fichiers de suivi du matériel sous Excel|Suivi des incidents avec les fournisseurs et support client de niveau 3</span>
+              <span data-h="Outils">MDM SOTI, Android, Honeywell, Zebra, Excel</span>
             </span>
           </button>
           <button type="button" class="proj rv" id="rp3" data-c="B1.4 B1.5">
@@ -149,10 +150,10 @@
             </span>
           </button>
           <button type="button" class="proj rv" id="rp4" data-c="B1.1 B1.5">
-            <span class="cover"><span>RP-04 · ENTREPRISE</span></span>
+            <span class="cover"><span>RP-04 · JILITI</span></span>
             <span class="body"><h3>Installation de serveurs en datacenter</h3><p>Du quai de chargement jusqu'au rack : réception, contrôle et installation physique de serveurs.</p>
             <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-04" data-ctx="En entreprise · datacenter">
+            <span class="detail" hidden data-ref="RP-04" data-ctx="Alternance JILITI, Rungis · 2025 – 2026">
               <span data-h="Contexte">De nouveaux serveurs devaient être mis en place dans un datacenter. J'ai pris en charge la partie manuelle, de leur arrivée sur le site jusqu'à leur installation dans les baies.</span>
               <span data-h="Missions">Réception des serveurs au quai de chargement et contrôle du bon de livraison|Vérification de l'état du matériel et relevé des numéros de série|Acheminement vers la salle serveurs en respectant les règles d'accès du site|Montage des rails et installation des serveurs dans les racks|Câblage électrique et réseau, puis étiquetage des câbles|Mise sous tension, contrôle des voyants et mise à jour de l'inventaire</span>
               <span data-h="Outils">Racks 19 pouces, rails, PDU, câbles RJ45 et fibre, étiqueteuse, outil de ticketing</span>
@@ -194,13 +195,13 @@
               <th scope="col"><b>B1.4</b>Mode projet</th><th scope="col"><b>B1.5</b>Service</th><th scope="col"><b>B1.6</b>Dév. pro</th></tr></thead>
             <tbody>
               <tr data-rp="rp1"><th><small>RP-01</small>Active Directory</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp2"><th><small>RP-02</small>GLPI</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+              <tr data-rp="rp2"><th><small>RP-02</small>Terminaux mobiles (MDM)</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
               <tr data-rp="rp3"><th><small>RP-03</small>VLAN</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
               <tr data-rp="rp4"><th><small>RP-04</small>Serveurs en datacenter</th><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
               <tr data-rp="rp5"><th><small>RP-05</small>Zabbix</th><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
               <tr data-rp="rp6"><th><small>RP-06</small>Portfolio</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
             </tbody>
-            <tfoot><tr><th>Total</th><td>3</td><td>1</td><td>1</td><td>2</td><td>3</td><td>2</td></tr></tfoot>
+            <tfoot><tr><th>Total</th><td>3</td><td>1</td><td>1</td><td>2</td><td>4</td><td>2</td></tr></tfoot>
           </table>
         </div>
         <p class="tip rv">Survolez une colonne pour la mettre en évidence. Cliquez sur une ligne pour ouvrir la réalisation.</p>
@@ -238,13 +239,13 @@
         <p class="crumb rv">Accueil › <b>Contact</b></p>
         <h2 class="page-title rv">Contact</h2>
         <div class="wave rv" aria-hidden="true"></div>
-        <p class="lead rv" style="margin-bottom:24px">Vous recherchez un alternant en administration systèmes et réseaux ? Je serais ravi d'échanger avec vous.</p>
+        <p class="lead rv" style="margin-bottom:24px">Vous recherchez un technicien de proximité, de support ou de maintenance informatique ? Je serais ravi d'échanger avec vous.</p>
         <div class="rows rv">
           <div class="row"><span>E-mail</span><span class="act"><code id="email">issak.dirir@yahoo.com</code><button class="copy" id="copy" type="button">Copier</button></span></div>
           <div class="row"><span>GitHub</span><a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75 ↗</a></div>
           <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/" target="_blank" rel="noopener">[votre profil] ↗</a></div>
-          <div class="row"><span>Ville</span><span>Paris, Île-de-France</span></div>
-          <div class="row"><span>Recherche</span><span>Alternance ou stage, à partir de 2027</span></div>
+          <div class="row"><span>Ville</span><span>Torcy (77), Île-de-France</span></div>
+          <div class="row"><span>Recherche</span><span>Technicien de proximité, support ou maintenance</span></div>
         </div>
       </section>
     </div>
@@ -252,10 +253,10 @@
     <!-- ===== BARRE LATÉRALE ===== -->
     <aside class="sidebar" aria-label="Barre latérale">
       <div class="widget profile">
-        <div class="avatar" aria-hidden="true">ID</div>
+        <img class="avatar" src="photo-issak.jpg" width="300" height="300" alt="">
         <b>Issak Dirir</b>
-        <span>BTS SIO · option SISR<br>Session 2027 · Paris</span>
-        <span class="avail"><i></i>Disponible en alternance</span>
+        <span>BTS SIO · option SISR<br>IPSSI Serris · session 2027</span>
+        <span class="avail"><i></i>En recherche d'alternance</span>
       </div>
       <div class="widget">
         <h2>Pages</h2>
@@ -274,7 +275,7 @@
         <div class="wave" aria-hidden="true"></div>
         <ul class="links">
           <li><a href="#realisations" data-go="realisations" data-open="rp1"><span><small>RP-01</small>Active Directory</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp2"><span><small>RP-02</small>GLPI</span></a></li>
+          <li><a href="#realisations" data-go="realisations" data-open="rp2"><span><small>RP-02</small>Terminaux mobiles (MDM)</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp3"><span><small>RP-03</small>VLAN</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp4"><span><small>RP-04</small>Serveurs en datacenter</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp5"><span><small>RP-05</small>Zabbix</span></a></li>

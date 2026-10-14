@@ -267,3 +267,6 @@ main{overflow-x:clip}
   box-shadow:0 10px 22px -12px color-mix(in srgb,var(--coral) 90%,transparent)}
 .btn.solid:hover{background:linear-gradient(135deg,var(--coral),color-mix(in srgb,var(--coral) 80%,#000 20%));color:#fff;border-color:transparent}
 .sidebar{top:96px}
+/* Photos réelles */
+img.photo{width:150px;height:150px;aspect-ratio:1;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 5px var(--surface),0 0 0 7px var(--teal),var(--shadow)}
+img.avatar{object-fit:cover;display:block}
