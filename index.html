@@ -25,47 +25,19 @@
   </div>
 </header>
 
-<div class="ribbon-wrap gut">
+<div class="tabbar-wrap gut">
   <div class="inner">
-    <nav class="ribbon" id="ribbon" aria-label="Menu principal">
-      <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="menu"><i></i>Menu</button>
-      <ul class="menu" id="menu">
-        <li><a href="#accueil" data-go="accueil">Accueil</a></li>
-        <li class="has-dd" data-for="parcours">
-          <button class="dd-btn" type="button" aria-expanded="false">Curriculum vitae <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
-          <ul class="dd">
-            <li><a href="#parcours" data-go="parcours" data-scroll="cv-formation">Formation<small>BTS SIO, baccalauréat</small></a></li>
-            <li><a href="#parcours" data-go="parcours" data-scroll="cv-stages">Stages<small>Deux périodes en entreprise</small></a></li>
-            <li><a href="#parcours" data-go="parcours" data-scroll="cv-competences">Compétences<small>Réseaux, systèmes, sécurité</small></a></li>
-          </ul>
-        </li>
-        <li class="has-dd" data-for="realisations">
-          <button class="dd-btn" type="button" aria-expanded="false">Situations professionnelles <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
-          <ul class="dd">
-            <li><a href="#realisations" data-go="realisations">Toutes les réalisations</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp1">RP-01 · Active Directory</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp2">RP-02 · GLPI</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp3">RP-03 · VLAN</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp4">RP-04 · pfSense et VPN</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp5">RP-05 · Zabbix</a></li>
-            <li><a href="#realisations" data-go="realisations" data-open="rp6">RP-06 · Portfolio</a></li>
-          </ul>
-        </li>
-        <li><a href="#synthese" data-go="synthese">Tableau de synthèse</a></li>
-        <li class="has-dd" data-for="veille">
-          <button class="dd-btn" type="button" aria-expanded="false">Veille technologique <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
-          <ul class="dd">
-            <li><a href="#veille" data-go="veille" data-acc="0">Fonctionnement des passkeys</a></li>
-            <li><a href="#veille" data-go="veille" data-acc="1">Apports en sécurité</a></li>
-            <li><a href="#veille" data-go="veille" data-acc="2">Enjeux pour un administrateur</a></li>
-            <li><a href="#veille" data-go="veille" data-acc="3">Ce que j'en retiens</a></li>
-          </ul>
-        </li>
-        <li><a href="#contact" data-go="contact">Contact</a></li>
-      </ul>
-      <span class="progress" aria-hidden="true"></span>
+    <nav class="tabbar" id="tabbar" aria-label="Menu principal">
+      <span class="tab-ind" aria-hidden="true"></span>
+      <a class="tab" href="#accueil" data-go="accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg><span>Accueil</span></a>
+      <a class="tab" href="#parcours" data-go="parcours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5"/><path d="M9.5 12.5h6M9.5 16h6"/></svg><span>CV</span></a>
+      <a class="tab" href="#realisations" data-go="realisations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V5.5h6v2M3.5 12.5h17"/></svg><span>Réalisations</span></a>
+      <a class="tab" href="#synthese" data-go="synthese"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M9.5 9.5v10M15 9.5v10"/></svg><span>Synthèse E5</span></a>
+      <a class="tab" href="#veille" data-go="veille"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg><span>Veille</span></a>
+      <a class="tab" href="#contact" data-go="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg><span>Contact</span></a>
     </nav>
   </div>
+  <span class="progress" aria-hidden="true"></span>
 </div>
 
 <main class="gut">
@@ -118,25 +90,16 @@
         <p class="crumb rv">Accueil › <b>Curriculum vitae</b></p>
         <h2 class="page-title rv">Curriculum vitae</h2>
         <div class="wave rv" aria-hidden="true"></div>
-        <h3 class="h-sec rv" id="cv-formation" style="margin-top:0">Formation</h3>
-        <ol class="tl rv">
-          <li><span class="when">2025 – 2027</span><h3>BTS SIO, option SISR</h3><p>Lycée [nom de l'établissement], Paris. Administration des systèmes et des réseaux, cybersécurité, virtualisation et gestion de projet.</p></li>
-          <li><span class="when">2022 – 2025</span><h3>Baccalauréat [général / STI2D]</h3><p>Lycée [nom], spécialités [NSI, mathématiques].</p></li>
-        </ol>
-        <h3 class="h-sec rv" id="cv-stages">Stages</h3>
-        <ol class="tl rv">
-          <li><span class="when">2e année · 8 semaines · janv. – mars 2027</span><h3>[Entreprise], administration systèmes et réseaux</h3>
-            <ul><li>Mise en place d'un pare-feu pfSense et d'un VPN</li><li>Gestion des comptes et des droits dans Active Directory</li><li>Mise en place de la politique de sauvegarde</li></ul></li>
-          <li><span class="when">1re année · 6 semaines · mai – juin 2026</span><h3>[Entreprise], service informatique</h3>
-            <ul><li>Inventaire du parc informatique avec GLPI</li><li>Support utilisateurs de niveau 1 et suivi des tickets</li><li>Préparation et déploiement de postes Windows</li></ul></li>
-        </ol>
-        <h3 class="h-sec rv" id="cv-competences">Compétences</h3>
-        <div class="skills">
-          <div class="skill rv"><h3>Réseaux</h3><ul><li>Cisco IOS <span>switch, routeur</span></li><li>VLAN, inter-VLAN</li><li>Adressage IPv4</li><li>DHCP, DNS</li><li>Packet Tracer</li></ul></div>
-          <div class="skill rv"><h3>Systèmes</h3><ul><li>Windows Server <span>AD, GPO</span></li><li>Linux <span>Debian</span></li><li>VMware, VirtualBox</li><li>Sauvegardes</li><li>PowerShell, Bash</li></ul></div>
-          <div class="skill rv"><h3>Sécurité et outils</h3><ul><li>pfSense</li><li>OpenVPN</li><li>Zabbix</li><li>GLPI</li><li>Git</li></ul></div>
-          <div class="skill rv"><h3>Certifications</h3><ul><li>Cisco CCNA ITN <span>NetAcad</span></li><li>SecNumacadémie <span>ANSSI</span></li><li>Pix <span>[score]</span></li><li>Anglais <span>B2</span></li><li>Permis B</li></ul></div>
+        <div class="cv-bar rv">
+          <p>Mon CV à jour, au format PDF.</p>
+          <div class="cta">
+            <a class="btn solid" href="cv-issak-dirir.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a>
+            <a class="btn" href="cv-issak-dirir.pdf" download="CV-Issak-Dirir.pdf">Télécharger</a>
+          </div>
         </div>
+        <a class="cv-sheet rv" href="cv-issak-dirir.pdf" target="_blank" rel="noopener" aria-label="Ouvrir le CV d'Issak Dirir en PDF">
+          <img src="cv-apercu.jpg" width="1075" height="1521" alt="CV d'Issak Dirir : technicien de proximité, de support ou de maintenance informatique, BTS SIO option SISR à l'IPSSI">
+        </a>
       </section>
 
       <!-- ===== SITUATIONS PROFESSIONNELLES ===== -->
@@ -185,14 +148,14 @@
               <span data-h="Outils">Cisco IOS, Packet Tracer, switchs 2960, routeur 4321</span>
             </span>
           </button>
-          <button type="button" class="proj rv" id="rp4" data-c="B1.2 B1.5">
-            <span class="cover"><span>RP-04 · STAGE 2</span></span>
-            <span class="body"><h3>Pare-feu pfSense et accès VPN</h3><p>Sécurisation du réseau et accès distant chiffré pour le télétravail.</p>
-            <span class="tags"><span class="tag">B1.2</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-04" data-ctx="Stage 2 · janv. – mars 2027">
-              <span data-h="Contexte">Les salariés en télétravail devaient accéder aux serveurs internes de façon sécurisée.</span>
-              <span data-h="Missions">Installation et configuration de pfSense|Rédaction des règles de filtrage|Mise en place d'OpenVPN avec certificats|Guide de connexion pour les utilisateurs|Résolution des incidents de connexion</span>
-              <span data-h="Outils">pfSense, OpenVPN, certificats X.509, Active Directory</span>
+          <button type="button" class="proj rv" id="rp4" data-c="B1.1 B1.5">
+            <span class="cover"><span>RP-04 · ENTREPRISE</span></span>
+            <span class="body"><h3>Installation de serveurs en datacenter</h3><p>Du quai de chargement jusqu'au rack : réception, contrôle et installation physique de serveurs.</p>
+            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
+            <span class="detail" hidden data-ref="RP-04" data-ctx="En entreprise · datacenter">
+              <span data-h="Contexte">De nouveaux serveurs devaient être mis en place dans un datacenter. J'ai pris en charge la partie manuelle, de leur arrivée sur le site jusqu'à leur installation dans les baies.</span>
+              <span data-h="Missions">Réception des serveurs au quai de chargement et contrôle du bon de livraison|Vérification de l'état du matériel et relevé des numéros de série|Acheminement vers la salle serveurs en respectant les règles d'accès du site|Montage des rails et installation des serveurs dans les racks|Câblage électrique et réseau, puis étiquetage des câbles|Mise sous tension, contrôle des voyants et mise à jour de l'inventaire</span>
+              <span data-h="Outils">Racks 19 pouces, rails, PDU, câbles RJ45 et fibre, étiqueteuse, outil de ticketing</span>
             </span>
           </button>
           <button type="button" class="proj rv" id="rp5" data-c="B1.1 B1.6">
@@ -233,11 +196,11 @@
               <tr data-rp="rp1"><th><small>RP-01</small>Active Directory</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
               <tr data-rp="rp2"><th><small>RP-02</small>GLPI</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
               <tr data-rp="rp3"><th><small>RP-03</small>VLAN</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp4"><th><small>RP-04</small>pfSense et VPN</th><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
+              <tr data-rp="rp4"><th><small>RP-04</small>Serveurs en datacenter</th><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
               <tr data-rp="rp5"><th><small>RP-05</small>Zabbix</th><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
               <tr data-rp="rp6"><th><small>RP-06</small>Portfolio</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
             </tbody>
-            <tfoot><tr><th>Total</th><td>2</td><td>2</td><td>1</td><td>2</td><td>3</td><td>2</td></tr></tfoot>
+            <tfoot><tr><th>Total</th><td>3</td><td>1</td><td>1</td><td>2</td><td>3</td><td>2</td></tr></tfoot>
           </table>
         </div>
         <p class="tip rv">Survolez une colonne pour la mettre en évidence. Cliquez sur une ligne pour ouvrir la réalisation.</p>
@@ -277,7 +240,7 @@
         <div class="wave rv" aria-hidden="true"></div>
         <p class="lead rv" style="margin-bottom:24px">Vous recherchez un alternant en administration systèmes et réseaux ? Je serais ravi d'échanger avec vous.</p>
         <div class="rows rv">
-          <div class="row"><span>E-mail</span><span class="act"><code id="email">ton.email@exemple.fr</code><button class="copy" id="copy" type="button">Copier</button></span></div>
+          <div class="row"><span>E-mail</span><span class="act"><code id="email">issak.dirir@yahoo.com</code><button class="copy" id="copy" type="button">Copier</button></span></div>
           <div class="row"><span>GitHub</span><a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75 ↗</a></div>
           <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/" target="_blank" rel="noopener">[votre profil] ↗</a></div>
           <div class="row"><span>Ville</span><span>Paris, Île-de-France</span></div>
@@ -313,7 +276,7 @@
           <li><a href="#realisations" data-go="realisations" data-open="rp1"><span><small>RP-01</small>Active Directory</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp2"><span><small>RP-02</small>GLPI</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp3"><span><small>RP-03</small>VLAN</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp4"><span><small>RP-04</small>pfSense et VPN</span></a></li>
+          <li><a href="#realisations" data-go="realisations" data-open="rp4"><span><small>RP-04</small>Serveurs en datacenter</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp5"><span><small>RP-05</small>Zabbix</span></a></li>
           <li><a href="#realisations" data-go="realisations" data-open="rp6"><span><small>RP-06</small>Portfolio</span></a></li>
         </ul>

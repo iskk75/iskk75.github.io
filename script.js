@@ -29,15 +29,22 @@
     window.addEventListener('resize', function () { size(); if (reduce) draw(0); });
   }
 
-  /* ========== Navigation par onglets ========== */
+  /* ========== Navigation par boutons-onglets ========== */
   var views = $$('.view');
   var order = views.map(function (v) { return v.id; });
-  var progress = $('.progress'), ribbon = $('#ribbon'), burger = $('#burger');
+  var progress = $('.progress'), tabbar = $('#tabbar'), ind = $('.tab-ind');
   var current = null, busy = false;
 
-  function closeMenus() {
-    $$('.has-dd').forEach(function (li) { li.classList.remove('open'); $('.dd-btn', li).setAttribute('aria-expanded', 'false'); });
-    ribbon.classList.remove('mob-open'); burger.setAttribute('aria-expanded', 'false');
+  function placeInd(instant) {
+    var a = $('.tab[aria-current="page"]');
+    if (!a || !ind) return;
+    if (instant) ind.classList.add('noanim');
+    ind.style.width = a.offsetWidth + 'px';
+    ind.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+    if (instant) { void ind.offsetWidth; ind.classList.remove('noanim'); }
+    if (tabbar.scrollWidth > tabbar.clientWidth) {
+      tabbar.scrollTo({ left: a.offsetLeft - (tabbar.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+    }
   }
 
   function show(id, initial) {
@@ -46,14 +53,14 @@
     $$('.rv', v).forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 12)); });
     void v.offsetWidth;
     v.classList.add('enter');
-    $$('.menu > li > a, #side-pages a').forEach(function (a) {
+    $$('.tab, #side-pages a').forEach(function (a) {
       if (a.dataset.go === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     $$('#side-pages a').forEach(function (a) { a.classList.toggle('cur', a.dataset.go === id); });
-    $$('.has-dd').forEach(function (li) { li.classList.toggle('cur', li.dataset.for === id); });
     current = id;
-    var top = $('.ribbon-wrap').offsetTop;
-    if (window.scrollY > top) window.scrollTo(0, top);
+    placeInd(initial);
+    var top = $('.tabbar-wrap').offsetTop;
+    if (window.scrollY > top) window.scrollTo({ top: top, behavior: initial || reduce ? 'auto' : 'smooth' });
     if (!initial) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
     document.title = (id === 'accueil' ? '' : v.dataset.label + ' · ') + 'Portfolio Issak Dirir';
   }
@@ -64,58 +71,34 @@
     if (reduce) { show(id); if (after) after(); return; }
     busy = true;
     progress.classList.remove('run'); void progress.offsetWidth; progress.classList.add('run');
+    $$('.tab').forEach(function (a) { if (a.dataset.go === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    placeInd();
     var old = document.getElementById(current);
     old.classList.remove('enter'); old.classList.add('leave');
-    setTimeout(function () { show(id); busy = false; if (after) setTimeout(after, 300); }, 200);
+    setTimeout(function () { show(id); busy = false; if (after) setTimeout(after, 350); }, 290);
   }
 
   $$('[data-go]').forEach(function (el) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
-      closeMenus();
       var after = null;
       if (el.dataset.open) after = function () { filter('all'); openModal(projs.indexOf(document.getElementById(el.dataset.open))); };
-      else if (el.dataset.scroll) after = function () { var t = document.getElementById(el.dataset.scroll); t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); };
-      else if (el.dataset.acc) after = function () {
-        var d = $$('#acc details')[+el.dataset.acc];
-        $$('#acc details').forEach(function (x) { x.open = x === d; });
-        d.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      };
       go(el.dataset.go, after);
     });
   });
 
   var start = (location.hash || '').slice(1);
   show(order.indexOf(start) > -1 ? start : 'accueil', true);
-  window.addEventListener('load', function () { window.scrollTo(0, 0); });
-
-  /* ========== Menus déroulants + menu mobile ========== */
-  var desktop = window.matchMedia('(min-width: 981px) and (hover: hover)');
-  $$('.has-dd').forEach(function (li) {
-    var btn = $('.dd-btn', li);
-    function set(open) {
-      $$('.has-dd').forEach(function (o) { if (o !== li) { o.classList.remove('open'); $('.dd-btn', o).setAttribute('aria-expanded', 'false'); } });
-      li.classList.toggle('open', open); btn.setAttribute('aria-expanded', open);
-    }
-    btn.addEventListener('click', function (e) { e.stopPropagation(); set(!li.classList.contains('open')); });
-    li.addEventListener('mouseenter', function () { if (desktop.matches) set(true); });
-    li.addEventListener('mouseleave', function () { if (desktop.matches) set(false); });
-  });
-  burger.addEventListener('click', function (e) {
-    e.stopPropagation();
-    var o = !ribbon.classList.contains('mob-open');
-    ribbon.classList.toggle('mob-open', o); burger.setAttribute('aria-expanded', o);
-  });
-  document.addEventListener('click', function (e) { if (!ribbon.contains(e.target)) closeMenus(); });
+  window.addEventListener('load', function () { window.scrollTo(0, 0); placeInd(true); });
+  window.addEventListener('resize', function () { placeInd(true); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeInd(true); });
 
   document.addEventListener('keydown', function (e) {
     if (!modal.hidden) {
       if (e.key === 'Escape') closeModal();
       if (e.key === 'ArrowRight') step(1);
       if (e.key === 'ArrowLeft') step(-1);
-      return;
     }
-    if (e.key === 'Escape') closeMenus();
   });
 
   /* ========== Thème ========== */
