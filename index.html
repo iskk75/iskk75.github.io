@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Issak Dirir</title>
+<meta name="description" content="Portfolio BTS SIO d'Issak Dirir : réalisations professionnelles, stages, tableau de synthèse E5 et veille technologique.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+
+<nav class="gut" aria-label="Navigation principale">
+  <div class="inner">
+    <a class="logo" href="#top">issak<span>.</span>dirir</a>
+    <ul>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#stages">Stages</a></li>
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#synthese">Synthèse E5</a></li>
+      <li><a href="#veille">Veille</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero gut" id="top">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="inner">
+    <div>
+      <span class="status"><i></i>Disponible pour un stage ou une alternance</span>
+      <h1>Issak<span class="l2">Dirir</span></h1>
+      <p class="typed">&gt; <b id="typed">Étudiant BTS SIO option SLAM</b><span class="caret"></span></p>
+      <p class="lead">Je conçois des applications web et des services informatiques utiles aux organisations. Voici mes réalisations, mes stages et mon tableau de synthèse pour l'épreuve E5.</p>
+      <div class="cta">
+        <a class="btn btn-main" href="#realisations">Voir mes réalisations
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn btn-ghost" href="#contact">Me contacter</a>
+      </div>
+    </div>
+    <div class="term" aria-label="Présentation façon terminal">
+      <div class="term-bar"><i></i><i></i><i></i><span>issak@sio: ~</span></div>
+<pre><span class="p">issak@sio</span>:~$ <span class="c">whoami</span>
+Étudiant BTS SIO · option <span class="v">SLAM</span>
+<span class="p">issak@sio</span>:~$ <span class="c">cat stack.txt</span>
+<span class="k">back</span>   PHP · Symfony · SQL
+<span class="k">front</span>  HTML · CSS · JavaScript
+<span class="k">outils</span> Git · Linux · GLPI
+<span class="p">issak@sio</span>:~$ <span class="c">./disponibilite.sh</span>
+<span class="p">✔</span> Stage / alternance 2027
+<span class="p">✔</span> Basé à Paris</pre>
+    </div>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="inner" style="display:flex;flex-direction:column;gap:120px">
+
+    <div class="stats reveal">
+      <div class="stat"><b data-count="6">6</b><span>réalisations professionnelles</span></div>
+      <div class="stat"><b><span data-count="14">14</span><small> sem.</small></b><span>de stage en entreprise</span></div>
+      <div class="stat"><b><span data-count="6">6</span><small>/6</small></b><span>compétences du bloc 1 couvertes</span></div>
+      <div class="stat"><b data-count="2027">2027</b><span>session d'examen</span></div>
+    </div>
+
+    <section id="parcours" class="reveal">
+      <div class="sh"><span class="eyebrow">Parcours</span><h2>Formation</h2></div>
+      <ol class="tl">
+        <li class="now"><span class="when">2025 → 2027</span><div><h3>BTS SIO, option SLAM</h3><p>Lycée [nom de l'établissement], Paris. Développement d'applications, bases de données, cybersécurité et gestion de projet.</p></div></li>
+        <li><span class="when">2022 → 2025</span><div><h3>Baccalauréat [général / STI2D]</h3><p>Lycée [nom], spécialités [NSI, mathématiques].</p></div></li>
+      </ol>
+    </section>
+
+    <section id="stages" class="reveal">
+      <div class="sh"><span class="eyebrow">Expérience</span><h2>Stages en entreprise</h2><p>Les deux périodes de formation en milieu professionnel du BTS.</p></div>
+      <div class="duo">
+        <article class="stage"><span class="num" aria-hidden="true">01</span>
+          <span class="when">1re année · 6 semaines · mai → juin 2026</span>
+          <h3>[Entreprise], service informatique</h3>
+          <ul><li>Inventaire du parc informatique dans GLPI</li><li>Traitement des tickets d'assistance de niveau 1</li><li>Préparation et déploiement de postes utilisateurs</li></ul>
+        </article>
+        <article class="stage"><span class="num" aria-hidden="true">02</span>
+          <span class="when">2e année · 8 semaines · janv. → mars 2027</span>
+          <h3>[Entreprise], pôle développement</h3>
+          <ul><li>Développement d'un module de réservation en PHP</li><li>Rédaction de la documentation technique</li><li>Participation aux réunions de suivi de projet</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="realisations" class="reveal">
+      <div class="sh"><span class="eyebrow">Projets</span><h2>Réalisations professionnelles</h2><p>Filtre par compétence pour voir quelles réalisations la mobilisent.</p></div>
+      <div class="filters" role="group" aria-label="Filtrer par compétence">
+        <button type="button" class="on" data-f="all" aria-pressed="true">Toutes</button>
+        <button type="button" data-f="B1.1" aria-pressed="false">B1.1</button>
+        <button type="button" data-f="B1.2" aria-pressed="false">B1.2</button>
+        <button type="button" data-f="B1.3" aria-pressed="false">B1.3</button>
+        <button type="button" data-f="B1.4" aria-pressed="false">B1.4</button>
+        <button type="button" data-f="B1.5" aria-pressed="false">B1.5</button>
+        <button type="button" data-f="B1.6" aria-pressed="false">B1.6</button>
+      </div>
+      <div class="projects">
+        <article class="proj" id="rp1" data-c="B1.4 B1.5"><div class="top"><span class="ref">RP-01</span><span class="ctx">Formation</span></div>
+          <h3>Application de réservation de salles</h3><p>Application web MVC pour réserver des salles, avec authentification et gestion des rôles.</p>
+          <div class="comp"><span>B1.4</span><span>B1.5</span></div><div class="stack"><span>PHP</span><span>MySQL</span><span>MVC</span><span>Git</span></div></article>
+        <article class="proj" id="rp2" data-c="B1.1 B1.2"><div class="top"><span class="ref">RP-02</span><span class="ctx">Stage 1</span></div>
+          <h3>Inventaire du parc avec GLPI</h3><p>Recensement de 80 postes, agent d'inventaire automatique et suivi des tickets.</p>
+          <div class="comp"><span>B1.1</span><span>B1.2</span></div><div class="stack"><span>GLPI</span><span>Linux</span><span>OCS</span></div></article>
+        <article class="proj" id="rp3" data-c="B1.3 B1.4"><div class="top"><span class="ref">RP-03</span><span class="ctx">Formation</span></div>
+          <h3>Site vitrine pour une association</h3><p>Site responsive avec formulaire de contact, référencement de base et mentions légales RGPD.</p>
+          <div class="comp"><span>B1.3</span><span>B1.4</span></div><div class="stack"><span>WordPress</span><span>HTML/CSS</span><span>SEO</span></div></article>
+        <article class="proj" id="rp4" data-c="B1.2 B1.4 B1.5"><div class="top"><span class="ref">RP-04</span><span class="ctx">Stage 2</span></div>
+          <h3>Module de réservation en entreprise</h3><p>Ajout d'une fonctionnalité dans l'application interne, tests et mise en production.</p>
+          <div class="comp"><span>B1.2</span><span>B1.4</span><span>B1.5</span></div><div class="stack"><span>PHP</span><span>Symfony</span><span>PHPUnit</span></div></article>
+        <article class="proj" id="rp5" data-c="B1.5 B1.6"><div class="top"><span class="ref">RP-05</span><span class="ctx">Formation</span></div>
+          <h3>API REST de gestion d'inventaire</h3><p>API documentée pour interroger le stock d'un magasin, consommée par une appli mobile.</p>
+          <div class="comp"><span>B1.5</span><span>B1.6</span></div><div class="stack"><span>Node.js</span><span>Express</span><span>SQL</span></div></article>
+        <article class="proj" id="rp6" data-c="B1.3 B1.6"><div class="top"><span class="ref">RP-06</span><span class="ctx">Personnel</span></div>
+          <h3>Ce portfolio</h3><p>Conception, animation et mise en ligne de mon portfolio professionnel.</p>
+          <div class="comp"><span>B1.3</span><span>B1.6</span></div><div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>GitHub Pages</span></div></article>
+      </div>
+    </section>
+
+    <section id="synthese" class="reveal">
+      <div class="sh"><span class="eyebrow">Épreuve E5</span><h2>Tableau de synthèse</h2><p>Compétences du bloc 1 couvertes par chaque réalisation. Clique sur une ligne pour voir le projet.</p></div>
+      <div class="matrix-box">
+        <table>
+          <thead><tr><th scope="col" style="text-align:left">Réalisation</th>
+            <th scope="col"><b>B1.1</b>Patrimoine</th><th scope="col"><b>B1.2</b>Incidents</th><th scope="col"><b>B1.3</b>Présence<br>en ligne</th>
+            <th scope="col"><b>B1.4</b>Mode projet</th><th scope="col"><b>B1.5</b>Service</th><th scope="col"><b>B1.6</b>Dév. pro</th></tr></thead>
+          <tbody>
+            <tr data-go="rp1"><th><small>RP-01</small>Réservation de salles</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
+            <tr data-go="rp2"><th><small>RP-02</small>Inventaire GLPI</th><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr data-go="rp3"><th><small>RP-03</small>Site associatif</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td></tr>
+            <tr data-go="rp4"><th><small>RP-04</small>Module en entreprise</th><td class="n"></td><td class="y"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
+            <tr data-go="rp5"><th><small>RP-05</small>API d'inventaire</th><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td></tr>
+            <tr data-go="rp6"><th><small>RP-06</small>Portfolio</th><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
+          </tbody>
+          <tfoot><tr><th>Couverture</th><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td><td>2</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="legend">
+        <span><b>B1.1</b>Gérer le patrimoine informatique</span>
+        <span><b>B1.2</b>Répondre aux incidents et aux demandes d'assistance</span>
+        <span><b>B1.3</b>Développer la présence en ligne de l'organisation</span>
+        <span><b>B1.4</b>Travailler en mode projet</span>
+        <span><b>B1.5</b>Mettre à disposition un service informatique</span>
+        <span><b>B1.6</b>Organiser son développement professionnel</span>
+      </div>
+    </section>
+
+    <section id="competences" class="reveal">
+      <div class="sh"><span class="eyebrow">Savoir-faire</span><h2>Compétences</h2></div>
+      <div class="skills">
+        <div class="box"><h3>Développement</h3><div class="chips"><span>PHP</span><span>Symfony</span><span>JavaScript</span><span>Python</span><span>HTML/CSS</span><span>Java</span></div></div>
+        <div class="box"><h3>Données et outils</h3><div class="chips"><span>MySQL</span><span>Merise</span><span>UML</span><span>Git</span><span>Linux</span><span>GLPI</span><span>Docker</span></div></div>
+        <div class="box"><h3>Certifications</h3>
+          <ul class="certs"><li>Pix <span>[score] pts</span></li><li>Anglais B2 <span>CECRL</span></li><li>SecNumacadémie <span>ANSSI</span></li><li>Permis B <span>Obtenu</span></li></ul></div>
+      </div>
+    </section>
+
+    <section id="veille" class="reveal">
+      <div class="sh"><span class="eyebrow">Veille technologique</span><h2>Ce que je surveille</h2></div>
+      <div class="veille">
+        <svg class="key" viewBox="0 0 100 100" fill="none" aria-hidden="true"><circle cx="34" cy="50" r="22" stroke="#ffb547" stroke-width="6"/><path d="M56 50h38M80 50v16M92 50v10" stroke="#ffb547" stroke-width="6" stroke-linecap="round"/></svg>
+        <span class="when">Sujet suivi depuis septembre 2025</span>
+        <h3>Les passkeys et la fin des mots de passe</h3>
+        <p>Je suis l'adoption des passkeys (norme FIDO2 / WebAuthn) par les grands services en ligne : fonctionnement, protection contre le phishing, et freins à leur déploiement dans les organisations.</p>
+        <div class="meta"><span><b>Sources</b>CERT-FR, FIDO Alliance, Le Monde Informatique</span><span><b>Outils</b>Feedly, alertes Google</span></div>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div class="contact">
+        <span class="eyebrow">Contact</span>
+        <h2>Travaillons<br>ensemble<span>.</span></h2>
+        <div class="mail"><code id="email">ton.email@exemple.fr</code><button class="btn btn-main" id="copy" type="button">Copier l'adresse</button></div>
+        <div class="socials"><a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener">GitHub</a><a class="btn btn-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="gut"><div class="inner"><span>© 2026 Issak Dirir</span><span>Portfolio BTS SIO · HTML · CSS · JavaScript</span></div></footer>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
