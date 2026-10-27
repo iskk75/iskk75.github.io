@@ -80,7 +80,7 @@
               <div class="slide-txt">
                 <span class="slide-ctx">Formation · IPSSI</span>
                 <h3>Infrastructure Active Directory</h3>
-                <p>Domaine Windows Server avec DNS, DHCP et stratégies de groupe pour une PME de 40 salariés.</p>
+                <p>Domaine novaconseil.local : deux contrôleurs de domaine, DNS, DHCP, partages par service et trois GPO.</p>
                 <div class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></div>
                 <button type="button" class="btn solid slide-open" data-rp="rp2" tabindex="-1">Voir le détail</button>
               </div>
@@ -210,13 +210,17 @@
             </span>
           </button>
           <button type="button" class="proj rv" id="rp2" data-c="B1.4 B1.5">
-            <span class="cover"><span>RP-02 · FORMATION</span></span>
-            <span class="body"><h3>Infrastructure Active Directory</h3><p>Domaine Windows Server avec DNS, DHCP et stratégies de groupe pour une PME.</p>
+            <span class="cover"><span>RP-02 · FORMATION IPSSI</span></span>
+            <span class="body"><h3>Infrastructure Active Directory</h3><p>Domaine novaconseil.local pour une PME de 40 salariés : deux contrôleurs de domaine, DNS, DHCP, partages par service et GPO.</p>
             <span class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-02" data-ctx="Formation · 2025">
-              <span data-h="Contexte">Une PME de 40 salariés n'a pas de gestion centralisée des comptes. J'ai conçu et déployé son domaine.</span>
-              <span data-h="Missions">Installation de Windows Server 2022|Création du domaine et des unités d'organisation|Configuration des rôles DNS et DHCP|Déploiement de GPO (lecteurs réseau, restrictions)|Rédaction de la documentation technique</span>
-              <span data-h="Outils">Windows Server 2022, AD DS, DNS, DHCP, GPO, VMware</span>
+            <span class="detail" hidden data-ref="RP-02" data-ctx="Formation IPSSI · 2025-2026 · laboratoire VMware">
+              <span data-h="Contexte">Nova Conseil, PME fictive de 40 salariés répartis en 3 services (Direction, Comptabilité, Commercial), fonctionne sans serveur central : un compte différent sur chaque poste, des fichiers échangés par clé USB et aucun contrôle des accès.</span>
+              <span data-h="Objectifs" data-list>Un compte unique par salarié, géré au même endroit|Des adresses IP attribuées automatiquement|Des dossiers partagés, protégés par service|Des postes configurés automatiquement|Un service qui continue si un serveur tombe en panne</span>
+              <span data-h="Architecture">Trois machines virtuelles sous VMware sur un réseau isolé 192.168.10.0/24 : SRV-CPD (contrôleur de domaine principal, DNS, DHCP, partages), SRV-CSD (contrôleur de domaine secondaire, DNS) et PC-01 (poste Windows 10 Pro du salarié).</span>
+              <span data-h="Démarche" data-list>Réseau : adresses IP fixes et nommage des serveurs|Domaine : rôle AD DS et DNS, nouvelle forêt novaconseil.local|DHCP : étendue de .100 à .150, autorisée dans l'Active Directory|Annuaire : une unité d'organisation et un groupe de sécurité par service, comptes créés aussi en PowerShell|Partages : un partage unique, droits NTFS par groupe et énumération basée sur l'accès|GPO : lecteurs réseau ciblés par groupe, fond d'écran imposé, panneau de configuration bloqué|Redondance : second contrôleur de domaine et réplication vérifiée avec repadmin|Tests : jonction du poste au domaine, gpresult et connexion avec le contrôleur principal éteint</span>
+              <span data-h="Résultat">Chaque salarié se connecte avec un compte unique, retrouve automatiquement ses lecteurs réseau et ne voit que les dossiers de son service. Si SRV-CPD tombe en panne, SRV-CSD prend le relais pour les connexions.</span>
+              <span data-h="Pistes d'amélioration" data-list>Serveur de fichiers dédié plutôt que sur un contrôleur de domaine|Basculement DHCP entre les deux serveurs|Sauvegarde de l'Active Directory|Méthode AGDLP avec des groupes de domaine local</span>
+              <span data-h="Outils">Windows Server 2022, AD DS, DNS, DHCP, GPO, PowerShell, Windows 10 Pro, VMware Workstation</span>
             </span>
           </button>
           <button type="button" class="proj rv" id="rp3" data-c="B1.4 B1.5">
