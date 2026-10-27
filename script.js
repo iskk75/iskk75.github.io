@@ -152,10 +152,18 @@
     body.appendChild($('.tags', p).cloneNode(true));
     /* Bouton vers la présentation PowerPoint du projet, affiché seulement si elle existe (data-ppt) */
     if (d.dataset.ppt) {
+      var box = document.createElement('div'); box.className = 'ppt-box';
       var a = document.createElement('a');
       a.className = 'btn solid ppt'; a.href = d.dataset.ppt; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = 'Voir la présentation du projet';
-      body.appendChild(a);
+      a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M8 12l3-3 2 2 3-3"/></svg><span>Voir la présentation et la procédure</span>';
+      box.appendChild(a);
+      if (d.dataset.pptx) {
+        var dl = document.createElement('a');
+        dl.className = 'btn ppt'; dl.href = d.dataset.pptx; dl.setAttribute('download', '');
+        dl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>PowerPoint (.pptx)</span>';
+        box.appendChild(dl);
+      }
+      body.appendChild(box);
     }
     $('.panel', modal).scrollTop = 0;
   }

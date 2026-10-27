@@ -332,4 +332,6 @@ td.per{text-align:left;white-space:nowrap;color:var(--muted);font-size:.85rem}
   .car-arrow{top:60px;width:36px;height:36px}
 }
 @media (prefers-reduced-motion:reduce){.slide .slide-txt > *{opacity:1;transform:none}}
-.modal .ppt{margin-top:22px}
+.modal .ppt-box{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+.modal .ppt{display:inline-flex;align-items:center;gap:10px}
+.modal .ppt svg{width:20px;height:20px;flex:none}
