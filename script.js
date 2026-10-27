@@ -306,3 +306,31 @@
     try { navigator.clipboard.writeText(t).then(function () { toast('Adresse e-mail copiée'); }, sel); } catch (e) { sel(); }
   });
 })();
+
+/* ===== Fenêtre d'accueil « Qui visite ? » =====
+   Réponse obligatoire pour entrer. Affichée une seule fois par navigateur.
+   La réponse est envoyée à un Google Form (data-form = URL formResponse, data-entry = entry.XXXX). */
+(function () {
+  var gate = document.getElementById('gate'); if (!gate) return;
+  var KEY = 'portfolio-visiteur';
+  try { if (localStorage.getItem(KEY)) return; } catch (e) {}
+  var form = document.getElementById('gate-form'), input = document.getElementById('gate-name');
+  var prevFocus = document.activeElement;
+  gate.hidden = false; document.documentElement.style.overflow = 'hidden';
+  setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, 60);
+  function close(val) {
+    try { localStorage.setItem(KEY, val || '-'); } catch (e) {}
+    gate.classList.add('out');
+    setTimeout(function () { gate.hidden = true; gate.classList.remove('out'); document.documentElement.style.overflow = ''; if (prevFocus && prevFocus.focus) prevFocus.focus(); }, 280);
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = input.value.trim().slice(0, 40); if (!name) { input.focus(); return; }
+    var url = gate.dataset.form, entry = gate.dataset.entry;
+    if (url && entry) {
+      var fd = new FormData(); fd.append(entry, name);
+      try { fetch(url, { method: 'POST', mode: 'no-cors', body: fd }).catch(function () {}); } catch (err) {}
+    }
+    close(name);
+  });
+})();

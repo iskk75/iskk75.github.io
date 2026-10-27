@@ -335,3 +335,24 @@ td.per{text-align:left;white-space:nowrap;color:var(--muted);font-size:.85rem}
 .modal .ppt-box{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
 .modal .ppt{display:inline-flex;align-items:center;gap:10px}
 .modal .ppt svg{width:20px;height:20px;flex:none}
+
+/* ===== Fenêtre d'accueil « Qui visite ? » ===== */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gate{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px 16px;background:rgba(20,23,25,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:gateIn .35s ease both}
+.gate[hidden]{display:none}
+.gate.out{animation:gateOut .3s ease both}
+.gate-card{width:min(440px,100%);background:var(--surface);color:var(--ink);border-radius:16px;padding:34px 30px 24px;box-shadow:0 30px 80px -30px rgba(0,0,0,.55);border-top:4px solid var(--teal);text-align:center}
+.gate-kicker{margin:0 0 6px;font:600 12px/1 var(--f-title);letter-spacing:.18em;text-transform:uppercase;color:var(--teal-deep)}
+.gate-card h2{margin:0 0 8px;font:600 30px/1.2 var(--f-title)}
+.gate-card p{margin:0 0 20px;color:var(--muted)}
+.gate-form{display:flex;gap:10px;flex-wrap:wrap}
+.gate-form input{flex:1 1 180px;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
+.gate-form input:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:transparent}
+.gate-form .btn{flex:0 0 auto;justify-content:center}
+.gate-skip{margin-top:14px;background:none;border:0;color:var(--muted);font:inherit;font-size:15px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.gate-skip:hover{color:var(--coral)}
+.gate-card .gate-note{margin:18px 0 0;font-size:12.5px;line-height:1.5}
+@keyframes gateIn{from{opacity:0}to{opacity:1}}
+@keyframes gateOut{to{opacity:0}}
+@media (prefers-reduced-motion:reduce){.gate,.gate.out{animation:none}}
+@media (max-width:480px){.gate-form .btn{flex:1 1 100%}}
