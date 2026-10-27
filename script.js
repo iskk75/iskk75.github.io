@@ -139,7 +139,7 @@
     $$('[data-h]', d).forEach(function (s) {
       var h = document.createElement('h4'); h.textContent = s.dataset.h; body.appendChild(h);
       var txt = s.textContent, el;
-      if (s.dataset.h === 'Missions') {
+      if (s.dataset.h === 'Missions' || s.hasAttribute('data-list')) {
         el = document.createElement('ul');
         txt.split('|').forEach(function (m) { var li = document.createElement('li'); li.textContent = m; el.appendChild(li); });
       } else if (s.dataset.h === 'Outils') {
@@ -150,6 +150,13 @@
     });
     var h = document.createElement('h4'); h.textContent = 'Compétences'; body.appendChild(h);
     body.appendChild($('.tags', p).cloneNode(true));
+    /* Bouton vers la présentation PowerPoint du projet, affiché seulement si elle existe (data-ppt) */
+    if (d.dataset.ppt) {
+      var a = document.createElement('a');
+      a.className = 'btn solid ppt'; a.href = d.dataset.ppt; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = 'Voir la présentation du projet';
+      body.appendChild(a);
+    }
     $('.panel', modal).scrollTop = 0;
   }
   function openModal(i) { lastFocus = document.activeElement; fill(i); modal.hidden = false; document.body.style.overflow = 'hidden'; $('.close', modal).focus(); }
