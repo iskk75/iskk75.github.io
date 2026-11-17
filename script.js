@@ -16,14 +16,15 @@ PROJETS.forEach(function (projet, i) {
   const carte = document.createElement("button");
   carte.type = "button";
   carte.className = "carte reveal";
-  carte.style.setProperty("--n", i % 3);        // décalage de l'animation d'apparition
+  carte.style.setProperty("--n", i % 6);        // décalage de l'animation d'apparition
   carte.dataset.competences = projet.competences.join(" ");
+  // Une ligne par réalisation : numéro, titre + résumé, cadre + compétences, flèche
   carte.innerHTML =
-    '<span class="ref">' + projet.ref + " · " + projet.cadre + " · " + projet.lieu + "</span>" +
-    "<h3>" + projet.titre + "</h3>" +
-    "<p>" + projet.resume + "</p>" +
-    '<span class="tags">' + projet.competences.map(c => '<span class="tag">' + c + "</span>").join("") + "</span>" +
-    '<span class="lire">Voir le détail <span>›</span></span>';
+    '<span class="num">' + projet.ref.replace("RP-", "") + "</span>" +
+    '<span class="corps"><h3>' + projet.titre + "</h3><p>" + projet.resume + "</p></span>" +
+    '<span class="meta"><span class="cadre-ligne">' + projet.cadre + " — " + projet.lieu + "</span>" +
+    '<span class="tags">' + projet.competences.map(c => '<span class="tag">' + c + "</span>").join("") + "</span></span>" +
+    '<span class="fleche" aria-hidden="true">→</span>';
   carte.addEventListener("click", function () { ouvrirDetail(i); });
   grille.appendChild(carte);
 });
@@ -217,60 +218,9 @@ function auDefilement() {
 window.addEventListener("scroll", auDefilement, { passive: true });
 auDefilement();
 
-/* ---------- 10. Effets de survol à la souris ---------- */
-if (!moinsAnimations && window.matchMedia("(hover: hover)").matches) {
-
-  // Cartes : halo qui suit la souris + légère inclinaison 3D
-  grille.addEventListener("pointermove", function (e) {
-    const carte = e.target.closest(".carte");
-    if (!carte) return;
-    const r = carte.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width;    // de 0 à 1
-    const y = (e.clientY - r.top) / r.height;
-    carte.style.setProperty("--x", x * 100 + "%");
-    carte.style.setProperty("--y", y * 100 + "%");
-    carte.style.setProperty("--ry", (x - 0.5) * 8 + "deg");
-    carte.style.setProperty("--rx", (0.5 - y) * 8 + "deg");
-  });
-  grille.addEventListener("pointerout", function (e) {
-    const carte = e.target.closest(".carte");
-    if (carte && !carte.contains(e.relatedTarget)) {
-      carte.style.setProperty("--rx", "0deg");
-      carte.style.setProperty("--ry", "0deg");
-    }
-  });
-
-  // Boutons "aimantés" : ils suivent un peu la souris
-  document.querySelectorAll(".btn:not(.btn-petit)").forEach(function (btn) {
-    btn.addEventListener("pointermove", function (e) {
-      const r = btn.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width / 2);
-      const dy = e.clientY - (r.top + r.height / 2);
-      btn.style.transform = "translate(" + dx * 0.2 + "px," + dy * 0.3 + "px)";
-    });
-    btn.addEventListener("pointerleave", () => btn.style.transform = "");
-  });
-
-  // Curseur personnalisé : un point qui suit la souris et un anneau qui le rattrape en douceur
-  const point = document.createElement("div");
-  const anneau = document.createElement("div");
-  point.className = "curseur";
-  anneau.className = "curseur-anneau";
-  document.body.append(point, anneau);
-  let sx = -100, sy = -100, ax = -100, ay = -100;
-  window.addEventListener("pointermove", function (e) {
-    sx = e.clientX; sy = e.clientY;
-    point.style.transform = "translate(" + sx + "px," + sy + "px)";
-    // L'anneau grossit au-dessus des éléments cliquables
-    anneau.classList.toggle("grand", !!e.target.closest("a, button, summary, tr, .carte"));
-  });
-  (function suivre() {
-    ax += (sx - ax) * 0.18;   // l'anneau parcourt 18 % de la distance à chaque image : effet de retard
-    ay += (sy - ay) * 0.18;
-    anneau.style.transform = "translate(" + ax + "px," + ay + "px)";
-    requestAnimationFrame(suivre);
-  })();
-}
+/* ---------- 10. Effets de survol ----------
+   Volontairement sobres : les survols (cartes, boutons, liens) sont gérés
+   en CSS. Pas de curseur personnalisé ni d'effet 3D sur les cartes. */
 
 /* ---------- 11. Rideau d'ouverture ---------- */
 const rideau = document.getElementById("rideau");
@@ -349,9 +299,8 @@ window.addEventListener("scroll", function () {
 (function () {
   const zone = document.getElementById("globe");
   const toileArriere = zone.querySelector(".globe-arriere");
-  const toileAvant = zone.querySelector(".globe-avant");
   const ctxA = toileArriere.getContext("2d");
-  const ctxV = toileAvant.getContext("2d");
+  const ctxV = ctxA;   // un seul canvas : tout le globe reste derrière le portrait
   const couleur = getComputedStyle(document.documentElement).getPropertyValue("--indigo").trim();
 
   // 1. Points sur la sphère (répartition "spirale de Fibonacci" : régulière, sans trou)
@@ -379,8 +328,8 @@ window.addEventListener("scroll", function () {
   function dimensionner() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     taille = zone.clientWidth;
-    [toileArriere, toileAvant].forEach(function (c) { c.width = taille * dpr; c.height = taille * dpr; });
-    [ctxA, ctxV].forEach(ctx => ctx.setTransform(dpr, 0, 0, dpr, 0, 0));
+    toileArriere.width = taille * dpr; toileArriere.height = taille * dpr;
+    ctxA.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   // Rotation 3D puis projection en perspective
@@ -389,7 +338,7 @@ window.addEventListener("scroll", function () {
     let z = p.x * Math.sin(rotY) + p.z * Math.cos(rotY);
     let y = p.y * Math.cos(rotX) - z * Math.sin(rotX);
     z = p.y * Math.sin(rotX) + z * Math.cos(rotX);
-    const rayon = taille * 0.42;
+    const rayon = taille * 0.46;
     const persp = 3 / (3 + z);              // perspective
     return { x: taille / 2 + x * rayon * persp, y: taille / 2 + y * rayon * persp, z: z, persp: persp };
   }
@@ -404,20 +353,20 @@ window.addEventListener("scroll", function () {
       rotY += cibleY * 0.02;
 
       const proj = points.map(projeter);
-      [ctxA, ctxV].forEach(ctx => ctx.clearRect(0, 0, taille, taille));
+      ctxA.clearRect(0, 0, taille, taille);
 
       // z > 0 : point à l'arrière (dessiné derrière la photo) ; z < 0 : à l'avant
       liens.forEach(function (l) {
         const a = proj[l[0]], b = proj[l[1]];
         const ctx = (a.z + b.z) / 2 > 0 ? ctxA : ctxV;
         ctx.strokeStyle = couleur;
-        ctx.globalAlpha = 0.12 + (1 - (a.z + b.z) / 2) * 0.18;
+        ctx.globalAlpha = 0.06 + (1 - (a.z + b.z) / 2) * 0.1;
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       });
       proj.forEach(function (p) {
         const ctx = p.z > 0 ? ctxA : ctxV;
-        ctx.globalAlpha = 0.35 + (1 - p.z) * 0.3;
+        ctx.globalAlpha = 0.2 + (1 - p.z) * 0.2;
         ctx.fillStyle = couleur;
         ctx.beginPath(); ctx.arc(p.x, p.y, 2.2 * p.persp, 0, Math.PI * 2); ctx.fill();
       });

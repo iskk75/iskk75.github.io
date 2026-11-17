@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400&family=JetBrains+Mono:wght@400&display=swap">
-  <link rel="stylesheet" href="style.css?v=20261117">
+  <link rel="stylesheet" href="style.css?v=20261117b">
 </head>
 <body>
 
@@ -43,13 +43,15 @@
           <a class="btn btn-ghost" href="cv-issak-dirir.pdf" target="_blank" rel="noopener">Mon CV (PDF)</a>
         </div>
       </div>
-      <!-- Globe réseau en 3D (dessiné par script.js) avec la photo au centre.
-           Deux canvas : les nœuds de l'arrière passent DERRIÈRE la photo, ceux de l'avant DEVANT. -->
-      <div class="globe" id="globe">
+      <!-- Portrait : photo détourée posée sur un fond aux couleurs du site, dans une arche.
+           Le globe réseau (script.js) tourne DERRIÈRE, comme un décor : il ne passe jamais sur le visage. -->
+      <figure class="portrait-zone" id="globe">
         <canvas class="globe-arriere" aria-hidden="true"></canvas>
-        <img class="portrait" src="photo-issak.jpg" width="300" height="300" alt="Photo d'Issak Dirir">
-        <canvas class="globe-avant" aria-hidden="true"></canvas>
-      </div>
+        <div class="arche">
+          <img class="portrait" src="photo-issak-detouree.webp" width="300" height="300" alt="Photo d'Issak Dirir">
+        </div>
+        <figcaption class="statut"><i aria-hidden="true"></i>Disponible · Torcy (77)</figcaption>
+      </figure>
     </section>
 
     <!-- Chiffres clés : "6" et "6/6" sont calculés par script.js à partir de projets.js -->
@@ -216,7 +218,7 @@
 
   <!-- projets.js doit être chargé AVANT script.js, qui utilise ses données -->
   <script src="projets.js?v=20261117"></script>
-  <script src="script.js?v=20261117"></script>
+  <script src="script.js?v=20261117b"></script>
 
 </body>
 </html>

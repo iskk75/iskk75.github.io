@@ -166,24 +166,54 @@ img { max-width: 100%; display: block; }
 @keyframes motIn { to { opacity: 1; transform: none; filter: none; } }
 .intro { font-size: 20px; line-height: 1.45; color: var(--ardoise); max-width: 56ch; margin-top: 24px; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
-/* Globe réseau 3D + photo au centre */
-.hero { grid-template-columns: minmax(0, 1fr) 440px; }
-.globe { position: relative; width: 440px; aspect-ratio: 1; display: grid; place-items: center; }
-.globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.globe-arriere { z-index: 0; }
-.globe-avant { z-index: 2; pointer-events: none; }
-.portrait {
-  position: relative; z-index: 1;
-  width: 46%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  border: 1px solid var(--lavande);
-  box-shadow: 0 0 0 8px var(--fond);
-  filter: grayscale(.4);
-  transition: filter .6s, scale .6s var(--courbe);
+/* Portrait : arche + photo détourée sur fond indigo, globe réseau en décor derrière */
+.hero { grid-template-columns: minmax(0, 1fr) 420px; }
+.portrait-zone { position: relative; width: 420px; aspect-ratio: 1; margin: 0; display: grid; place-items: center; }
+.globe-arriere {
+  position: absolute; inset: -8%; width: 116%; height: 116%; z-index: 0; pointer-events: none;
+  -webkit-mask: radial-gradient(closest-side, #000 60%, transparent);
+          mask: radial-gradient(closest-side, #000 60%, transparent);
 }
-.globe:hover .portrait { filter: none; scale: 1.05; }
+.arche {
+  position: relative; z-index: 1; width: 64%; aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: 999px 999px var(--rayon) var(--rayon);
+  /* Fond de la photo : dégradé aux couleurs du site, à la place du gris de studio */
+  background:
+    radial-gradient(120% 80% at 50% 25%, color-mix(in srgb, var(--indigo-clair) 38%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--indigo) 30%, var(--bande)), var(--bande));
+  border: 1px solid var(--givre);
+  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--indigo) 55%, transparent);
+  transition: transform .6s var(--courbe);
+}
+/* Seconde arche en simple trait, décalée : donne de la profondeur */
+.portrait-zone::before {
+  content: ""; position: absolute; z-index: 0; width: 64%; aspect-ratio: 4 / 5;
+  border-radius: 999px 999px var(--rayon) var(--rayon); border: 1px solid var(--lavande);
+  translate: 14px 14px; opacity: .7; transition: translate .6s var(--courbe);
+}
+.portrait {
+  /* La photo remplit l'arche : son bord haut se cache dans la courbe de l'arche */
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 0;
+  transform-origin: 50% 100%; transition: scale .8s var(--courbe);
+}
+.portrait-zone:hover .arche { transform: translateY(-6px); }
+.portrait-zone:hover::before { translate: 8px 8px; }
+.portrait-zone:hover .portrait { scale: 1.04; }
+/* Petite pastille "Disponible", posée sur le bas de l'arche */
+.statut {
+  position: absolute; z-index: 2; left: 50%; bottom: 13%; translate: -50% 0;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  padding: 8px 14px; border-radius: 9999px; font-size: 13px; font-weight: 400;
+  background: color-mix(in srgb, var(--fond) 85%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--givre); color: var(--encre);
+}
+.statut i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pouls 2.4s infinite; }
+@keyframes pouls { 0% { box-shadow: 0 0 0 0 #22c55e80; } 70%, 100% { box-shadow: 0 0 0 7px #22c55e00; } }
 @media (max-width: 960px) {
   .hero { grid-template-columns: 1fr; gap: 24px; padding-block: 40px; }
-  .globe { width: min(320px, 86vw); order: -1; justify-self: center; }
+  .portrait-zone { width: min(340px, 86vw); order: -1; justify-self: center; }
   .hero::before { width: 380px; height: 380px; left: -120px; }
 }
 
@@ -276,31 +306,38 @@ img { max-width: 100%; display: block; }
 .filtres button:hover { border-color: var(--lavande); color: var(--indigo); }
 .filtres button[aria-pressed="true"] { background: var(--indigo); border-color: var(--indigo); color: #fff; }
 
-.grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px; margin-top: 32px; }
-/* Carte : légère inclinaison 3D + halo lumineux qui suit la souris (positions --x / --y données par script.js) */
+/* Réalisations : une liste éditoriale, une ligne par réalisation */
+.grille { margin-top: 32px; border-top: 1px solid var(--givre); }
 .carte {
-  position: relative; overflow: hidden; text-align: left; cursor: pointer;
-  display: flex; flex-direction: column; gap: 12px;
-  padding: 32px; border-radius: var(--rayon);
-  background: var(--fond); border: 1px solid var(--givre); color: inherit; font: inherit;
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform .2s ease-out, border-color .3s, opacity .4s, filter .4s;
+  width: 100%; position: relative; isolation: isolate;
+  display: grid; grid-template-columns: 72px minmax(0, 1fr) 250px 32px; gap: 32px; align-items: start;
+  padding: 32px 0; border: 0; border-bottom: 1px solid var(--givre); background: none;
+  color: inherit; font: inherit; text-align: left; cursor: pointer;
+  transition: opacity .4s, filter .4s;
 }
+/* Fond qui se déploie de gauche à droite au survol */
 .carte::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
-  background: radial-gradient(360px circle at var(--x, 50%) var(--y, 50%), color-mix(in srgb, var(--indigo) 12%, transparent), transparent 60%);
+  content: ""; position: absolute; inset: 0 -16px; z-index: -1; background: var(--bande);
+  transform: scaleX(0); transform-origin: left; transition: transform .5s var(--courbe);
 }
-.carte:hover { border-color: var(--lavande); }
-.carte:hover::before { opacity: 1; }
-.carte > * { position: relative; }
-.carte .ref { font: 400 12px var(--mono); color: var(--brume); letter-spacing: .04em; }
-.carte h3 { font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
-.carte p { color: var(--acier); font-size: 15px; }
-.carte .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
-.carte .lire { font-size: 14px; font-weight: 400; color: var(--indigo); }
-.carte .lire span { display: inline-block; transition: transform .3s var(--courbe); }
-.carte:hover .lire span { transform: translateX(6px); }
-.carte.estompee { opacity: .25; filter: grayscale(1); }
+.carte:hover::before, .carte:focus-visible::before { transform: scaleX(1); }
+.carte .num { font-size: 40px; line-height: 1; letter-spacing: -0.03em; color: var(--brume); transition: color .3s; }
+.carte:hover .num { color: var(--indigo); }
+.carte h3 { font-size: 26px; line-height: 1.15; letter-spacing: -0.015em; }
+.carte .corps p { color: var(--acier); font-size: 16px; margin-top: 8px; max-width: 58ch; }
+.carte .meta { display: grid; gap: 12px; padding-top: 6px; }
+.carte .cadre-ligne { font-size: 14px; color: var(--ardoise); }
+.carte .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.carte .fleche { font-size: 22px; color: var(--indigo); transition: transform .4s var(--courbe); }
+.carte:hover .fleche { transform: translateX(6px); }
+.carte.estompee { opacity: .3; filter: grayscale(1); }
+@media (max-width: 860px) {
+  .carte { grid-template-columns: 40px minmax(0, 1fr); gap: 12px 16px; padding: 24px 0; }
+  .carte .num { font-size: 26px; }
+  .carte .meta { grid-column: 2; padding-top: 0; }
+  .carte .fleche { display: none; }
+  .carte h3 { font-size: 22px; }
+}
 
 /* Fenêtre de détail */
 dialog {
@@ -423,29 +460,8 @@ tfoot th { text-align: left; }
   to   { opacity: 1; transform: perspective(600px) rotateY(0); }
 }
 
-/* Cartes des réalisations : arrivent inclinées en 3D, puis contenu en relief */
-.carte { transform-style: preserve-3d; }
-.carte.reveal.visible { animation: carteIn 1s var(--courbe) both; animation-delay: calc(var(--n, 0) * 120ms); }
-@keyframes carteIn {
-  from { opacity: 0; translate: 0 60px; rotate: x 25deg; }
-  to   { opacity: 1; translate: 0 0; rotate: x 0deg; }
-}
-.carte h3, .carte .lire { transition: transform .3s ease-out; }
-.carte:hover h3 { transform: translateZ(40px); }     /* le titre "sort" de la carte */
-.carte:hover .tags { transform: translateZ(25px); }
-.carte:hover .lire { transform: translateZ(50px); }
-.carte .tags { transition: transform .3s ease-out; }
-/* Contour lumineux qui tourne autour de la carte au survol */
-.carte::after {
-  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
-  background: conic-gradient(from var(--angle, 0deg), transparent 70%, var(--indigo), transparent 85%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  opacity: 0; transition: opacity .3s;
-}
-.carte:hover::after { opacity: 1; animation: tourne 2.5s linear infinite; }
-@property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-@keyframes tourne { to { --angle: 360deg; } }
+/* Lignes des réalisations : arrivent en glissant doucement */
+.carte.reveal.visible { animation: revealIn .8s var(--courbe) both; animation-delay: calc(var(--n, 0) * 80ms); }
 
 /* Fenêtre de détail : s'ouvre en basculant en 3D */
 dialog[open] { animation: dialog3d .6s var(--courbe); }
@@ -469,15 +485,6 @@ dialog[open] #detail-contenu > *:nth-child(n+7) { animation-delay: .26s; }
 }
 .bandeau-piste span:hover { color: var(--indigo); }
 .bandeau-piste span::before { content: "◆"; font-size: .4em; vertical-align: middle; margin-right: 48px; color: var(--lavande); }
-
-/* Curseur personnalisé (ordinateur uniquement) */
-.curseur, .curseur-anneau { position: fixed; top: 0; left: 0; z-index: 900; pointer-events: none; border-radius: 50%; }
-.curseur { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--indigo); }
-.curseur-anneau {
-  width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 1px solid var(--indigo); opacity: .5;
-  transition: width .3s var(--courbe), height .3s var(--courbe), margin .3s var(--courbe), opacity .3s, background .3s;
-}
-.curseur-anneau.grand { width: 64px; height: 64px; margin: -32px 0 0 -32px; opacity: 1; background: color-mix(in srgb, var(--indigo) 10%, transparent); }
 
 /* Bouton "retour en haut" avec anneau de progression */
 .haut {
@@ -503,5 +510,4 @@ dialog[open] #detail-contenu > *:nth-child(n+7) { animation-delay: .26s; }
   .reveal, .hero h1 .mot { opacity: 1; transform: none; filter: none; }
   .coche { transform: none; }
   .rideau { display: none; }
-  .curseur, .curseur-anneau { display: none; }
 }
