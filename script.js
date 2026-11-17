@@ -1,336 +1,455 @@
-(function () {
-  'use strict';
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var $ = function (s, r) { return (r || document).querySelector(s); };
-  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+/* =====================================================================
+   script.js — Portfolio Issak Dirir
+   1. Génère les cartes des réalisations et le tableau E5 depuis projets.js
+   2. Gère les filtres, la fenêtre de détail et la copie de l'e-mail
+   3. Ajoute les animations : apparition au défilement, compteurs,
+      barre de progression, menu actif, effets de survol à la souris
+   ===================================================================== */
 
-  /* ========== Bandeau à pois animé ========== */
-  var cv = $('#dots');
-  if (cv && cv.getContext) {
-    var ctx = cv.getContext('2d'), dots = [], W = 0, H = 0;
-    var cols = ['rgba(255,255,255,.95)', 'rgba(246,183,196,.95)', 'rgba(255,255,255,.75)', 'rgba(190,240,232,.9)'];
-    function size() {
-      var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
-      W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
-      dots = [];
-      var n = Math.round(W / 34);
-      for (var i = 0; i < n; i++) dots.push({ x: Math.random() * W, y: Math.random() * H, r: 6 + Math.random() * 9, v: .15 + Math.random() * .35, c: cols[i % cols.length], p: Math.random() * 6 });
-    }
-    function draw(t) {
-      ctx.clearRect(0, 0, W, H);
-      dots.forEach(function (d) {
-        if (!reduce) { d.x += d.v; if (d.x - d.r > W) d.x = -d.r; }
-        var y = d.y + (reduce ? 0 : Math.sin(t / 1400 + d.p) * 3);
-        ctx.fillStyle = d.c; ctx.beginPath(); ctx.arc(d.x, y, d.r, 0, Math.PI * 2); ctx.fill();
-      });
-      if (!reduce) requestAnimationFrame(draw);
-    }
-    size(); draw(0);
-    window.addEventListener('resize', function () { size(); if (reduce) draw(0); });
-  }
+/* Respecte le réglage "réduire les animations" de l'ordinateur */
+const moinsAnimations = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ========== Navigation par boutons-onglets ========== */
-  var views = $$('.view');
-  var order = views.map(function (v) { return v.id; });
-  var progress = $('.progress'), tabbar = $('#tabbar'), ind = $('.tab-ind');
-  var current = null, busy = false;
+/* ---------- 1. Cartes des réalisations ---------- */
+const grille = document.getElementById("grille");
 
-  function placeInd(instant) {
-    var a = $('.tab[aria-current="page"]');
-    if (!a || !ind) return;
-    if (instant) ind.classList.add('noanim');
-    ind.style.width = a.offsetWidth + 'px';
-    ind.style.transform = 'translateX(' + a.offsetLeft + 'px)';
-    if (instant) { void ind.offsetWidth; ind.classList.remove('noanim'); }
-    if (tabbar.scrollWidth > tabbar.clientWidth) {
-      tabbar.scrollTo({ left: a.offsetLeft - (tabbar.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
-    }
-  }
+PROJETS.forEach(function (projet, i) {
+  const carte = document.createElement("button");
+  carte.type = "button";
+  carte.className = "carte reveal";
+  carte.style.setProperty("--n", i % 3);        // décalage de l'animation d'apparition
+  carte.dataset.competences = projet.competences.join(" ");
+  carte.innerHTML =
+    '<span class="ref">' + projet.ref + " · " + projet.cadre + " · " + projet.lieu + "</span>" +
+    "<h3>" + projet.titre + "</h3>" +
+    "<p>" + projet.resume + "</p>" +
+    '<span class="tags">' + projet.competences.map(c => '<span class="tag">' + c + "</span>").join("") + "</span>" +
+    '<span class="lire">Voir le détail <span>›</span></span>';
+  carte.addEventListener("click", function () { ouvrirDetail(i); });
+  grille.appendChild(carte);
+});
 
-  function show(id, initial) {
-    views.forEach(function (v) { v.hidden = v.id !== id; v.classList.remove('enter', 'leave'); });
-    var v = document.getElementById(id);
-    $$('.rv', v).forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 12)); });
-    void v.offsetWidth;
-    v.classList.add('enter');
-    $$('.tab, #side-pages a').forEach(function (a) {
-      if (a.dataset.go === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
-    });
-    $$('#side-pages a').forEach(function (a) { a.classList.toggle('cur', a.dataset.go === id); });
-    current = id;
-    placeInd(initial);
-    var top = $('.tabbar-wrap').offsetTop;
-    if (window.scrollY > top) window.scrollTo({ top: top, behavior: initial || reduce ? 'auto' : 'smooth' });
-    if (!initial) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
-    document.title = (id === 'accueil' ? '' : v.dataset.label + ' · ') + 'Portfolio Issak Dirir';
-  }
-
-  function go(id, after) {
-    if (order.indexOf(id) === -1 || busy) return;
-    if (id === current) { if (after) after(); return; }
-    if (reduce) { show(id); if (after) after(); return; }
-    busy = true;
-    progress.classList.remove('run'); void progress.offsetWidth; progress.classList.add('run');
-    $$('.tab').forEach(function (a) { if (a.dataset.go === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-    placeInd();
-    var old = document.getElementById(current);
-    old.classList.remove('enter'); old.classList.add('leave');
-    setTimeout(function () { show(id); busy = false; if (after) setTimeout(after, 350); }, 290);
-  }
-
-  $$('[data-go]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      var after = null;
-      if (el.dataset.open) after = function () { filter('all'); openModal(projs.indexOf(document.getElementById(el.dataset.open))); };
-      go(el.dataset.go, after);
+/* ---------- 2. Filtres par compétence ---------- */
+const filtres = document.getElementById("filtres");
+["Toutes"].concat(Object.keys(COMPETENCES)).forEach(function (nom) {
+  const bouton = document.createElement("button");
+  bouton.type = "button";
+  bouton.textContent = nom;
+  bouton.setAttribute("aria-pressed", nom === "Toutes");
+  bouton.addEventListener("click", function () {
+    filtres.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === bouton));
+    grille.querySelectorAll(".carte").forEach(function (carte) {
+      const garde = nom === "Toutes" || carte.dataset.competences.includes(nom);
+      carte.classList.toggle("estompee", !garde);
     });
   });
+  filtres.appendChild(bouton);
+});
 
-  var start = (location.hash || '').slice(1);
-  show(order.indexOf(start) > -1 ? start : 'accueil', true);
-  window.addEventListener('load', function () { window.scrollTo(0, 0); placeInd(true); });
-  window.addEventListener('resize', function () { placeInd(true); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeInd(true); });
+/* ---------- 3. Fenêtre de détail ---------- */
+const fenetre = document.getElementById("detail");
+const liste = items => "<ul>" + items.map(m => "<li>" + m + "</li>").join("") + "</ul>";
 
-  document.addEventListener('keydown', function (e) {
-    if (!modal.hidden) {
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowRight') step(1);
-      if (e.key === 'ArrowLeft') step(-1);
+function ouvrirDetail(i) {
+  const p = PROJETS[i];
+  let html =
+    '<span class="label">' + p.ref + "</span>" +
+    '<h3 id="detail-titre">' + p.titre + "</h3>" +
+    '<p class="cadre">' + p.cadre + " · " + p.lieu + " · " + p.periode + "</p>" +
+    "<h4>Contexte</h4><p>" + p.contexte + "</p>";
+  if (p.missions) html += "<h4>Missions</h4>" + liste(p.missions);
+  // Rubriques libres (Mon rôle, Démarche, Résultat…) : texte ou liste
+  (p.details || []).forEach(function (d) {
+    html += "<h4>" + d.titre + "</h4>" + (d.liste ? liste(d.liste) : "<p>" + d.texte + "</p>");
+  });
+  html +=
+    '<h4>Outils</h4><div class="tags">' + p.outils.map(o => '<span class="tag">' + o + "</span>").join("") + "</div>" +
+    '<h4>Compétences</h4><div class="tags">' + p.competences.map(c => '<span class="tag">' + c + " · " + COMPETENCES[c] + "</span>").join("") + "</div>";
+  // Documents liés (PDF, PowerPoint…)
+  if (p.documents && p.documents.length) {
+    html += '<div class="documents">' + p.documents.map(function (doc, k) {
+      const classe = k === 0 ? "btn btn-primary" : "btn btn-ghost";
+      const cible = doc.telecharger ? " download" : ' target="_blank" rel="noopener"';
+      return '<a class="' + classe + '" href="' + doc.href + '"' + cible + ">" + doc.label + "</a>";
+    }).join("") + "</div>";
+  }
+  document.getElementById("detail-contenu").innerHTML = html;
+  fenetre.showModal();   // la touche Échap ferme la fenêtre automatiquement
+  fenetre.scrollTop = 0;
+}
+fenetre.querySelector(".fermer").addEventListener("click", () => fenetre.close());
+fenetre.addEventListener("click", function (e) { if (e.target === fenetre) fenetre.close(); }); // clic en dehors
+
+/* ---------- 4. Tableau de synthèse E5 ---------- */
+const codes = Object.keys(COMPETENCES);
+let html = "<thead><tr><th scope='col' style='text-align:left'>Réalisation</th>";
+codes.forEach(c => html += "<th scope='col'><b>" + c + "</b></th>");
+html += "</tr></thead><tbody>";
+
+let n = 0;   // numéro de la coche, pour les faire apparaître l'une après l'autre
+PROJETS.forEach(function (p, i) {
+  html += "<tr data-i='" + i + "'><th scope='row'><small>" + p.ref + "</small>" + p.titre + "</th>";
+  codes.forEach(function (c) {
+    html += p.competences.includes(c)
+      ? "<td><span class='coche' style='--n:" + (n++) + "' aria-label='oui'>✓</span></td>"
+      : "<td class='vide'>–</td>";
+  });
+  html += "</tr>";
+});
+
+// Ligne "Total" calculée automatiquement
+html += "</tbody><tfoot><tr><th>Total</th>";
+codes.forEach(c => html += "<td>" + PROJETS.filter(p => p.competences.includes(c)).length + "</td>");
+html += "</tr></tfoot>";
+
+const tableau = document.getElementById("tableau");
+tableau.innerHTML = html;
+tableau.querySelectorAll("tbody tr").forEach(tr => tr.addEventListener("click", () => ouvrirDetail(Number(tr.dataset.i))));
+
+document.getElementById("legende").innerHTML =
+  codes.map(c => "<div><dt>" + c + "</dt><dd>" + COMPETENCES[c] + "</dd></div>").join("");
+
+/* Chiffres clés calculés depuis les données */
+const couvertes = codes.filter(c => PROJETS.some(p => p.competences.includes(c))).length;
+document.getElementById("nb-projets").textContent = PROJETS.length;
+document.getElementById("nb-competences").textContent = couvertes + "/" + codes.length;
+
+/* ---------- 5. Copier l'adresse e-mail ---------- */
+const toast = document.getElementById("toast");
+function afficherMessage(texte) {
+  toast.textContent = texte;
+  toast.classList.add("montre");
+  setTimeout(() => toast.classList.remove("montre"), 1800);
+}
+document.getElementById("copier").addEventListener("click", function () {
+  const email = document.getElementById("email").textContent;
+  navigator.clipboard.writeText(email)
+    .then(() => afficherMessage("Adresse e-mail copiée"))
+    .catch(() => afficherMessage(email));
+});
+
+/* =====================================================================
+   ANIMATIONS
+   ===================================================================== */
+
+/* ---------- 6. Titre : les mots apparaissent un par un ---------- */
+const titre = document.querySelector(".hero h1");
+if (!moinsAnimations) {
+  titre.innerHTML = titre.textContent.split(" ")
+    .map((mot, i) => '<span class="mot" style="--n:' + i + '">' + mot + "</span>")
+    .join(" ");
+}
+
+/* ---------- 7. Apparition des blocs au défilement ---------- */
+// On marque les éléments à animer, puis un IntersectionObserver ajoute
+// la classe "visible" quand ils entrent dans l'écran.
+document.querySelectorAll(".section .label, .section h2, .sous-titre, .ledger > li, .domaines article, .stats div, .table-scroll, .accordeon details, .ligne, .sources")
+  .forEach(function (el) {
+    el.classList.add("reveal");
+    // décalage en cascade entre éléments voisins
+    el.style.setProperty("--n", Array.from(el.parentElement.children).indexOf(el) % 5);
+  });
+
+const observateur = new IntersectionObserver(function (entrees) {
+  entrees.forEach(function (entree) {
+    if (entree.isIntersecting) {
+      entree.target.classList.add("visible");
+      observateur.unobserve(entree.target);   // l'animation ne se joue qu'une fois
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".reveal").forEach(el => observateur.observe(el));
+
+/* ---------- 8. Compteurs des chiffres clés ---------- */
+// "3 ans" compte de 0 à 3, "6/6" de 0/6 à 6/6, etc.
+function animerCompteur(el) {
+  const texte = el.textContent;
+  const cible = parseInt(texte, 10);
+  const suite = texte.replace(String(cible), "");   // " ans" ou "/6"
+  const debut = performance.now();
+  function etape(t) {
+    const avance = Math.min((t - debut) / 1200, 1);
+    const doux = 1 - Math.pow(1 - avance, 3);         // ralentit à la fin
+    el.textContent = Math.round(cible * doux) + suite;
+    if (avance < 1) requestAnimationFrame(etape);
+  }
+  requestAnimationFrame(etape);
+}
+if (!moinsAnimations) {
+  const obsCompteurs = new IntersectionObserver(function (entrees) {
+    entrees.forEach(function (e) {
+      if (e.isIntersecting) { animerCompteur(e.target); obsCompteurs.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll(".stats strong").forEach(el => obsCompteurs.observe(el));
+}
+
+/* ---------- 9. Au défilement : barre de progression, menu, frise ---------- */
+const barre = document.createElement("div");
+barre.className = "progression";
+document.body.prepend(barre);
+
+const nav = document.querySelector(".nav");
+const frise = document.querySelector(".ledger");
+const liensMenu = document.querySelectorAll(".nav nav a");
+const sections = Array.from(liensMenu).map(a => document.querySelector(a.getAttribute("href")));
+
+function auDefilement() {
+  const y = window.scrollY;
+  const hauteur = document.documentElement.scrollHeight - window.innerHeight;
+
+  // Barre de progression de lecture
+  barre.style.transform = "scaleX(" + (hauteur > 0 ? y / hauteur : 0) + ")";
+
+  // Menu plus compact et bordé une fois qu'on a défilé
+  nav.classList.toggle("defile", y > 20);
+
+  // Lien du menu correspondant à la section visible
+  let active = null;
+  sections.forEach(function (s, i) { if (s.getBoundingClientRect().top < window.innerHeight * 0.4) active = i; });
+  liensMenu.forEach((a, i) => a.classList.toggle("actif", i === active));
+
+  // La ligne de la frise se dessine au fil du défilement
+  const r = frise.getBoundingClientRect();
+  const trace = (window.innerHeight * 0.7 - r.top) / r.height;
+  frise.style.setProperty("--trace", Math.max(0, Math.min(1, trace)));
+}
+window.addEventListener("scroll", auDefilement, { passive: true });
+auDefilement();
+
+/* ---------- 10. Effets de survol à la souris ---------- */
+if (!moinsAnimations && window.matchMedia("(hover: hover)").matches) {
+
+  // Cartes : halo qui suit la souris + légère inclinaison 3D
+  grille.addEventListener("pointermove", function (e) {
+    const carte = e.target.closest(".carte");
+    if (!carte) return;
+    const r = carte.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;    // de 0 à 1
+    const y = (e.clientY - r.top) / r.height;
+    carte.style.setProperty("--x", x * 100 + "%");
+    carte.style.setProperty("--y", y * 100 + "%");
+    carte.style.setProperty("--ry", (x - 0.5) * 8 + "deg");
+    carte.style.setProperty("--rx", (0.5 - y) * 8 + "deg");
+  });
+  grille.addEventListener("pointerout", function (e) {
+    const carte = e.target.closest(".carte");
+    if (carte && !carte.contains(e.relatedTarget)) {
+      carte.style.setProperty("--rx", "0deg");
+      carte.style.setProperty("--ry", "0deg");
     }
   });
 
-  /* ========== Thème ========== */
-  var root = document.documentElement;
-  try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
-  $('#theme').addEventListener('click', function () {
-    var t = root.getAttribute('data-theme');
-    var dark = t ? t === 'dark' : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
-    var next = dark ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    toast(next === 'dark' ? 'Thème sombre activé' : 'Thème clair activé');
+  // Boutons "aimantés" : ils suivent un peu la souris
+  document.querySelectorAll(".btn:not(.btn-petit)").forEach(function (btn) {
+    btn.addEventListener("pointermove", function (e) {
+      const r = btn.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      btn.style.transform = "translate(" + dx * 0.2 + "px," + dy * 0.3 + "px)";
+    });
+    btn.addEventListener("pointerleave", () => btn.style.transform = "");
   });
 
-  /* ========== Filtres ========== */
-  var fbtn = $$('.filters button'), count = $('#count');
-  function filter(f) {
-    var n = 0;
-    fbtn.forEach(function (b) { var on = b.dataset.f === f; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-    $$('.proj').forEach(function (p) {
-      var hit = f === 'all' || p.dataset.c.split(' ').indexOf(f) > -1;
-      p.classList.toggle('dim', !hit); p.tabIndex = hit ? 0 : -1;
-      if (hit) n++;
-    });
-    count.textContent = n + (n > 1 ? ' réalisations' : ' réalisation') + (f === 'all' ? '' : ' · ' + f);
-  }
-  fbtn.forEach(function (b) { b.addEventListener('click', function () { filter(b.dataset.f); }); });
-
-  /* ========== Fenêtre de détail ========== */
-  var modal = $('#modal'), projs = $$('.proj'), mi = 0, lastFocus = null;
-  function fill(i) {
-    mi = (i + projs.length) % projs.length;
-    var p = projs[mi], d = $('.detail', p), body = $('#m-body');
-    $('#m-ref').textContent = d.dataset.ref;
-    $('#m-title').textContent = $('h3', p).textContent;
-    $('#m-ctx').textContent = d.dataset.ctx;
-    body.innerHTML = '';
-    $$('[data-h]', d).forEach(function (s) {
-      var h = document.createElement('h4'); h.textContent = s.dataset.h; body.appendChild(h);
-      var txt = s.textContent, el;
-      if (s.dataset.h === 'Missions' || s.hasAttribute('data-list')) {
-        el = document.createElement('ul');
-        txt.split('|').forEach(function (m) { var li = document.createElement('li'); li.textContent = m; el.appendChild(li); });
-      } else if (s.dataset.h === 'Outils') {
-        el = document.createElement('div'); el.className = 'tags';
-        txt.split(',').forEach(function (o) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = o.trim(); el.appendChild(t); });
-      } else { el = document.createElement('p'); el.textContent = txt; }
-      body.appendChild(el);
-    });
-    var h = document.createElement('h4'); h.textContent = 'Compétences'; body.appendChild(h);
-    body.appendChild($('.tags', p).cloneNode(true));
-    /* Bouton vers la présentation PowerPoint du projet, affiché seulement si elle existe (data-ppt) */
-    if (d.dataset.ppt) {
-      var box = document.createElement('div'); box.className = 'ppt-box';
-      var a = document.createElement('a');
-      a.className = 'btn solid ppt'; a.href = d.dataset.ppt; a.target = '_blank'; a.rel = 'noopener';
-      a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M8 12l3-3 2 2 3-3"/></svg><span>Voir la présentation et la procédure</span>';
-      box.appendChild(a);
-      if (d.dataset.pptx) {
-        var dl = document.createElement('a');
-        dl.className = 'btn ppt'; dl.href = d.dataset.pptx; dl.setAttribute('download', '');
-        dl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>PowerPoint (.pptx)</span>';
-        box.appendChild(dl);
-      }
-      body.appendChild(box);
-    }
-    $('.panel', modal).scrollTop = 0;
-  }
-  function openModal(i) { lastFocus = document.activeElement; fill(i); modal.hidden = false; document.body.style.overflow = 'hidden'; $('.close', modal).focus(); }
-  function closeModal() { modal.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
-  function step(d) {
-    var panel = $('.panel', modal);
-    if (!reduce) { panel.style.animation = 'none'; void panel.offsetWidth; panel.style.animation = ''; }
-    fill(mi + d);
-  }
-  projs.forEach(function (p, i) { p.addEventListener('click', function () { openModal(i); }); });
-  $$('[data-close]', modal).forEach(function (b) { b.addEventListener('click', closeModal); });
-  $('#m-prev').addEventListener('click', function () { step(-1); });
-  $('#m-next').addEventListener('click', function () { step(1); });
-
-  /* ========== Tableau de synthèse ========== */
-  var table = $('#matrix');
-  function colHi(i) {
-    $$('.col-hi', table).forEach(function (c) { c.classList.remove('col-hi'); });
-    if (i < 1) return;
-    $$('tr', table).forEach(function (tr) { var c = tr.children[i]; if (c) c.classList.add('col-hi'); });
-  }
-  table.addEventListener('pointerover', function (e) {
-    var cell = e.target.closest('th,td');
-    if (cell) colHi(Array.prototype.indexOf.call(cell.parentElement.children, cell));
+  // Curseur personnalisé : un point qui suit la souris et un anneau qui le rattrape en douceur
+  const point = document.createElement("div");
+  const anneau = document.createElement("div");
+  point.className = "curseur";
+  anneau.className = "curseur-anneau";
+  document.body.append(point, anneau);
+  let sx = -100, sy = -100, ax = -100, ay = -100;
+  window.addEventListener("pointermove", function (e) {
+    sx = e.clientX; sy = e.clientY;
+    point.style.transform = "translate(" + sx + "px," + sy + "px)";
+    // L'anneau grossit au-dessus des éléments cliquables
+    anneau.classList.toggle("grand", !!e.target.closest("a, button, summary, tr, .carte"));
   });
-  table.addEventListener('pointerleave', function () { colHi(-1); });
-  $$('tbody tr', table).forEach(function (tr) {
-    tr.addEventListener('click', function () {
-      var i = projs.indexOf(document.getElementById(tr.dataset.rp));
-      go('realisations', function () { filter('all'); openModal(i); });
-    });
-  });
+  (function suivre() {
+    ax += (sx - ax) * 0.18;   // l'anneau parcourt 18 % de la distance à chaque image : effet de retard
+    ay += (sy - ay) * 0.18;
+    anneau.style.transform = "translate(" + ax + "px," + ay + "px)";
+    requestAnimationFrame(suivre);
+  })();
+}
 
-  /* ========== Carrousel « Réalisations à la une » ==========
-     Écrit sans bibliothèque : défilement automatique piloté par requestAnimationFrame,
-     pause au survol / au focus / onglet masqué / hors écran, glissement tactile
-     (Pointer Events), clavier, et attributs ARIA pour les lecteurs d'écran. */
-  var car = $('#carousel');
-  if (car) {
-    var track = $('.car-track', car), slides = $$('.slide', car), dotsC = $$('.dot', car);
-    var countEl = $('.car-count b', car), bar = $('.car-progress i', car), playBtn = $('.car-play', car);
-    var vp = $('.car-viewport', car);
-    var DELAY = 6000, idx = 0, elapsed = 0, last = 0;
-    var userPaused = reduce, hover = false, focusIn = false, inView = true, dragged = false;
+/* ---------- 11. Rideau d'ouverture ---------- */
+const rideau = document.getElementById("rideau");
+if (moinsAnimations) rideau.remove();
+else setTimeout(function () {
+  rideau.classList.add("leve");
+  setTimeout(() => rideau.remove(), 1100);
+}, 700);
 
-    function goTo(i, instant) {
-      idx = (i + slides.length) % slides.length;
-      if (instant) track.style.transition = 'none';
-      track.style.transform = 'translateX(' + (-idx * 100) + '%)';
-      if (instant) { void track.offsetWidth; track.style.transition = ''; }
-      slides.forEach(function (s, k) {
-        var on = k === idx;
-        s.classList.toggle('is-active', on);
-        if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
-        $$('button', s).forEach(function (b) { b.tabIndex = on ? 0 : -1; });
-      });
-      dotsC.forEach(function (d, k) {
-        d.classList.toggle('on', k === idx);
-        if (k === idx) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
-      });
-      countEl.textContent = idx + 1;
-      elapsed = 0;
-    }
-    function running() {
-      return !userPaused && !hover && !focusIn && !document.hidden && inView && car.offsetParent !== null;
-    }
-    function setPaused(p) {
-      userPaused = p;
-      car.classList.toggle('paused', p);
-      playBtn.setAttribute('aria-label', p ? 'Relancer le défilement' : 'Mettre en pause le défilement');
-    }
-    (function tick(ts) {
-      var dt = last ? ts - last : 0; last = ts;
-      if (running()) { elapsed += dt; if (elapsed >= DELAY) goTo(idx + 1); }
-      bar.style.transform = 'scaleX(' + Math.min(elapsed / DELAY, 1) + ')';
-      requestAnimationFrame(tick);
-    })(performance.now());
-
-    $('.car-arrow.prev', car).addEventListener('click', function () { goTo(idx - 1); });
-    $('.car-arrow.next', car).addEventListener('click', function () { goTo(idx + 1); });
-    dotsC.forEach(function (d, k) { d.addEventListener('click', function () { goTo(k); }); });
-    playBtn.addEventListener('click', function () { setPaused(!userPaused); });
-    car.addEventListener('mouseenter', function () { hover = true; });
-    car.addEventListener('mouseleave', function () { hover = false; });
-    car.addEventListener('focusin', function () { focusIn = true; });
-    car.addEventListener('focusout', function (e) { if (!car.contains(e.relatedTarget)) focusIn = false; });
-    car.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(idx + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(idx - 1); }
-    });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }, { threshold: .3 }).observe(car);
-    }
-    $$('.slide-open', car).forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (dragged) return;
-        openModal(projs.indexOf(document.getElementById(b.dataset.rp)));
-      });
-    });
-
-    /* Glissement au doigt ou à la souris */
-    var startX = 0, startY = 0, dx = 0, drag = false, lock = null;
-    vp.addEventListener('pointerdown', function (e) {
-      if (e.button !== 0 || e.target.closest('.car-arrow')) return;
-      drag = true; lock = null; dragged = false; dx = 0; startX = e.clientX; startY = e.clientY;
-    });
-    window.addEventListener('pointermove', function (e) {
-      if (!drag) return;
-      var mx = e.clientX - startX, my = e.clientY - startY;
-      if (lock === null && (Math.abs(mx) > 6 || Math.abs(my) > 6)) lock = Math.abs(mx) > Math.abs(my) ? 'x' : 'y';
-      if (lock !== 'x') return;
-      dx = mx; dragged = Math.abs(dx) > 8;
-      track.classList.add('dragging');
-      var edge = (idx === 0 && dx > 0) || (idx === slides.length - 1 && dx < 0) ? .35 : 1;
-      track.style.transform = 'translateX(calc(' + (-idx * 100) + '% + ' + (dx * edge) + 'px))';
-    });
-    function endDrag() {
-      if (!drag) return;
-      drag = false; track.classList.remove('dragging');
-      if (lock === 'x') {
-        var w = vp.clientWidth;
-        if (dx < -w * .15) goTo(idx + 1); else if (dx > w * .15) goTo(idx - 1); else goTo(idx);
-      }
-      setTimeout(function () { dragged = false; }, 0);
-    }
-    window.addEventListener('pointerup', endDrag);
-    window.addEventListener('pointercancel', endDrag);
-
-    setPaused(userPaused);
-    goTo(0, true);
-  }
-
-  /* ========== Copier l'e-mail ========== */
-  var toastEl = $('.toast'), tt;
-  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 1800); }
-  $('#copy').addEventListener('click', function () {
-    var code = $('#email'), t = code.textContent;
-    function sel() { var r = document.createRange(); r.selectNodeContents(code); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Adresse sélectionnée, faites Ctrl+C'); }
-    try { navigator.clipboard.writeText(t).then(function () { toast('Adresse e-mail copiée'); }, sel); } catch (e) { sel(); }
-  });
+/* ---------- 12. Bandeau d'outils : défilement infini, accéléré par le scroll ---------- */
+// La liste des outils est construite à partir de projets.js (sans doublons)
+const outils = [...new Set(PROJETS.flatMap(p => p.outils).concat(["PowerShell", "Bash", "Salesforce", "Office 365"]))];
+const piste = document.getElementById("bandeau");
+// On met la liste deux fois à la suite : quand la 1re moitié est sortie, on revient au début sans que ça se voie
+piste.innerHTML = outils.concat(outils).map(o => "<span>" + o + "</span>").join("");
+let decalage = 0, vitesse = 0, dernierY = window.scrollY;
+(function defiler() {
+  const y = window.scrollY;
+  vitesse += (Math.abs(y - dernierY) * 0.4 - vitesse) * 0.1;   // plus on scrolle vite, plus il accélère
+  dernierY = y;
+  if (!moinsAnimations) decalage -= 0.5 + vitesse;
+  const moitie = piste.scrollWidth / 2;
+  if (-decalage >= moitie) decalage += moitie;
+  piste.style.translate = decalage + "px 0";
+  requestAnimationFrame(defiler);
 })();
 
-/* ===== Fenêtre d'accueil « Qui visite ? » =====
-   Réponse obligatoire pour entrer. Affichée une seule fois par navigateur.
-   La réponse est envoyée à un Google Form (data-form = URL formResponse, data-entry = entry.XXXX). */
+/* ---------- 13. Libellés "brouillés" façon terminal ---------- */
+// Quand un libellé apparaît, ses lettres défilent au hasard avant de se fixer
+const signes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/<>_";
+function brouiller(el) {
+  const final = el.textContent;
+  let tour = 0;
+  el.classList.add("brouille");
+  const minuteur = setInterval(function () {
+    el.textContent = final.split("").map(function (c, i) {
+      if (c === " " || i < tour) return c;
+      return signes[Math.floor(Math.random() * signes.length)];
+    }).join("");
+    tour += 1;
+    if (tour > final.length) { clearInterval(minuteur); el.textContent = final; el.classList.remove("brouille"); }
+  }, 28);
+}
+if (!moinsAnimations) {
+  const obsLabels = new IntersectionObserver(function (entrees) {
+    entrees.forEach(function (e) {
+      if (e.isIntersecting) { brouiller(e.target); obsLabels.unobserve(e.target); }
+    });
+  }, { threshold: 1 });
+  document.querySelectorAll(".label").forEach(el => obsLabels.observe(el));
+}
+
+/* ---------- 14. Bouton "retour en haut" ---------- */
+const haut = document.createElement("button");
+haut.className = "haut";
+haut.type = "button";
+haut.setAttribute("aria-label", "Revenir en haut de la page");
+haut.innerHTML = '<svg viewBox="0 0 48 48"><circle class="piste" cx="24" cy="24" r="22"/><circle class="avance" cx="24" cy="24" r="22"/></svg>↑';
+haut.addEventListener("click", () => window.scrollTo({ top: 0 }));
+document.body.appendChild(haut);
+window.addEventListener("scroll", function () {
+  const hauteur = document.documentElement.scrollHeight - window.innerHeight;
+  haut.style.setProperty("--p", window.scrollY / hauteur);
+  haut.classList.toggle("montre", window.scrollY > 600);
+}, { passive: true });
+
+/* =====================================================================
+   15. GLOBE RÉSEAU EN 3D
+   Des points répartis sur une sphère (les équipements), reliés à leurs
+   voisins (les câbles). Des paquets de données circulent sur les liens.
+   La sphère tourne seule, suit la souris et accélère quand on scrolle.
+   Principe 3D : on fait tourner chaque point (x, y, z) avec un peu de
+   trigonométrie, puis on le projette en 2D (perspective : plus un point
+   est loin, plus il est petit et proche du centre).
+   ===================================================================== */
 (function () {
-  var gate = document.getElementById('gate'); if (!gate) return;
-  var KEY = 'portfolio-visiteur';
-  try { if (localStorage.getItem(KEY)) return; } catch (e) {}
-  var form = document.getElementById('gate-form'), input = document.getElementById('gate-name');
-  var prevFocus = document.activeElement;
-  gate.hidden = false; document.documentElement.style.overflow = 'hidden';
-  setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, 60);
-  function close(val) {
-    try { localStorage.setItem(KEY, val || '-'); } catch (e) {}
-    gate.classList.add('out');
-    setTimeout(function () { gate.hidden = true; gate.classList.remove('out'); document.documentElement.style.overflow = ''; if (prevFocus && prevFocus.focus) prevFocus.focus(); }, 280);
+  const zone = document.getElementById("globe");
+  const toileArriere = zone.querySelector(".globe-arriere");
+  const toileAvant = zone.querySelector(".globe-avant");
+  const ctxA = toileArriere.getContext("2d");
+  const ctxV = toileAvant.getContext("2d");
+  const couleur = getComputedStyle(document.documentElement).getPropertyValue("--indigo").trim();
+
+  // 1. Points sur la sphère (répartition "spirale de Fibonacci" : régulière, sans trou)
+  const NB = 80, points = [];
+  for (let i = 0; i < NB; i++) {
+    const y = 1 - (i / (NB - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const a = i * Math.PI * (3 - Math.sqrt(5));
+    points.push({ x: Math.cos(a) * r, y: y, z: Math.sin(a) * r });
   }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = input.value.trim().slice(0, 40); if (!name) { input.focus(); return; }
-    var url = gate.dataset.form, entry = gate.dataset.entry;
-    if (url && entry) {
-      var fd = new FormData(); fd.append(entry, name);
-      try { fetch(url, { method: 'POST', mode: 'no-cors', body: fd }).catch(function () {}); } catch (err) {}
-    }
-    close(name);
+
+  // 2. Liens : chaque point est relié à ses 3 voisins les plus proches
+  const liens = [];
+  points.forEach(function (p, i) {
+    points.map((q, j) => ({ j: j, d: (p.x - q.x) ** 2 + (p.y - q.y) ** 2 + (p.z - q.z) ** 2 }))
+      .filter(o => o.j !== i).sort((a, b) => a.d - b.d).slice(0, 3)
+      .forEach(function (o) { if (!liens.some(l => l[0] === o.j && l[1] === i)) liens.push([i, o.j]); });
   });
+
+  // 3. Paquets de données qui voyagent sur les liens
+  const paquets = Array.from({ length: 14 }, () => ({ lien: Math.floor(Math.random() * liens.length), t: Math.random() }));
+
+  let taille = 0, rotY = 0, rotX = -0.3, cibleX = -0.3, cibleY = 0, visible = true, dernierScroll = window.scrollY;
+
+  function dimensionner() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    taille = zone.clientWidth;
+    [toileArriere, toileAvant].forEach(function (c) { c.width = taille * dpr; c.height = taille * dpr; });
+    [ctxA, ctxV].forEach(ctx => ctx.setTransform(dpr, 0, 0, dpr, 0, 0));
+  }
+
+  // Rotation 3D puis projection en perspective
+  function projeter(p) {
+    let x = p.x * Math.cos(rotY) - p.z * Math.sin(rotY);
+    let z = p.x * Math.sin(rotY) + p.z * Math.cos(rotY);
+    let y = p.y * Math.cos(rotX) - z * Math.sin(rotX);
+    z = p.y * Math.sin(rotX) + z * Math.cos(rotX);
+    const rayon = taille * 0.42;
+    const persp = 3 / (3 + z);              // perspective
+    return { x: taille / 2 + x * rayon * persp, y: taille / 2 + y * rayon * persp, z: z, persp: persp };
+  }
+
+  function dessiner() {
+    if (visible) {
+      // La sphère tourne seule + un peu plus vite quand on scrolle
+      const y = window.scrollY;
+      rotY += 0.003 + Math.abs(y - dernierScroll) * 0.0008;
+      dernierScroll = y;
+      rotX += (cibleX - rotX) * 0.05;
+      rotY += cibleY * 0.02;
+
+      const proj = points.map(projeter);
+      [ctxA, ctxV].forEach(ctx => ctx.clearRect(0, 0, taille, taille));
+
+      // z > 0 : point à l'arrière (dessiné derrière la photo) ; z < 0 : à l'avant
+      liens.forEach(function (l) {
+        const a = proj[l[0]], b = proj[l[1]];
+        const ctx = (a.z + b.z) / 2 > 0 ? ctxA : ctxV;
+        ctx.strokeStyle = couleur;
+        ctx.globalAlpha = 0.12 + (1 - (a.z + b.z) / 2) * 0.18;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      });
+      proj.forEach(function (p) {
+        const ctx = p.z > 0 ? ctxA : ctxV;
+        ctx.globalAlpha = 0.35 + (1 - p.z) * 0.3;
+        ctx.fillStyle = couleur;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 2.2 * p.persp, 0, Math.PI * 2); ctx.fill();
+      });
+      // Paquets : un petit point lumineux qui avance le long d'un lien
+      paquets.forEach(function (pq) {
+        pq.t += 0.012;
+        if (pq.t > 1) { pq.t = 0; pq.lien = Math.floor(Math.random() * liens.length); }
+        const a = proj[liens[pq.lien][0]], b = proj[liens[pq.lien][1]];
+        const x = a.x + (b.x - a.x) * pq.t, yy = a.y + (b.y - a.y) * pq.t, z = a.z + (b.z - a.z) * pq.t;
+        const ctx = z > 0 ? ctxA : ctxV;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = couleur;
+        ctx.shadowColor = couleur; ctx.shadowBlur = 10;
+        ctx.beginPath(); ctx.arc(x, yy, 2.6, 0, Math.PI * 2); ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+    }
+    if (!moinsAnimations) requestAnimationFrame(dessiner);
+  }
+
+  // La souris incline le globe
+  zone.addEventListener("pointermove", function (e) {
+    const r = zone.getBoundingClientRect();
+    cibleY = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
+    cibleX = -0.3 + ((e.clientY - r.top) / r.height - 0.5) * 0.8;
+  });
+  zone.addEventListener("pointerleave", function () { cibleY = 0; cibleX = -0.3; });
+
+  // On arrête de dessiner quand le globe n'est plus à l'écran (économie de batterie)
+  new IntersectionObserver(e => visible = e[0].isIntersecting).observe(zone);
+
+  dimensionner();
+  window.addEventListener("resize", dimensionner);
+  dessiner();
 })();

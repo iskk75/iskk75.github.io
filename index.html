@@ -1,404 +1,222 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Portfolio Issak Dirir</title>
-<meta name="description" content="Portefeuille de compétences BTS SIO option SISR d'Issak Dirir : CV, situations professionnelles, tableau de synthèse E5 et veille technologique.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Source+Sans+3:wght@400;600&family=Lora:ital@0;1&display=swap">
-<link rel="stylesheet" href="style.css?v=20261027b">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Issak Dirir · Portfolio BTS SIO SISR</title>
+  <meta name="description" content="Portfolio d'Issak Dirir, technicien systèmes et réseaux en BTS SIO option SISR : parcours, réalisations, tableau de synthèse E5 et veille technologique.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400&family=JetBrains+Mono:wght@400&display=swap">
+  <link rel="stylesheet" href="style.css?v=20261117">
 </head>
 <body>
-<div class="band" aria-hidden="true"><canvas id="dots"></canvas></div>
 
-<header class="masthead gut">
-  <div class="inner">
-    <div>
-      <button class="site-title" type="button" data-go="accueil">Portfolio <b>Issak Dirir</b></button>
-      <p class="tagline">Portefeuille de compétences · BTS SIO option SISR</p>
+  <!-- Écran d'ouverture : un rideau indigo qui se lève au chargement -->
+  <div class="rideau" id="rideau" aria-hidden="true"><span>Issak Dirir</span></div>
+
+  <!-- ===== Barre de navigation ===== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#haut">Issak Dirir</a>
+      <nav aria-label="Menu principal">
+        <a href="#parcours">Parcours</a>
+        <a href="#realisations">Réalisations</a>
+        <a href="#synthese">Synthèse E5</a>
+        <a href="#veille">Veille</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-primary nav-cta" href="#contact">Me contacter</a>
     </div>
-    <button class="theme" id="theme" type="button" aria-label="Changer de thème (clair / sombre)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-</header>
+  </header>
 
-<div class="tabbar-wrap gut">
-  <div class="inner">
-    <nav class="tabbar" id="tabbar" aria-label="Menu principal">
-      <span class="tab-ind" aria-hidden="true"></span>
-      <a class="tab" href="#accueil" data-go="accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg><span>Accueil</span></a>
-      <a class="tab" href="#parcours" data-go="parcours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5"/><path d="M9.5 12.5h6M9.5 16h6"/></svg><span>CV</span></a>
-      <a class="tab" href="#realisations" data-go="realisations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V5.5h6v2M3.5 12.5h17"/></svg><span>Réalisations</span></a>
-      <a class="tab" href="#synthese" data-go="synthese"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M9.5 9.5v10M15 9.5v10"/></svg><span>Synthèse E5</span></a>
-      <a class="tab" href="#veille" data-go="veille"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg><span>Veille</span></a>
-      <a class="tab" href="#contact" data-go="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg><span>Contact</span></a>
-    </nav>
-  </div>
-  <span class="progress" aria-hidden="true"></span>
-</div>
+  <main id="haut">
 
-<main class="gut">
-  <div class="inner layout">
-    <div class="content">
-
-      <!-- ===== ACCUEIL ===== -->
-      <section class="view" id="accueil" data-label="Accueil">
-        <p class="crumb rv"><b>Accueil</b></p>
-        <h1 class="page-title rv">Présentation</h1>
-        <div class="wave rv" aria-hidden="true"></div>
-        <div class="welcome">
-          <img class="photo rv" src="photo-issak.jpg" width="300" height="300" alt="Photo d'Issak Dirir">
-          <div class="prose">
-            <p class="lead rv">Bienvenue sur mon portefeuille de compétences. Je m'appelle Issak Dirir, je suis apprenti en BTS SIO (Services Informatiques aux Organisations), option SISR, à l'IPSSI de Serris.</p>
-            <p class="rv">J'ai trois ans d'expérience en informatique en alternance : support technique helpdesk chez ZETES France, puis maintenance des infrastructures IT des clients chez JILITI. Je recherche un poste de technicien de proximité, de support ou de maintenance informatique. Vous trouverez ici mon CV, mes situations professionnelles, mon tableau de synthèse et ma veille technologique.</p>
-            <div class="cta rv">
-              <button class="btn solid" type="button" data-go="realisations">Mes réalisations</button>
-              <button class="btn" type="button" data-go="parcours">Mon CV</button>
-            </div>
-          </div>
+    <!-- ===== Accueil ===== -->
+    <section class="container hero">
+      <div class="hero-text">
+        <p class="label">BTS SIO · option SISR · IPSSI Serris</p>
+        <h1>Technicien systèmes et réseaux, avec trois ans de terrain.</h1>
+        <p class="intro">Je suis Issak Dirir, apprenti en BTS SIO option SISR. Après deux ans de support chez ZETES France puis la maintenance d'infrastructures clients chez JILITI, je recherche un poste de technicien de proximité, de support ou de maintenance informatique.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#realisations">Voir mes réalisations</a>
+          <a class="btn btn-ghost" href="cv-issak-dirir.pdf" target="_blank" rel="noopener">Mon CV (PDF)</a>
         </div>
+      </div>
+      <!-- Globe réseau en 3D (dessiné par script.js) avec la photo au centre.
+           Deux canvas : les nœuds de l'arrière passent DERRIÈRE la photo, ceux de l'avant DEVANT. -->
+      <div class="globe" id="globe">
+        <canvas class="globe-arriere" aria-hidden="true"></canvas>
+        <img class="portrait" src="photo-issak.jpg" width="300" height="300" alt="Photo d'Issak Dirir">
+        <canvas class="globe-avant" aria-hidden="true"></canvas>
+      </div>
+    </section>
 
-        <h2 class="h-sec rv">Réalisations à la une</h2>
-        <section class="carousel rv" id="carousel" aria-roledescription="carrousel" aria-label="Réalisations à la une">
-          <div class="car-viewport">
-            <ul class="car-track" aria-live="off">
-            <li class="slide tone-b" role="group" aria-roledescription="diapositive" aria-label="1 sur 6 : Déploiement de terminaux mobiles par MDM">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-01</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="6" width="26" height="52" rx="5"/><path d="M28 50h8M25 14h14v26H25z"/><path d="m29 27 3 3 6-6"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Alternance · ZETES France</span>
-                <h3>Déploiement de terminaux mobiles par MDM</h3>
-                <p>De 3 à 300 terminaux Honeywell et Zebra par commande, configurés via le MDM SOTI pour Carrefour, DHL, Renault, Lactalis…</p>
-                <div class="tags"><span class="tag">B1.1</span><span class="tag">B1.2</span><span class="tag">B1.5</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp1">Voir le détail</button>
-              </div>
-            </li>
-            <li class="slide tone-a" role="group" aria-roledescription="diapositive" aria-label="2 sur 6 : Infrastructure Active Directory" aria-hidden="true">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-02</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="44" height="14" rx="3"/><rect x="10" y="26" width="44" height="14" rx="3"/><rect x="10" y="44" width="44" height="14" rx="3"/><path d="M17 15h.01M17 33h.01M17 51h.01M26 15h20M26 33h20M26 51h20"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Formation · IPSSI</span>
-                <h3>Infrastructure Active Directory</h3>
-                <p>Domaine novaconseil.local : deux contrôleurs de domaine, DNS, DHCP, partages par service et trois GPO.</p>
-                <div class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp2" tabindex="-1">Voir le détail</button>
-              </div>
-            </li>
-            <li class="slide tone-c" role="group" aria-roledescription="diapositive" aria-label="3 sur 6 : Segmentation réseau par VLAN" aria-hidden="true">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-03</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="6" width="16" height="11" rx="2"/><rect x="6" y="46" width="16" height="11" rx="2"/><rect x="24" y="46" width="16" height="11" rx="2"/><rect x="42" y="46" width="16" height="11" rx="2"/><path d="M32 17v12M14 46v-8h36v8M32 29v17"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Formation · IPSSI</span>
-                <h3>Segmentation réseau par VLAN</h3>
-                <p>Réseau d'entreprise segmenté par service, avec routage inter-VLAN et DHCP sur équipements Cisco.</p>
-                <div class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp3" tabindex="-1">Voir le détail</button>
-              </div>
-            </li>
-            <li class="slide tone-a" role="group" aria-roledescription="diapositive" aria-label="4 sur 6 : Installation de serveurs en datacenter" aria-hidden="true">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-04</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="36" height="56" rx="3"/><path d="M20 12h24M20 20h24M20 28h24M20 36h24M20 44h24M20 52h24"/><path d="M40 12h.01M40 20h.01M40 28h.01"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Alternance · JILITI</span>
-                <h3>Installation de serveurs en datacenter</h3>
-                <p>Du quai de chargement jusqu'au rack : réception, contrôle, montage, câblage et mise sous tension.</p>
-                <div class="tags"><span class="tag">B1.1</span><span class="tag">B1.5</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp4" tabindex="-1">Voir le détail</button>
-              </div>
-            </li>
-            <li class="slide tone-b" role="group" aria-roledescription="diapositive" aria-label="5 sur 6 : Supervision avec Zabbix" aria-hidden="true">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-05</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 54h48"/><path d="M12 44l12-14 10 8 16-22"/><circle cx="50" cy="16" r="3"/><path d="M8 8v46"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Formation · IPSSI</span>
-                <h3>Supervision avec Zabbix</h3>
-                <p>Surveillance des serveurs et des switchs avec seuils d'alerte et notifications automatiques.</p>
-                <div class="tags"><span class="tag">B1.1</span><span class="tag">B1.6</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp5" tabindex="-1">Voir le détail</button>
-              </div>
-            </li>
-            <li class="slide tone-c" role="group" aria-roledescription="diapositive" aria-label="6 sur 6 : Portfolio professionnel" aria-hidden="true">
-              <div class="slide-art" aria-hidden="true"><span class="slide-num">RP-06</span><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 20-12 12 12 12M42 20l12 12-12 12M36 14l-8 36"/></svg></div>
-              <div class="slide-txt">
-                <span class="slide-ctx">Projet personnel</span>
-                <h3>Portfolio professionnel</h3>
-                <p>Site responsive en HTML, CSS et JavaScript, hébergé sur GitHub Pages.</p>
-                <div class="tags"><span class="tag">B1.3</span><span class="tag">B1.6</span></div>
-                <button type="button" class="btn solid slide-open" data-rp="rp6" tabindex="-1">Voir le détail</button>
-              </div>
-            </li>
+    <!-- Chiffres clés : "6" et "6/6" sont calculés par script.js à partir de projets.js -->
+    <section class="container stats" aria-label="Chiffres clés">
+      <div><strong>3 ans</strong><span>d'expérience en alternance</span></div>
+      <div><strong>2</strong><span>entreprises : ZETES France, JILITI</span></div>
+      <div><strong id="nb-projets">6</strong><span>réalisations documentées</span></div>
+      <div><strong id="nb-competences">6/6</strong><span>compétences du bloc 1 couvertes</span></div>
+    </section>
+
+    <!-- Bandeau d'outils qui défile en continu (rempli par script.js) -->
+    <div class="bandeau" aria-label="Outils et technologies utilisés">
+      <div class="bandeau-piste" id="bandeau"></div>
+    </div>
+
+    <!-- ===== Parcours ===== -->
+    <section class="container section" id="parcours">
+      <p class="label">Parcours</p>
+      <h2>Formation et expérience</h2>
+      <ol class="ledger">
+        <li>
+          <span class="date">2025 – 2027</span>
+          <div>
+            <h3>BTS SIO, option SISR <span class="tag">Formation</span></h3>
+            <p class="lieu">IPSSI, Serris · en alternance</p>
+          </div>
+        </li>
+        <li>
+          <span class="date">2025 – 2026</span>
+          <div>
+            <h3>Technicien IT, maintenance des infrastructures clients <span class="tag">Alternance</span></h3>
+            <p class="lieu">JILITI, Rungis</p>
+            <ul>
+              <li>Maintenance des systèmes et réseaux des clients</li>
+              <li>Contrôle des salles informatiques et des sauvegardes sur robot</li>
+              <li>Upgrades matériels : disques, mémoire, cartes</li>
+              <li>Interventions de l'appel à la clôture, suivies dans Salesforce</li>
             </ul>
-            <button type="button" class="car-arrow prev" aria-label="Diapositive précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
-            <button type="button" class="car-arrow next" aria-label="Diapositive suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
           </div>
-          <div class="car-bar">
-            <button type="button" class="car-play" aria-label="Mettre en pause le défilement"><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg></button>
-            <div class="car-dots"><button type="button" class="dot on" aria-label="Aller à la diapositive 1" aria-current="true"></button><button type="button" class="dot" aria-label="Aller à la diapositive 2"></button><button type="button" class="dot" aria-label="Aller à la diapositive 3"></button><button type="button" class="dot" aria-label="Aller à la diapositive 4"></button><button type="button" class="dot" aria-label="Aller à la diapositive 5"></button><button type="button" class="dot" aria-label="Aller à la diapositive 6"></button></div>
-            <span class="car-count"><b>1</b> / 6</span>
+        </li>
+        <li>
+          <span class="date">2023 – 2025</span>
+          <div>
+            <h3>Technicien support helpdesk <span class="tag">Alternance</span></h3>
+            <p class="lieu">ZETES France, Antony</p>
+            <ul>
+              <li>Terminaux mobiles Honeywell et Zebra : préparation et mises à jour Android</li>
+              <li>Validation des configurations dans le MDM SOTI</li>
+              <li>Suivi du parc, étiquetage et traçabilité</li>
+              <li>Relation fournisseurs et support client de niveau 3</li>
+            </ul>
           </div>
-          <div class="car-progress" aria-hidden="true"><i></i></div>
-        </section>
-
-        <h2 class="h-sec rv">Domaines de compétences</h2>
-        <div class="cards3">
-          <article class="dom rv">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="12" y="3" width="8" height="6" rx="1"/><rect x="3" y="23" width="8" height="6" rx="1"/><rect x="21" y="23" width="8" height="6" rx="1"/><path d="M16 9v6M7 23v-4h18v4M16 15v4"/></svg>
-            <h3>Réseaux</h3><p>VLAN, routage, adressage IP, DHCP et DNS sur équipements Cisco.</p>
-          </article>
-          <article class="dom rv">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="4" width="22" height="8" rx="1.5"/><rect x="5" y="14" width="22" height="8" rx="1.5"/><path d="M9 8h.01M9 18h.01M13 8h6M13 18h6M11 26h10M16 22v4"/></svg>
-            <h3>Systèmes</h3><p>Windows Server, Active Directory, Linux, virtualisation et sauvegardes.</p>
-          </article>
-          <article class="dom rv">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 3 6 7v8c0 6.5 4.3 11.6 10 14 5.7-2.4 10-7.5 10-14V7L16 3z"/><path d="m11.5 16 3 3 6-6.5"/></svg>
-            <h3>Sécurité</h3><p>Pare-feu, VPN, gestion des droits et supervision des équipements.</p>
-          </article>
-        </div>
-
-        <h2 class="h-sec rv">Actualités</h2>
-        <ul class="news">
-          <li class="rv"><time>Oct. 2026</time><span><b>Mise en ligne du portfolio.</b> Mon portefeuille de compétences est désormais accessible en ligne.</span></li>
-          <li class="rv"><time>Juin 2026</time><span><b>Fin de ma mission chez JILITI (Rungis).</b> Neuf mois comme technicien IT de maintenance des infrastructures des clients.</span></li>
-          <li class="rv"><time>Sept. 2025</time><span><b>Entrée en BTS SIO option SISR à l'IPSSI de Serris,</b> en alternance chez JILITI.</span></li>
-          <li class="rv"><time>Juin 2025</time><span><b>Fin de deux ans d'alternance chez ZETES France (Antony)</b> et du Bac Pro Systèmes Numériques au CFA Utec d'Emerainville.</span></li>
-        </ul>
-      </section>
-
-      <!-- ===== CV ===== -->
-      <section class="view" id="parcours" data-label="Curriculum vitae" hidden>
-        <p class="crumb rv">Accueil › <b>Curriculum vitae</b></p>
-        <h2 class="page-title rv">Curriculum vitae</h2>
-        <div class="wave rv" aria-hidden="true"></div>
-        <div class="cv-bar rv">
-          <p>Mon CV à jour, au format PDF.</p>
-          <div class="cta">
-            <a class="btn solid" href="cv-issak-dirir.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a>
-            <a class="btn" href="cv-issak-dirir.pdf" download="CV-Issak-Dirir.pdf">Télécharger</a>
+        </li>
+        <li>
+          <span class="date">2023 – 2025</span>
+          <div>
+            <h3>Bac Pro Systèmes Numériques <span class="tag">Formation</span></h3>
+            <p class="lieu">CFA Utec, Emerainville · en alternance</p>
           </div>
-        </div>
-        <a class="cv-sheet rv" href="cv-issak-dirir.pdf" target="_blank" rel="noopener" aria-label="Ouvrir le CV d'Issak Dirir en PDF">
-          <img src="cv-apercu.jpg" width="1075" height="1521" alt="CV d'Issak Dirir : technicien de proximité, de support ou de maintenance informatique, BTS SIO option SISR à l'IPSSI">
-        </a>
-      </section>
+        </li>
+      </ol>
 
-      <!-- ===== SITUATIONS PROFESSIONNELLES ===== -->
-      <section class="view" id="realisations" data-label="Situations professionnelles" hidden>
-        <p class="crumb rv">Accueil › <b>Situations professionnelles</b></p>
-        <h2 class="page-title rv">Situations professionnelles</h2>
-        <div class="wave rv" aria-hidden="true"></div>
-        <div class="filters rv" role="group" aria-label="Filtrer par compétence">
-          <button type="button" class="on" data-f="all" aria-pressed="true">Toutes</button>
-          <button type="button" data-f="B1.1" aria-pressed="false">B1.1</button>
-          <button type="button" data-f="B1.2" aria-pressed="false">B1.2</button>
-          <button type="button" data-f="B1.3" aria-pressed="false">B1.3</button>
-          <button type="button" data-f="B1.4" aria-pressed="false">B1.4</button>
-          <button type="button" data-f="B1.5" aria-pressed="false">B1.5</button>
-          <button type="button" data-f="B1.6" aria-pressed="false">B1.6</button>
-          <span class="count" id="count">6 réalisations</span>
-        </div>
-        <div class="grid">
-          <button type="button" class="proj rv" id="rp1" data-c="B1.1 B1.2 B1.5">
-            <span class="cover"><span>RP-01 · ZETES FRANCE</span></span>
-            <span class="body"><h3>Déploiement de terminaux mobiles par MDM</h3><p>Préparation et configuration de 3 à 300 terminaux Honeywell et Zebra par commande, via le MDM SOTI, pour Carrefour, DHL, Renault…</p>
-            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.2</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-01" data-ctx="Alternance ZETES France, Antony · sept. 2023 – juin 2025" data-ppt="RP-01-ZETES-Deploiement-terminaux-MDM.pdf" data-pptx="RP-01-ZETES-Deploiement-terminaux-MDM.pptx">
-              <span data-h="Contexte">ZETES prépare et configure des terminaux mobiles industriels (terminaux de poche, PDA, tablettes Honeywell et Zebra) pour des clients de la grande distribution, de la logistique et de l'industrie : Boulanger, Carrefour, DHL, Lactalis, Renault, Brink's, ainsi que des commerçants indépendants. Les commandes allaient de 3 à 300 terminaux, livrés surtout en France et parfois à l'étranger. La réception et l'expédition des colis étaient gérées par un service logistique dédié.</span>
-              <span data-h="Mon rôle">Pendant deux ans d'alternance, je préparais les terminaux avant leur livraison (mise à jour, configuration dans le MDM, tests, traçabilité), puis j'assurais le support auprès des clients et des fournisseurs une fois le matériel déployé.</span>
-              <span data-h="Procédure de préparation" data-list>Prise en charge des terminaux et vérification du matériel|Étiquetage et enregistrement dans le fichier de suivi Excel pour la traçabilité|Installation des mises à jour du système Android|Inscription du terminal dans le MDM SOTI|Application du profil du client : applications, paramètres, mode kiosque|Tests et validation de la configuration avant le déploiement à grande échelle|Remise des terminaux au service logistique pour l'expédition</span>
-              <span data-h="Mes actions dans SOTI" data-list>Création de profils de configuration|Déploiement (« push ») d'applications sur les terminaux|Verrouillage des terminaux en mode kiosque|Prise de contrôle à distance d'un terminal pour aider au support|Déplacement des terminaux vers le bon groupe du réseau du client</span>
-              <span data-h="À savoir">Certaines actions dans SOTI, irréversibles sur le parc d'un client, étaient réservées aux techniciens confirmés. J'ai appris à travailler dans ce cadre et à faire valider les opérations sensibles.</span>
-              <span data-h="Problèmes rencontrés et solutions" data-list>Terminal qui ne s'inscrit pas dans SOTI : connexion du terminal à la console SOTI pour diagnostiquer et corriger son inscription depuis l'interface|Mise à jour Android qui échoue : réinitialisation du terminal aux paramètres d'usine, puis reprise complète de la procédure|Incident matériel : suivi du dossier avec le fournisseur (Honeywell ou Zebra) jusqu'à la résolution</span>
-              <span data-h="Outils">MDM SOTI, Android, Honeywell, Zebra, Excel</span>
-            </span>
-          </button>
-          <button type="button" class="proj rv" id="rp2" data-c="B1.4 B1.5">
-            <span class="cover"><span>RP-02 · FORMATION IPSSI</span></span>
-            <span class="body"><h3>Infrastructure Active Directory</h3><p>Domaine novaconseil.local pour une PME de 40 salariés : deux contrôleurs de domaine, DNS, DHCP, partages par service et GPO.</p>
-            <span class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-02" data-ctx="Formation IPSSI · 2025-2026 · laboratoire VMware">
-              <span data-h="Contexte">Nova Conseil, PME fictive de 40 salariés répartis en 3 services (Direction, Comptabilité, Commercial), fonctionne sans serveur central : un compte différent sur chaque poste, des fichiers échangés par clé USB et aucun contrôle des accès.</span>
-              <span data-h="Objectifs" data-list>Un compte unique par salarié, géré au même endroit|Des adresses IP attribuées automatiquement|Des dossiers partagés, protégés par service|Des postes configurés automatiquement|Un service qui continue si un serveur tombe en panne</span>
-              <span data-h="Architecture">Trois machines virtuelles sous VMware sur un réseau isolé 192.168.10.0/24 : SRV-CPD (contrôleur de domaine principal, DNS, DHCP, partages), SRV-CSD (contrôleur de domaine secondaire, DNS) et PC-01 (poste Windows 10 Pro du salarié).</span>
-              <span data-h="Démarche" data-list>Réseau : adresses IP fixes et nommage des serveurs|Domaine : rôle AD DS et DNS, nouvelle forêt novaconseil.local|DHCP : étendue de .100 à .150, autorisée dans l'Active Directory|Annuaire : une unité d'organisation et un groupe de sécurité par service, comptes créés aussi en PowerShell|Partages : un partage unique, droits NTFS par groupe et énumération basée sur l'accès|GPO : lecteurs réseau ciblés par groupe, fond d'écran imposé, panneau de configuration bloqué|Redondance : second contrôleur de domaine et réplication vérifiée avec repadmin|Tests : jonction du poste au domaine, gpresult et connexion avec le contrôleur principal éteint</span>
-              <span data-h="Résultat">Chaque salarié se connecte avec un compte unique, retrouve automatiquement ses lecteurs réseau et ne voit que les dossiers de son service. Si SRV-CPD tombe en panne, SRV-CSD prend le relais pour les connexions.</span>
-              <span data-h="Pistes d'amélioration" data-list>Serveur de fichiers dédié plutôt que sur un contrôleur de domaine|Basculement DHCP entre les deux serveurs|Sauvegarde de l'Active Directory|Méthode AGDLP avec des groupes de domaine local</span>
-              <span data-h="Outils">Windows Server 2022, AD DS, DNS, DHCP, GPO, PowerShell, Windows 10 Pro, VMware Workstation</span>
-            </span>
-          </button>
-          <button type="button" class="proj rv" id="rp3" data-c="B1.4 B1.5">
-            <span class="cover"><span>RP-03 · FORMATION</span></span>
-            <span class="body"><h3>Segmentation réseau par VLAN</h3><p>Réseau d'entreprise segmenté avec routage inter-VLAN sur équipements Cisco.</p>
-            <span class="tags"><span class="tag">B1.4</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-03" data-ctx="Formation · 2026">
-              <span data-h="Contexte">Séparer les flux des services Direction, Comptabilité et Production pour améliorer la sécurité.</span>
-              <span data-h="Missions">Plan d'adressage IP et sous-réseaux|Création des VLAN et des ports trunk|Routage inter-VLAN (router-on-a-stick)|Serveur DHCP avec relais|Maquette et tests sous Packet Tracer</span>
-              <span data-h="Outils">Cisco IOS, Packet Tracer, switchs 2960, routeur 4321</span>
-            </span>
-          </button>
-          <button type="button" class="proj rv" id="rp4" data-c="B1.1 B1.5">
-            <span class="cover"><span>RP-04 · JILITI</span></span>
-            <span class="body"><h3>Installation de serveurs en datacenter</h3><p>Du quai de chargement jusqu'au rack : réception, contrôle et installation physique de serveurs.</p>
-            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.5</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-04" data-ctx="Alternance JILITI, Rungis · 2025 – 2026">
-              <span data-h="Contexte">De nouveaux serveurs devaient être mis en place dans un datacenter. J'ai pris en charge la partie manuelle, de leur arrivée sur le site jusqu'à leur installation dans les baies.</span>
-              <span data-h="Missions">Réception des serveurs au quai de chargement et contrôle du bon de livraison|Vérification de l'état du matériel et relevé des numéros de série|Acheminement vers la salle serveurs en respectant les règles d'accès du site|Montage des rails et installation des serveurs dans les racks|Câblage électrique et réseau, puis étiquetage des câbles|Mise sous tension, contrôle des voyants et mise à jour de l'inventaire</span>
-              <span data-h="Outils">Racks 19 pouces, rails, PDU, câbles RJ45 et fibre, étiqueteuse, outil de ticketing</span>
-            </span>
-          </button>
-          <button type="button" class="proj rv" id="rp5" data-c="B1.1 B1.6">
-            <span class="cover"><span>RP-05 · FORMATION</span></span>
-            <span class="body"><h3>Supervision avec Zabbix</h3><p>Surveillance des serveurs et du réseau avec alertes automatiques.</p>
-            <span class="tags"><span class="tag">B1.1</span><span class="tag">B1.6</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-05" data-ctx="Formation · 2026">
-              <span data-h="Contexte">Détecter les pannes avant les utilisateurs grâce à une supervision centralisée.</span>
-              <span data-h="Missions">Installation du serveur Zabbix sur Debian|Ajout des hôtes Windows et Linux par agent|Supervision SNMP des switchs|Seuils d'alerte et notifications par mail|Auto-formation sur la documentation officielle</span>
-              <span data-h="Outils">Zabbix, SNMP, Debian, PostgreSQL</span>
-            </span>
-          </button>
-          <button type="button" class="proj rv" id="rp6" data-c="B1.3 B1.6">
-            <span class="cover"><span>RP-06 · PERSONNEL</span></span>
-            <span class="body"><h3>Portfolio professionnel</h3><p>Conception et mise en ligne de ce portfolio sur GitHub Pages.</p>
-            <span class="tags"><span class="tag">B1.3</span><span class="tag">B1.6</span></span><span class="more">Lire la suite →</span></span>
-            <span class="detail" hidden data-ref="RP-06" data-ctx="Personnel · 2026">
-              <span data-h="Contexte">Présenter mon parcours et mes compétences aux jurys et aux recruteurs.</span>
-              <span data-h="Missions">Structure du site en HTML, CSS et JavaScript|Design responsive (ordinateur et mobile)|Hébergement sur GitHub Pages|Mise à jour régulière des réalisations</span>
-              <span data-h="Outils">HTML, CSS, JavaScript, Git, GitHub Pages</span>
-            </span>
-          </button>
-        </div>
-      </section>
+      <div class="domaines">
+        <article>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="12" y="3" width="8" height="6" rx="1"/><rect x="3" y="23" width="8" height="6" rx="1"/><rect x="21" y="23" width="8" height="6" rx="1"/><path d="M16 9v10M7 23v-4h18v4"/></svg>
+          <h3>Réseaux</h3>
+          <p>VLAN, routage, adressage IP, DHCP et DNS sur équipements Cisco.</p>
+        </article>
+        <article>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="22" height="8" rx="1"/><rect x="5" y="15" width="22" height="8" rx="1"/><path d="M9 8h1M9 19h1M14 8h8M14 19h8M12 28h8M16 23v5"/></svg>
+          <h3>Systèmes</h3>
+          <p>Windows Server, Active Directory, Linux, virtualisation et sauvegardes.</p>
+        </article>
+        <article>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 6 7v8c0 6.5 4.3 11.6 10 14 5.7-2.4 10-7.5 10-14V7z"/><path d="m11.5 16 3 3 6-6.5"/></svg>
+          <h3>Sécurité</h3>
+          <p>Pare-feu, VPN, gestion des droits et supervision des équipements.</p>
+        </article>
+      </div>
+    </section>
 
-      <!-- ===== SYNTHÈSE ===== -->
-      <section class="view" id="synthese" data-label="Tableau de synthèse" hidden>
-        <p class="crumb rv">Accueil › <b>Tableau de synthèse</b></p>
-        <h2 class="page-title rv">Tableau de synthèse</h2>
-        <div class="wave rv" aria-hidden="true"></div>
-        <p class="rv" style="margin-bottom:20px">Compétences du bloc 1, « Support et mise à disposition de services informatiques », mobilisées dans chaque réalisation.</p>
-        <div class="matrix rv">
-          <table id="matrix">
-            <thead><tr><th scope="col" style="text-align:left">Réalisation</th><th scope="col" style="text-align:left">Période</th>
-              <th scope="col"><b>B1.1</b>Patrimoine</th><th scope="col"><b>B1.2</b>Incidents</th><th scope="col"><b>B1.3</b>Présence en ligne</th>
-              <th scope="col"><b>B1.4</b>Mode projet</th><th scope="col"><b>B1.5</b>Service</th><th scope="col"><b>B1.6</b>Dév. pro</th></tr></thead>
-            <tbody>
-              <tr data-rp="rp1"><th><small>RP-01</small>Terminaux mobiles (MDM)</th><td class="per">2023-2025 · ZETES</td><td class="y"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp2"><th><small>RP-02</small>Active Directory</th><td class="per">2025-2026 · IPSSI</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp3"><th><small>RP-03</small>VLAN</th><td class="per">2025-2026 · IPSSI</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp4"><th><small>RP-04</small>Serveurs en datacenter</th><td class="per">2025-2026 · JILITI</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td></tr>
-              <tr data-rp="rp5"><th><small>RP-05</small>Zabbix</th><td class="per">2025-2026 · IPSSI</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
-              <tr data-rp="rp6"><th><small>RP-06</small>Portfolio</th><td class="per">Oct. 2026</td><td class="n"></td><td class="n"></td><td class="y"></td><td class="n"></td><td class="n"></td><td class="y"></td></tr>
-            </tbody>
-            <tfoot><tr><th colspan="2">Total</th><td>3</td><td>1</td><td>1</td><td>2</td><td>4</td><td>2</td></tr></tfoot>
-          </table>
-        </div>
-        <div class="cta rv" style="margin:18px 0 0"><a class="btn" href="tableau-synthese-E5.xlsx" download>Télécharger le tableau (Excel)</a></div>
-        <p class="tip rv">Survolez une colonne pour la mettre en évidence. Cliquez sur une ligne pour ouvrir la réalisation.</p>
-        <div class="legend rv">
-          <span><b>B1.1</b>Gérer le patrimoine informatique</span>
-          <span><b>B1.2</b>Répondre aux incidents et aux demandes d'assistance et d'évolution</span>
-          <span><b>B1.3</b>Développer la présence en ligne de l'organisation</span>
-          <span><b>B1.4</b>Travailler en mode projet</span>
-          <span><b>B1.5</b>Mettre à disposition des utilisateurs un service informatique</span>
-          <span><b>B1.6</b>Organiser son développement professionnel</span>
-        </div>
-      </section>
+    <!-- ===== Réalisations (cartes générées par script.js) ===== -->
+    <section class="container section" id="realisations">
+      <p class="label">Réalisations</p>
+      <h2>Situations professionnelles</h2>
+      <p class="sous-titre">Cliquez sur une réalisation pour voir le contexte, la démarche, les outils et les documents.</p>
+      <div class="filtres" id="filtres" role="group" aria-label="Filtrer par compétence"></div>
+      <div class="grille" id="grille"></div>
+      <noscript><p>Activez JavaScript pour afficher les réalisations.</p></noscript>
+    </section>
 
-      <!-- ===== VEILLE ===== -->
-      <section class="view" id="veille" data-label="Veille technologique" hidden>
-        <p class="crumb rv">Accueil › <b>Veille technologique</b></p>
-        <h2 class="page-title rv">Veille technologique</h2>
-        <div class="wave rv" aria-hidden="true"></div>
-        <div class="v-head rv">
-          <span class="when">Sujet suivi depuis septembre 2025</span>
-          <h3>Les passkeys et la fin des mots de passe</h3>
-          <p>J'étudie l'adoption des passkeys (norme FIDO2 / WebAuthn) et ce qu'elles changent pour la sécurité des comptes dans les organisations.</p>
-          <dl><dt>Sources</dt><dd>CERT-FR, ANSSI, FIDO Alliance, Le Monde Informatique</dd><dt>Outils</dt><dd>Feedly, alertes Google</dd></dl>
-        </div>
-        <div class="acc rv" id="acc">
-          <details open><summary>Fonctionnement des passkeys</summary><div class="body"><p>Une passkey est une paire de clés cryptographiques. La clé privée reste sur l'appareil de l'utilisateur et le service ne stocke que la clé publique. L'utilisateur se connecte avec son empreinte, son visage ou un code PIN.</p></div></details>
-          <details><summary>Apports en sécurité</summary><div class="body"><p>Plus de mot de passe à voler ou à réutiliser. La passkey est liée au nom de domaine du site, ce qui la rend inutilisable sur une page de phishing.</p></div></details>
-          <details><summary>Enjeux pour un administrateur</summary><div class="body"><p>Gestion des appareils perdus, compatibilité avec Active Directory et Entra ID, choix entre clés synchronisées ou clés physiques, accompagnement des utilisateurs.</p></div></details>
-          <details><summary>Ce que j'en retiens</summary><div class="body"><p>[Votre conclusion personnelle : ce que vous avez appris et l'impact sur le métier d'administrateur systèmes et réseaux.]</p></div></details>
-        </div>
-      </section>
+    <!-- ===== Tableau de synthèse E5 (généré par script.js) ===== -->
+    <section class="container section" id="synthese">
+      <p class="label">Épreuve E5</p>
+      <h2>Tableau de synthèse</h2>
+      <p class="sous-titre">Compétences du bloc 1, « Support et mise à disposition de services informatiques », mobilisées dans chaque réalisation.</p>
+      <div class="table-scroll">
+        <table id="tableau"></table>
+      </div>
+      <dl class="legende" id="legende"></dl>
+      <div class="actions">
+        <a class="btn btn-ghost" href="tableau-synthese-E5.xlsx" download>Télécharger le tableau (Excel)</a>
+      </div>
+    </section>
 
-      <!-- ===== CONTACT ===== -->
-      <section class="view" id="contact" data-label="Contact" hidden>
-        <p class="crumb rv">Accueil › <b>Contact</b></p>
-        <h2 class="page-title rv">Contact</h2>
-        <div class="wave rv" aria-hidden="true"></div>
-        <p class="lead rv" style="margin-bottom:24px">Vous recherchez un technicien de proximité, de support ou de maintenance informatique ? Je serais ravi d'échanger avec vous.</p>
-        <div class="rows rv">
-          <div class="row"><span>E-mail</span><span class="act"><code id="email">issak.dirir@yahoo.com</code><button class="copy" id="copy" type="button">Copier</button></span></div>
-          <div class="row"><span>GitHub</span><a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75 ↗</a></div>
-          <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/in/issak-dirir-14297b2a4" target="_blank" rel="noopener">linkedin.com/in/issak-dirir ↗</a></div>
-          <div class="row"><span>Ville</span><span>Torcy (77), Île-de-France</span></div>
-          <div class="row"><span>Recherche</span><span>Technicien de proximité, support ou maintenance</span></div>
-        </div>
-      </section>
+    <!-- ===== Veille technologique ===== -->
+    <section class="container section" id="veille">
+      <p class="label">Veille technologique</p>
+      <h2>Les passkeys et la fin des mots de passe</h2>
+      <p class="sous-titre">Sujet suivi depuis septembre 2025. J'étudie l'adoption des passkeys (norme FIDO2 / WebAuthn) et ce qu'elles changent pour la sécurité des comptes dans les organisations.</p>
+      <dl class="sources">
+        <div><dt>Sources</dt><dd>CERT-FR, ANSSI, FIDO Alliance, Le Monde Informatique</dd></div>
+        <div><dt>Outils</dt><dd>Feedly, alertes Google</dd></div>
+      </dl>
+      <div class="accordeon">
+        <details open>
+          <summary>Fonctionnement des passkeys</summary>
+          <p>Une passkey est une paire de clés cryptographiques. La clé privée reste sur l'appareil de l'utilisateur et le service ne stocke que la clé publique. L'utilisateur se connecte avec son empreinte, son visage ou un code PIN.</p>
+        </details>
+        <details>
+          <summary>Apports en sécurité</summary>
+          <p>Plus de mot de passe à voler ou à réutiliser. La passkey est liée au nom de domaine du site, ce qui la rend inutilisable sur une page de phishing.</p>
+        </details>
+        <details>
+          <summary>Enjeux pour un administrateur</summary>
+          <p>Gestion des appareils perdus, compatibilité avec Active Directory et Entra ID, choix entre clés synchronisées ou clés physiques, accompagnement des utilisateurs.</p>
+        </details>
+        <details>
+          <summary>Ce que j'en retiens</summary>
+          <p class="a-completer">À rédiger : ta conclusion personnelle, ce que tu as appris et l'impact sur le métier de technicien systèmes et réseaux.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section class="container section" id="contact">
+      <p class="label">Contact</p>
+      <h2>Travaillons ensemble</h2>
+      <p class="sous-titre">Vous recherchez un technicien de proximité, de support ou de maintenance informatique ? Je serais ravi d'échanger avec vous.</p>
+      <div class="lignes">
+        <div class="ligne"><span>E-mail</span><span><code id="email">issak.dirir@yahoo.com</code> <button class="btn btn-ghost btn-petit" id="copier" type="button">Copier</button></span></div>
+        <div class="ligne"><span>GitHub</span><a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75 ›</a></div>
+        <div class="ligne"><span>LinkedIn</span><a href="https://www.linkedin.com/in/issak-dirir-14297b2a4" target="_blank" rel="noopener">linkedin.com/in/issak-dirir ›</a></div>
+        <div class="ligne"><span>Ville</span><span>Torcy (77), Île-de-France</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pied">
+    <div class="container pied-inner">
+      <span>© 2026 Issak Dirir · Portfolio BTS SIO option SISR</span>
+      <span>Hébergé sur GitHub Pages</span>
     </div>
+  </footer>
 
-    <!-- ===== BARRE LATÉRALE ===== -->
-    <aside class="sidebar" aria-label="Barre latérale">
-      <div class="widget profile">
-        <img class="avatar" src="photo-issak.jpg" width="300" height="300" alt="">
-        <b>Issak Dirir</b>
-        <span>BTS SIO · option SISR<br>IPSSI Serris · session 2027</span>
-        <span class="avail"><i></i>En recherche d'alternance</span>
-      </div>
-      <div class="widget">
-        <h2>Pages</h2>
-        <div class="wave" aria-hidden="true"></div>
-        <ul class="links" id="side-pages">
-          <li><a href="#accueil" data-go="accueil">Accueil</a></li>
-          <li><a href="#parcours" data-go="parcours">Curriculum vitae</a></li>
-          <li><a href="#realisations" data-go="realisations">Situations professionnelles</a></li>
-          <li><a href="#synthese" data-go="synthese">Tableau de synthèse</a></li>
-          <li><a href="#veille" data-go="veille">Veille technologique</a></li>
-          <li><a href="#contact" data-go="contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="widget">
-        <h2>Réalisations</h2>
-        <div class="wave" aria-hidden="true"></div>
-        <ul class="links">
-          <li><a href="#realisations" data-go="realisations" data-open="rp1"><span><small>RP-01</small>Terminaux mobiles (MDM)</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp2"><span><small>RP-02</small>Active Directory</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp3"><span><small>RP-03</small>VLAN</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp4"><span><small>RP-04</small>Serveurs en datacenter</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp5"><span><small>RP-05</small>Zabbix</span></a></li>
-          <li><a href="#realisations" data-go="realisations" data-open="rp6"><span><small>RP-06</small>Portfolio</span></a></li>
-        </ul>
-      </div>
-    </aside>
-  </div>
-</main>
+  <!-- Fenêtre de détail d'une réalisation (balise <dialog> native du navigateur) -->
+  <dialog id="detail" aria-labelledby="detail-titre">
+    <button class="fermer" type="button" aria-label="Fermer">✕</button>
+    <div id="detail-contenu"></div>
+  </dialog>
 
-<footer class="gut"><div class="inner"><span>© 2026 Issak Dirir · Portfolio BTS SIO option SISR</span><span>Hébergé sur GitHub Pages · <a href="https://github.com/iskk75" target="_blank" rel="noopener">github.com/iskk75</a></span></div></footer>
+  <!-- Message "Adresse copiée" -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
-  <div class="bg" data-close></div>
-  <div class="panel">
-    <button class="close" type="button" data-close aria-label="Fermer">✕</button>
-    <span class="m-ref" id="m-ref"></span>
-    <h3 id="m-title"></h3>
-    <p class="ctx" id="m-ctx"></p>
-    <div id="m-body"></div>
-    <div class="nav"><button type="button" id="m-prev">← Précédente</button><button type="button" id="m-next">Suivante →</button></div>
-  </div>
-</div>
-<div class="toast" role="status" aria-live="polite"></div>
-<!-- Fenêtre d'accueil « Qui visite mon portfolio ? » (réponse obligatoire) -->
-<div class="gate" id="gate" hidden data-form="https://docs.google.com/forms/d/e/1FAIpQLSejPWlBFRQV9LS_46O1-Li8vbzlIlbdM8WHh-7pDGGQ13Fyiw/formResponse" data-entry="entry.565647532" role="dialog" aria-modal="true" aria-labelledby="gate-t" aria-describedby="gate-d">
-  <div class="gate-card">
-    <p class="gate-kicker">Portfolio · Issak Dirir</p>
-    <h2 id="gate-t">Bienvenue&nbsp;!</h2>
-    <p id="gate-d">Avant d'entrer, dites-moi qui visite mon portfolio&nbsp;: un prénom ou un pseudonyme suffit.</p>
-    <form class="gate-form" id="gate-form" autocomplete="off">
-      <label class="sr" for="gate-name">Prénom ou pseudonyme</label>
-      <input id="gate-name" name="name" type="text" maxlength="40" placeholder="Prénom ou pseudonyme" required>
-      <button class="btn solid" type="submit">Entrer</button>
-    </form>
-    <p class="gate-note">Votre réponse sert uniquement à savoir qui consulte ce portfolio. Elle n'est ni publiée ni partagée.</p>
-  </div>
-</div>
-<script src="script.js?v=20261027b"></script>
+  <!-- projets.js doit être chargé AVANT script.js, qui utilise ses données -->
+  <script src="projets.js?v=20261117"></script>
+  <script src="script.js?v=20261117"></script>
+
 </body>
 </html>
