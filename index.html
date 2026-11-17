@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400&family=JetBrains+Mono:wght@400&display=swap">
-  <link rel="stylesheet" href="style.css?v=20261117b">
+  <link rel="stylesheet" href="style.css?v=20261117c">
 </head>
 <body>
 
@@ -43,14 +43,18 @@
           <a class="btn btn-ghost" href="cv-issak-dirir.pdf" target="_blank" rel="noopener">Mon CV (PDF)</a>
         </div>
       </div>
-      <!-- Portrait : photo détourée posée sur un fond aux couleurs du site, dans une arche.
-           Le globe réseau (script.js) tourne DERRIÈRE, comme un décor : il ne passe jamais sur le visage. -->
+      <!-- Scène 3D : globe réseau (script.js) derrière une carte de profil qui s'incline vers la souris.
+           Le globe peut être attrapé et lancé à la souris ou au doigt. -->
       <figure class="portrait-zone" id="globe">
         <canvas class="globe-arriere" aria-hidden="true"></canvas>
-        <div class="arche">
-          <img class="portrait" src="photo-issak-detouree.webp" width="300" height="300" alt="Photo d'Issak Dirir">
+        <div class="profil">
+          <div class="profil-photo"><img src="photo-issak.jpg" width="300" height="300" alt="Photo d'Issak Dirir"></div>
+          <figcaption class="profil-texte">
+            <b>Issak Dirir</b>
+            <span>Technicien systèmes et réseaux</span>
+            <span class="dispo"><i aria-hidden="true"></i>Disponible · Torcy (77)</span>
+          </figcaption>
         </div>
-        <figcaption class="statut"><i aria-hidden="true"></i>Disponible · Torcy (77)</figcaption>
       </figure>
     </section>
 
@@ -218,7 +222,7 @@
 
   <!-- projets.js doit être chargé AVANT script.js, qui utilise ses données -->
   <script src="projets.js?v=20261117"></script>
-  <script src="script.js?v=20261117b"></script>
+  <script src="script.js?v=20261117c"></script>
 
 </body>
 </html>

@@ -288,116 +288,172 @@ window.addEventListener("scroll", function () {
 }, { passive: true });
 
 /* =====================================================================
-   15. GLOBE RÉSEAU EN 3D
-   Des points répartis sur une sphère (les équipements), reliés à leurs
-   voisins (les câbles). Des paquets de données circulent sur les liens.
-   La sphère tourne seule, suit la souris et accélère quand on scrolle.
-   Principe 3D : on fait tourner chaque point (x, y, z) avec un peu de
-   trigonométrie, puis on le projette en 2D (perspective : plus un point
-   est loin, plus il est petit et proche du centre).
+   15. SCÈNE 3D DE L'ACCUEIL
+   - Un globe réseau (équipements reliés par des câbles) dessiné en 3D :
+     les points et les liens sont triés par profondeur, plus petits et plus
+     pâles à l'arrière, plus nets et plus lumineux à l'avant.
+   - On peut l'attraper à la souris (ou au doigt) et le lancer : il garde
+     son élan puis ralentit (inertie).
+   - Quelques "serveurs" plus gros émettent une onde, des paquets de
+     données circulent sur les liens en laissant une traînée.
+   - La carte de profil s'incline vers la souris (parallaxe) : la carte
+     bouge plus que le globe, ce qui donne l'impression de profondeur.
+   Principe : on fait tourner chaque point (x, y, z) avec un peu de
+   trigonométrie, puis on le projette en 2D (perspective).
    ===================================================================== */
 (function () {
   const zone = document.getElementById("globe");
-  const toileArriere = zone.querySelector(".globe-arriere");
-  const ctxA = toileArriere.getContext("2d");
-  const ctxV = ctxA;   // un seul canvas : tout le globe reste derrière le portrait
-  const couleur = getComputedStyle(document.documentElement).getPropertyValue("--indigo").trim();
+  const toile = zone.querySelector(".globe-arriere");
+  const ctx = toile.getContext("2d");
+  const carte = zone.querySelector(".profil");
+  const css = getComputedStyle(document.documentElement);
+  let couleur = css.getPropertyValue("--indigo").trim();
+  let couleur2 = css.getPropertyValue("--indigo-clair").trim();
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+    const c = getComputedStyle(document.documentElement);
+    couleur = c.getPropertyValue("--indigo").trim(); couleur2 = c.getPropertyValue("--indigo-clair").trim();
+  });
 
-  // 1. Points sur la sphère (répartition "spirale de Fibonacci" : régulière, sans trou)
-  const NB = 80, points = [];
+  // 1. Points sur la sphère (spirale de Fibonacci : répartition régulière)
+  const NB = 110, points = [];
   for (let i = 0; i < NB; i++) {
-    const y = 1 - (i / (NB - 1)) * 2;
-    const r = Math.sqrt(1 - y * y);
-    const a = i * Math.PI * (3 - Math.sqrt(5));
-    points.push({ x: Math.cos(a) * r, y: y, z: Math.sin(a) * r });
+    const y = 1 - (i / (NB - 1)) * 2, r = Math.sqrt(1 - y * y), a = i * Math.PI * (3 - Math.sqrt(5));
+    points.push({ x: Math.cos(a) * r, y: y, z: Math.sin(a) * r, serveur: i % 13 === 0, phase: Math.random() * 6 });
   }
-
-  // 2. Liens : chaque point est relié à ses 3 voisins les plus proches
+  // 2. Liens : chaque point relié à ses 3 voisins les plus proches
   const liens = [];
   points.forEach(function (p, i) {
     points.map((q, j) => ({ j: j, d: (p.x - q.x) ** 2 + (p.y - q.y) ** 2 + (p.z - q.z) ** 2 }))
       .filter(o => o.j !== i).sort((a, b) => a.d - b.d).slice(0, 3)
-      .forEach(function (o) { if (!liens.some(l => l[0] === o.j && l[1] === i)) liens.push([i, o.j]); });
+      .forEach(function (o) { if (!liens.some(l => (l[0] === o.j && l[1] === i) || (l[0] === i && l[1] === o.j))) liens.push([i, o.j]); });
   });
+  // 3. Paquets de données
+  const paquets = Array.from({ length: 18 }, () => ({ lien: Math.floor(Math.random() * liens.length), t: Math.random(), v: 0.006 + Math.random() * 0.01 }));
 
-  // 3. Paquets de données qui voyagent sur les liens
-  const paquets = Array.from({ length: 14 }, () => ({ lien: Math.floor(Math.random() * liens.length), t: Math.random() }));
-
-  let taille = 0, rotY = 0, rotX = -0.3, cibleX = -0.3, cibleY = 0, visible = true, dernierScroll = window.scrollY;
+  let taille = 0, rotX = -0.35, rotY = 0, vitX = 0, vitY = 0.0035;   // angles et vitesses de rotation
+  let glisse = false, dx0 = 0, dy0 = 0, visible = true, temps = 0;
+  let tiltX = 0, tiltY = 0, cibleTX = 0, cibleTY = 0;                  // inclinaison de la carte
 
   function dimensionner() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    taille = zone.clientWidth;
-    toileArriere.width = taille * dpr; toileArriere.height = taille * dpr;
-    ctxA.setTransform(dpr, 0, 0, dpr, 0, 0);
+    taille = toile.clientWidth;
+    toile.width = taille * dpr; toile.height = taille * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function projeter(p) {
+    const cy = Math.cos(rotY), sy = Math.sin(rotY), cx = Math.cos(rotX), sx = Math.sin(rotX);
+    const x1 = p.x * cy - p.z * sy, z1 = p.x * sy + p.z * cy;
+    const y2 = p.y * cx - z1 * sx, z2 = p.y * sx + z1 * cx;
+    const persp = 2.6 / (2.6 + z2), rayon = taille * 0.4;
+    // profondeur : 0 = tout à l'arrière, 1 = tout à l'avant
+    return { x: taille / 2 + x1 * rayon * persp, y: taille / 2 + y2 * rayon * persp, z: z2, persp: persp, prof: (1 - z2) / 2 };
   }
 
-  // Rotation 3D puis projection en perspective
-  function projeter(p) {
-    let x = p.x * Math.cos(rotY) - p.z * Math.sin(rotY);
-    let z = p.x * Math.sin(rotY) + p.z * Math.cos(rotY);
-    let y = p.y * Math.cos(rotX) - z * Math.sin(rotX);
-    z = p.y * Math.sin(rotX) + z * Math.cos(rotX);
-    const rayon = taille * 0.46;
-    const persp = 3 / (3 + z);              // perspective
-    return { x: taille / 2 + x * rayon * persp, y: taille / 2 + y * rayon * persp, z: z, persp: persp };
+  // Ellipse d'un "parallèle" (anneau de latitude) pour donner du volume
+  function anneau(lat) {
+    const pts = [];
+    for (let k = 0; k <= 64; k++) {
+      const a = (k / 64) * Math.PI * 2, r = Math.cos(lat);
+      pts.push(projeter({ x: Math.cos(a) * r, y: Math.sin(lat), z: Math.sin(a) * r }));
+    }
+    return pts;
   }
 
   function dessiner() {
+    temps += 1;
     if (visible) {
-      // La sphère tourne seule + un peu plus vite quand on scrolle
-      const y = window.scrollY;
-      rotY += 0.003 + Math.abs(y - dernierScroll) * 0.0008;
-      dernierScroll = y;
-      rotX += (cibleX - rotX) * 0.05;
-      rotY += cibleY * 0.02;
+      // rotation : élan + retour doux vers la vitesse de croisière
+      if (!glisse) { vitY += (0.0035 - vitY) * 0.02; vitX += (0 - vitX) * 0.04; rotX += ((-0.35) - rotX) * 0.01; }
+      rotY += vitY; rotX += vitX;
+      rotX = Math.max(-1.2, Math.min(1.2, rotX));
 
+      ctx.clearRect(0, 0, taille, taille);
       const proj = points.map(projeter);
-      ctxA.clearRect(0, 0, taille, taille);
 
-      // z > 0 : point à l'arrière (dessiné derrière la photo) ; z < 0 : à l'avant
-      liens.forEach(function (l) {
-        const a = proj[l[0]], b = proj[l[1]];
-        const ctx = (a.z + b.z) / 2 > 0 ? ctxA : ctxV;
-        ctx.strokeStyle = couleur;
-        ctx.globalAlpha = 0.06 + (1 - (a.z + b.z) / 2) * 0.1;
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      // Anneaux de latitude très discrets
+      [-0.6, 0, 0.6].forEach(function (lat) {
+        const pts = anneau(lat);
+        ctx.strokeStyle = couleur; ctx.lineWidth = 1;
+        for (let k = 0; k < pts.length - 1; k++) {
+          ctx.globalAlpha = 0.03 + pts[k].prof * 0.08;
+          ctx.beginPath(); ctx.moveTo(pts[k].x, pts[k].y); ctx.lineTo(pts[k + 1].x, pts[k + 1].y); ctx.stroke();
+        }
       });
-      proj.forEach(function (p) {
-        const ctx = p.z > 0 ? ctxA : ctxV;
-        ctx.globalAlpha = 0.2 + (1 - p.z) * 0.2;
-        ctx.fillStyle = couleur;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 2.2 * p.persp, 0, Math.PI * 2); ctx.fill();
+
+      // Liens, de l'arrière vers l'avant
+      liens.map(l => ({ a: proj[l[0]], b: proj[l[1]] }))
+        .sort((u, v) => (v.a.z + v.b.z) - (u.a.z + u.b.z))
+        .forEach(function (l) {
+          const prof = (l.a.prof + l.b.prof) / 2;
+          ctx.globalAlpha = 0.04 + prof * prof * 0.4;
+          ctx.strokeStyle = couleur; ctx.lineWidth = 0.6 + prof * 0.8;
+          ctx.beginPath(); ctx.moveTo(l.a.x, l.a.y); ctx.lineTo(l.b.x, l.b.y); ctx.stroke();
+        });
+
+      // Points (équipements) et serveurs avec une onde
+      proj.map((p, i) => ({ p: p, src: points[i] })).sort((u, v) => v.p.z - u.p.z).forEach(function (o) {
+        const p = o.p, r = (o.src.serveur ? 3.4 : 1.8) * p.persp;
+        ctx.globalAlpha = 0.15 + p.prof * 0.85;
+        ctx.fillStyle = p.prof > 0.6 ? couleur2 : couleur;
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
+        if (o.src.serveur && p.prof > 0.45) {
+          const onde = ((temps * 0.012 + o.src.phase) % 1);
+          ctx.globalAlpha = (1 - onde) * 0.5 * p.prof;
+          ctx.strokeStyle = couleur2; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, r + onde * 16, 0, Math.PI * 2); ctx.stroke();
+        }
       });
-      // Paquets : un petit point lumineux qui avance le long d'un lien
+
+      // Paquets avec traînée
       paquets.forEach(function (pq) {
-        pq.t += 0.012;
+        pq.t += pq.v;
         if (pq.t > 1) { pq.t = 0; pq.lien = Math.floor(Math.random() * liens.length); }
         const a = proj[liens[pq.lien][0]], b = proj[liens[pq.lien][1]];
-        const x = a.x + (b.x - a.x) * pq.t, yy = a.y + (b.y - a.y) * pq.t, z = a.z + (b.z - a.z) * pq.t;
-        const ctx = z > 0 ? ctxA : ctxV;
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = couleur;
-        ctx.shadowColor = couleur; ctx.shadowBlur = 10;
-        ctx.beginPath(); ctx.arc(x, yy, 2.6, 0, Math.PI * 2); ctx.fill();
+        const prof = a.prof + (b.prof - a.prof) * pq.t;
+        if (prof < 0.35) return;                      // on ne montre que ceux de l'avant
+        const t0 = Math.max(0, pq.t - 0.25);
+        const grad = ctx.createLinearGradient(a.x + (b.x - a.x) * t0, a.y + (b.y - a.y) * t0, a.x + (b.x - a.x) * pq.t, a.y + (b.y - a.y) * pq.t);
+        grad.addColorStop(0, "transparent"); grad.addColorStop(1, couleur2);
+        ctx.globalAlpha = prof; ctx.strokeStyle = grad; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(a.x + (b.x - a.x) * t0, a.y + (b.y - a.y) * t0); ctx.lineTo(a.x + (b.x - a.x) * pq.t, a.y + (b.y - a.y) * pq.t); ctx.stroke();
+        ctx.fillStyle = couleur2; ctx.shadowColor = couleur2; ctx.shadowBlur = 12;
+        ctx.beginPath(); ctx.arc(a.x + (b.x - a.x) * pq.t, a.y + (b.y - a.y) * pq.t, 2.4, 0, Math.PI * 2); ctx.fill();
         ctx.shadowBlur = 0;
       });
+      ctx.globalAlpha = 1;
+    }
+
+    // Inclinaison douce de la carte de profil
+    if (carte) {
+      tiltX += (cibleTX - tiltX) * 0.08; tiltY += (cibleTY - tiltY) * 0.08;
+      carte.style.setProperty("--rx", tiltX.toFixed(2) + "deg");
+      carte.style.setProperty("--ry", tiltY.toFixed(2) + "deg");
+      carte.style.setProperty("--gx", (50 + tiltY * 6).toFixed(1) + "%");
+      carte.style.setProperty("--gy", (50 - tiltX * 6).toFixed(1) + "%");
     }
     if (!moinsAnimations) requestAnimationFrame(dessiner);
   }
 
-  // La souris incline le globe
+  // Attraper et lancer le globe (souris ou doigt)
+  zone.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(".profil")) return;
+    glisse = true; dx0 = e.clientX; dy0 = e.clientY; zone.setPointerCapture(e.pointerId); zone.classList.add("attrape");
+  });
   zone.addEventListener("pointermove", function (e) {
     const r = zone.getBoundingClientRect();
-    cibleY = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
-    cibleX = -0.3 + ((e.clientY - r.top) / r.height - 0.5) * 0.8;
+    const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+    cibleTY = nx * 14; cibleTX = -ny * 14;          // la carte suit la souris (max ±7°)
+    if (!glisse) return;
+    vitY = (e.clientX - dx0) * 0.0025; vitX = (e.clientY - dy0) * 0.0025;
+    dx0 = e.clientX; dy0 = e.clientY;
   });
-  zone.addEventListener("pointerleave", function () { cibleY = 0; cibleX = -0.3; });
+  function lacher() { glisse = false; zone.classList.remove("attrape"); }
+  zone.addEventListener("pointerup", lacher);
+  zone.addEventListener("pointercancel", lacher);
+  zone.addEventListener("pointerleave", function () { cibleTX = 0; cibleTY = 0; });
 
-  // On arrête de dessiner quand le globe n'est plus à l'écran (économie de batterie)
+  // Pause quand l'accueil n'est plus à l'écran (économie de batterie)
   new IntersectionObserver(e => visible = e[0].isIntersecting).observe(zone);
-
   dimensionner();
   window.addEventListener("resize", dimensionner);
   dessiner();
