@@ -21,7 +21,7 @@ export const sourceTime = (shot: Shot, local: number) => {
       return shot.from + interpolate(local, [0, dur], [0, dur * 0.5], { easing: EASE.out });
     case "crawl":
       // ultra-ralenti (0,15x) : la poussée de caméra du plan masque la cadence
-      return shot.from + interpolate(local, [0, dur], [0, dur * 0.085], { easing: EASE.inOut });
+      return shot.from + interpolate(local, [0, dur], [0, dur * 0.055], { easing: EASE.inOut });
     case "veryslow":
       return shot.from + interpolate(local, [0, dur], [0, dur * 0.33], { easing: EASE.out });
     case "fast":
