@@ -1,0 +1,8 @@
+# Refrain « Promis bébé » — transcrit automatiquement depuis ref.mp3 (Whisper), à vérifier.
+# Format : temps_en_secondes  phrase   (les temps mot par mot sont dans src/timing.ts)
+0.62  Des fois j'ai des sautes d'humeur, j'sais pas pourquoi
+3.92  Des fois j'ai des sautes d'humeur, j'sais pas pourquoi
+7.42  Un jour ça va, un jour ça va pas
+10.52 Des fois c'est comme ça
+12.30 Des fois c'est comme ça
+# 14.38 (phrase suivante non affichée : transcription pas assez sûre — remplacée par le titre KOBA LAD)

@@ -1,0 +1,6 @@
+node_modules
+out
+work
+.DS_Store
+public/clips
+public/ref.mp3
